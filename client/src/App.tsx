@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Input from './components/Input';
+import Hive from './components/Hive';
 
 function App() {
   useEffect(() => {
@@ -10,12 +12,13 @@ function App() {
       console.log(body);
     };
 
-    sayHello();
+    //sayHello();
   }, []);
 
   return (
     <div className="App">
-      Hello world!
+      <Input />
+      <Hive />
     </div>
   );
 }
