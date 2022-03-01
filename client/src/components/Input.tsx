@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { inputState } from '../recoil/atoms/input';
+import { ensureUpperCase } from '../utilities/ensureUpperCase';
 
 function Input() {
-    const [inputVal, setInputVal] = useState('');
+    const [inputVal, setInputVal] = useRecoilState(inputState);
 
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputVal(e.target.value);
+    const onChange = ({ target: { value }}: React.ChangeEvent<HTMLInputElement>) => {
+        setInputVal(
+            ensureUpperCase(value)
+        );
     };
 
     const styles = {
         width: '290px',
         height: '40px',
+        border: 'none',
     };
 
     return (
@@ -20,6 +25,7 @@ function Input() {
                 value={inputVal} 
                 onChange={onChange}
                 style={styles}
+                autoFocus
             />
         </div>
     );

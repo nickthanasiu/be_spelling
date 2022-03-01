@@ -1,9 +1,14 @@
-import { FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
+import { useRecoilState } from 'recoil';
+import { inputState } from '../recoil/atoms/input';
+import { ensureUpperCase } from '../utilities/ensureUpperCase';
 
 type HiveCellProps = {
     letter: string
 }
 const HiveCell: FunctionComponent<HiveCellProps> = ({ letter }) => {
+    const [inputValue, setInputValue] = useRecoilState(inputState);
+
     const styles = { 
         backgroundColor: 'lightgray', 
         height: '100px', 
@@ -16,8 +21,20 @@ const HiveCell: FunctionComponent<HiveCellProps> = ({ letter }) => {
         cursor: 'pointer',
     };
 
+    
+
+    const onClick = ({ currentTarget: {textContent}}: React.MouseEvent<HTMLDivElement>) => {
+        // @TODO :: This is annoying. Shouldn't be necessary. Figure out workaround
+        if (!textContent) return;
+
+        setInputValue(
+            ensureUpperCase(inputValue + textContent)
+        );  
+    };
+
+    // @TODO :: Convert this to polygon svg
     return (
-        <div style={styles}>{letter}</div>
+        <div onClick={onClick} style={styles}>{letter}</div>
     );
 }
 
