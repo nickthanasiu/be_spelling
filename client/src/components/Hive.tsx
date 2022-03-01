@@ -1,11 +1,8 @@
-import { useRecoilValue } from 'recoil';
 import data from '../data/letters.json';
-import { inputState } from '../recoil/atoms/input';
 import HiveCell from './HiveCell';
 
 function Hive() {
-    const state = useRecoilValue(inputState);
-    const { letters } = data;
+    const { centerLetter, letters } = data;
 
     const styles = { 
         display: 'flex',
@@ -13,14 +10,12 @@ function Hive() {
     };
 
     return (
-        <>
-            <div className="Hive" style={styles}>
+        <div className="Hive" style={styles}>
+                <HiveCell letter={centerLetter} isCenter />
                 {letters.map((letter) => (
                     <HiveCell letter={letter} />
                 ))}
-            </div>
-            <span>{state}</span>
-        </>
+        </div>
     )
 }
 

@@ -1,5 +1,4 @@
 import { RecoilRoot } from 'recoil';
-import './App.css';
 import Input from './components/Input';
 import Hive from './components/Hive';
 

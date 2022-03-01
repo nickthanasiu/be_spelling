@@ -4,13 +4,14 @@ import { inputState } from '../recoil/atoms/input';
 import { ensureUpperCase } from '../utilities/ensureUpperCase';
 
 type HiveCellProps = {
-    letter: string
+    letter: string,
+    isCenter?: boolean,
 }
-const HiveCell: FunctionComponent<HiveCellProps> = ({ letter }) => {
+const HiveCell: FunctionComponent<HiveCellProps> = ({ letter, isCenter }) => {
     const [inputValue, setInputValue] = useRecoilState(inputState);
 
     const styles = { 
-        backgroundColor: 'lightgray', 
+        backgroundColor: isCenter ? '#f7da21': 'lightgray', 
         height: '100px', 
         width: '100px',
         margin: '0 5px',
