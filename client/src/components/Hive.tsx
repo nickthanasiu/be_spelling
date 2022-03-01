@@ -7,7 +7,6 @@ function BeeHive() {
 
     const styles = { 
         display: 'flex',
-        
     };
 
     return (
