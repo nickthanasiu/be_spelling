@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useRecoilState } from 'recoil';
 import { inputState } from '../recoil/atoms/input';
-import { ensureUpperCase } from '../utilities/ensureUpperCase';
+import { ensureUpperCase } from '../utils/ensureUpperCase';
 
 type HiveCellProps = {
     letter: string,
@@ -28,9 +28,9 @@ const HiveCell: FunctionComponent<HiveCellProps> = ({ letter, isCenter }) => {
         // @TODO :: This is annoying. Shouldn't be necessary. Figure out workaround
         if (!textContent) return;
 
-        setInputValue(
+        /**setInputValue(
             ensureUpperCase(inputValue + textContent)
-        );  
+        );   */
     };
 
     // @TODO :: Convert this to polygon svg
