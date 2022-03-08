@@ -1,87 +1,85 @@
 import React from 'react';
+import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { inputState, LetterObj } from '../recoil/atoms/input';
-import { ensureUpperCase } from '../utils/ensureUpperCase';
+import { inputState, LetterType } from '../recoil/atoms/input';
 import { useKeyPressListener } from '../hooks/useKeyPressListener';
-import lettersList from '../data/letters.json';
+import { useLetterValidation } from '../hooks/useLetterValidation';
+import wordList from '../data/wordList.json';
 
-// @TODO :: ensureUpperCase can be achieved with css text-transform: uppercase
+import Letter from '../components/Letter';
 
-
-function useIsCharacterLetter(char: string): boolean {
+function isCharacterLetter(char: string): boolean {
+    // @TODO :: Shift, Tab, Caps Lock, Meta, are passing character validation
     return (/[a-zA-Z]/).test(char);
-}
-
-/*
-    -Input component loads
-    -Add keyboard event listener to window
-    -Key pressed
-    -Check if key value is letter
-    -if not, do nothing
-    -if it is, create letter Object and setInputVal
-*/
-
-function useLetterValidation(letter: string): LetterObj {
-    const { centerLetter, letters } = lettersList;
-
-    const isCenterLetter = ensureUpperCase(letter) === centerLetter;
-    const isValid = letters.includes(ensureUpperCase(letter));
- 
-    return {
-        letter,
-        isValid,
-        isCenterLetter
-    };
 }
 
 function Input() {
     const [inputVal, setInputVal] = useRecoilState(inputState);
+
+    const submitWord = () => {
+        /**/
+        const { pangrams } = wordList;
+
+        const word = inputVal.map(letter => letter.character)
+            .join('')
+            .toLowerCase();
+
+        console.log('@@@ SUbMITING WORD :: ', word);
+        const isPangram = pangrams.includes(word);
+
+        console.log('@@@ isPangram :: ', isPangram);
+    };
+
+    const handleBackspace = () => {
+        setInputVal([...inputVal.slice(0, -1)]);
+    };
  
     const keyPressHandler = ({ key }: React.KeyboardEvent<Window>) => {
-        // Check if character is a letter
-        const isCharacterLetter = useIsCharacterLetter(key);
+        /*
+            Keys to listen for
 
-        // Check if key value is a letter
-        // If character is NOT a letter, do nothing
-        if (!isCharacterLetter) return;
+            * Letters
+            * Enter (Submit word)
+            * Backspace
+            * Spacebar (shuffle letters)
+        */
 
-        const newLetterObj = useLetterValidation(key);
+        if (key === ' ' || key === 'Spacebar') {
+            console.log('@@@ SPACEBAR');
+            return;
+        } else if (key === 'Backspace') {
+            handleBackspace();
+            return;
+        } else if (key === 'Enter') {
+            submitWord();
+            return;
+        } else if (isCharacterLetter(key)) {
+            const newLetterObj = useLetterValidation(key);
 
-        setInputVal([...inputVal, newLetterObj]);
+            setInputVal([...inputVal, newLetterObj]);
+
+        } else {
+            return;
+        }
     };
 
     useKeyPressListener(keyPressHandler);
 
-    const styles = {
-        width: '290px',
-        height: '40px',
-        border: 'none',
-    };
-
-    const getLetterStyle = (letter: LetterObj) => ({
-        color: letter.isCenterLetter ? 'yellow' : letter.isValid ? 'black' : 'lightgrey'
-    });
-
     return (
-        <div className="input">
-            {/*<input 
-                type="text" 
-                placeholder="Type or click" 
-                value={inputVal} 
-                onChange={onChange}
-                style={styles}
-                autoFocus
-            />*/}
+        <StyledInput>
             <span className="input-content">
-                {/* List of letter <span> elements */}
-                {inputVal.map((letter: LetterObj) => (
-                    <span style={getLetterStyle(letter)}>
-                        {letter.letter}
-                    </span>
+                {inputVal.map((letter: LetterType) => (
+                    <Letter letter={letter} />
                 ))}
             </span>
-        </div>
+        </StyledInput>
     );
 }
+
+const StyledInput = styled.div`
+width: 290px;
+height: 40px;
+border: none;
+`;
 
 export default Input;
