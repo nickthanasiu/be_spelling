@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { inputState, LetterType } from '../recoil/atoms/input';
@@ -9,25 +9,58 @@ import wordList from '../data/wordList.json';
 import Letter from '../components/Letter';
 
 function isCharacterLetter(char: string): boolean {
-    // @TODO :: Shift, Tab, Caps Lock, Meta, are passing character validation
-    return (/[a-zA-Z]/).test(char);
+    return char.length === 1 && (/[a-zA-Z]/).test(char);
 }
 
 function Input() {
     const [inputVal, setInputVal] = useRecoilState(inputState);
+    const [foundWordsList, setFoundWordsList] = useState([] as string[]);
+
+    const clearInput = () => setInputVal([]);
+
+    const addToFoundWordsList = (word: string) => {
+        setFoundWordsList([...foundWordsList , word]);
+        clearInput();
+    };
+
+    const showMessage = (message: string) => {
+        window.alert(message);
+        clearInput();
+    };
 
     const submitWord = () => {
-        /**/
-        const { pangrams } = wordList;
-
+        const { pangrams, words } = wordList;
+        // @TODO :: Use Recoil selector to derive word from state
         const word = inputVal.map(letter => letter.character)
             .join('')
             .toLowerCase();
 
-        console.log('@@@ SUbMITING WORD :: ', word);
-        const isPangram = pangrams.includes(word);
+        // Check if answer is too short
+        if (word.length < 4) {
+            showMessage('Too short');
+            return;
+        }
 
-        console.log('@@@ isPangram :: ', isPangram);
+        // Check if answer contains invalid letters
+        if (inputVal.some(letter => !letter.isValid)) {
+            showMessage('Bad letters');
+            return;
+        }
+
+        // Check if answer is pangram
+        if (pangrams.includes(word)) {
+            showMessage('Pangram!');
+            addToFoundWordsList(word);
+            return;
+        }
+
+        // Check if answer is in word list
+        if (words.includes(word)) {
+            showMessage('Submitting word!!!');
+            addToFoundWordsList(word);
+        } else {
+            showMessage('Not in word list');
+        }
     };
 
     const handleBackspace = () => {
@@ -57,29 +90,36 @@ function Input() {
             const newLetterObj = useLetterValidation(key);
 
             setInputVal([...inputVal, newLetterObj]);
-
-        } else {
-            return;
         }
     };
 
     useKeyPressListener(keyPressHandler);
 
     return (
-        <StyledInput>
-            <span className="input-content">
-                {inputVal.map((letter: LetterType) => (
-                    <Letter letter={letter} />
-                ))}
-            </span>
-        </StyledInput>
+        <>
+            <StyledInput>
+                <span className="input-content">
+                    {inputVal.map((letter: LetterType) => (
+                        <Letter letter={letter} />
+                   ))}
+                </span>
+             </StyledInput>
+             <div>
+                 <h3>Word List</h3>
+                 <ul>
+                    {foundWordsList.map(word => (
+                        <li>{word}</li>
+                    ))}
+                 </ul>
+             </div>
+        </>
     );
 }
 
 const StyledInput = styled.div`
-width: 290px;
-height: 40px;
-border: none;
+    width: 290px;
+    height: 40px;
+    border: none;
 `;
 
 export default Input;
