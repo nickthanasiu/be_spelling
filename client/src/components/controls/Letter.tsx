@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { LetterType } from '../recoil/atoms/input';
+import { LetterType } from '../../recoil/atoms/input';
 
 
 interface LetterProps {

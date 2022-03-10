@@ -22,8 +22,9 @@ export function generateMessage() {
 }
 
 type InvalidInputMessage = "Too short" | "Bad letters";
-type InvalidWordMessage = "Not in word list";
-type SuccessMessage = "Pangram!" | "Good!" | "Nice!" | "Awesome!";
+type InvalidWordMessage = "Not in word list" | "Already found";
+export type ErrorMessage = InvalidInputMessage | InvalidWordMessage;
+export type SuccessMessage = "Pangram!" | "Good!" | "Nice!" | "Awesome!";
 
 const appendScore = (message: string, score: number) => `${message} +${score}!`;
 

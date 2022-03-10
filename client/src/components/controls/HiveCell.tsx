@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useRecoilState } from 'recoil';
-import { inputState } from '../recoil/atoms/input';
-import { useLetterValidation } from '../hooks/useLetterValidation';
+import { inputState } from '../../recoil/atoms/input';
+import { useLetterValidation } from '../../hooks/useLetterValidation';
 
 type HiveCellProps = {
     letter: string,

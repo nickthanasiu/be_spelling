@@ -1,4 +1,4 @@
-import data from '../data/letters.json';
+import data from '../../data/letters.json';
 import HiveCell from './HiveCell';
 
 function Hive() {
