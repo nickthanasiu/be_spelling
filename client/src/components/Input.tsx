@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { inputState, LetterType } from '../recoil/atoms/input';
+import { inputWord } from '../recoil/selectors/input';
 import { useKeyPressListener } from '../hooks/useKeyPressListener';
 import { useLetterValidation } from '../hooks/useLetterValidation';
 import wordList from '../data/wordList.json';
@@ -14,13 +15,13 @@ function isCharacterLetter(char: string): boolean {
 
 function Input() {
     const [inputVal, setInputVal] = useRecoilState(inputState);
+    const inputValAsString = useRecoilValue(inputWord);
     const [foundWordsList, setFoundWordsList] = useState([] as string[]);
 
     const clearInput = () => setInputVal([]);
 
     const addToFoundWordsList = (word: string) => {
         setFoundWordsList([...foundWordsList , word]);
-        clearInput();
     };
 
     const showMessage = (message: string) => {
@@ -29,38 +30,17 @@ function Input() {
     };
 
     const submitWord = () => {
-        const { pangrams, words } = wordList;
-        // @TODO :: Use Recoil selector to derive word from state
-        const word = inputVal.map(letter => letter.character)
-            .join('')
-            .toLowerCase();
 
-        // Check if answer is too short
-        if (word.length < 4) {
-            showMessage('Too short');
-            return;
+        function useWordValidator(word: string) {
+            return {
+                isValid: true,
+                message: ''          
+            }
         }
+    
+        const { message } = useWordValidator(inputValAsString);
 
-        // Check if answer contains invalid letters
-        if (inputVal.some(letter => !letter.isValid)) {
-            showMessage('Bad letters');
-            return;
-        }
-
-        // Check if answer is pangram
-        if (pangrams.includes(word)) {
-            showMessage('Pangram!');
-            addToFoundWordsList(word);
-            return;
-        }
-
-        // Check if answer is in word list
-        if (words.includes(word)) {
-            showMessage('Submitting word!!!');
-            addToFoundWordsList(word);
-        } else {
-            showMessage('Not in word list');
-        }
+        showMessage(message);
     };
 
     const handleBackspace = () => {
