@@ -16,8 +16,6 @@ function MessageBox() {
     );
 }
 
-export default MessageBox;
-
 const StyledErrorMessageBox = styled.div`
     background-color: #000;
     color: #fff;
@@ -25,3 +23,5 @@ const StyledErrorMessageBox = styled.div`
     width: fit-content;
     border-radius: 3px;
 `;
+
+export default MessageBox;

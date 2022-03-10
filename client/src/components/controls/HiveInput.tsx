@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { inputState, LetterType } from '../../recoil/atoms/input';
+import { inputState, LetterObj } from '../../recoil/atoms/input';
 import { inputWord } from '../../recoil/selectors/input';
 import { useKeyPressListener } from '../../hooks/useKeyPressListener';
-import { useLetterValidation } from '../../hooks/useLetterValidation';
+import { createLetterObj } from '../../utils/createLetterObj';
 
 import Letter from './Letter';
 import { messageBoxState, MessageBoxState } from '../../recoil/atoms/messageBox';
@@ -72,8 +72,7 @@ function HiveInput() {
             submitWord();
             return;
         } else if (isCharacterLetter(key)) {
-            const newLetterObj = useLetterValidation(key);
-
+            const newLetterObj = createLetterObj(key);
             setInputVal([...inputVal, newLetterObj]);
         }
     };
@@ -87,8 +86,8 @@ function HiveInput() {
     return (
         <StyledInput className='hive-input'>
             <span className="hive-input-content">
-                {inputVal.map((letter: LetterType) => (
-                    <Letter letter={letter} />
+                {inputVal.map((letterObj: LetterObj) => (
+                    <Letter letterObj={letterObj} />
                 ))}
             </span>
         </StyledInput>

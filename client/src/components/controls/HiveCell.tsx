@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react';
+import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { inputState } from '../../recoil/atoms/input';
-import { useLetterValidation } from '../../hooks/useLetterValidation';
+import { createLetterObj } from '../../utils/createLetterObj';
 
 type HiveCellProps = {
     letter: string,
@@ -9,32 +10,81 @@ type HiveCellProps = {
 }
 const HiveCell: FunctionComponent<HiveCellProps> = ({ letter, isCenter }) => {
     const [inputVal, setInputVal] = useRecoilState(inputState);
-
-    const styles = { 
-        backgroundColor: isCenter ? '#f7da21': 'lightgray',
-        height: '100px',
-        width: '100px',
-        margin: '0 5px',
-        fontSize: '25px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        cursor: 'pointer',
-    };
     
-    const onClick = ({ currentTarget: {textContent}}: React.MouseEvent<HTMLDivElement>) => {
-        // @TODO :: This is annoying. Shouldn't be necessary. Figure out workaround
-        if (!textContent) return;
+    const onClick = ({ target }: React.MouseEvent<SVGSVGElement>) => {
+      
+        const polygon = target as HTMLElement;
+        const textElement = polygon.nextElementSibling as SVGTextElement;
+        const text = textElement.textContent as string;
 
-        const newLetterObj = useLetterValidation(textContent);
+        const newLetterObj = createLetterObj(text);
 
         setInputVal([...inputVal, newLetterObj]);
     };
 
-    // @TODO :: Convert this to polygon svg
     return (
-        <div onClick={onClick} style={styles}>{letter}</div>
+        <StyledSvg viewBox='0 0 120 103.92304845413263' onClick={onClick}>
+            <StyledPolygon 
+                points='0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263'
+                stroke='white'
+                strokeWidth='7.5'
+                isCenter={isCenter}
+            />
+            <StyledText x='50%' y='50%' dy='0.35em'>
+                {letter}
+            </StyledText>
+        </StyledSvg>
     );
 }
+
+const StyledSvg = styled.svg<{ onClick: React.MouseEventHandler<SVGSVGElement> }>`
+    position: absolute;
+    top: calc(100% / 3);
+    left: 30%;
+    width: 40%;
+    height: calc(100% / 3);
+
+    &:nth-child(1) {
+        transform: translate(0, 0);
+    }
+
+    &:nth-child(2) {
+        transform: translate(-75%, -50%);
+    }
+
+    &:nth-child(3) {
+        transform: translate(0, -100%);
+    }
+
+    &:nth-child(4) {
+        transform: translate(75%, -50%);
+    }
+
+    &:nth-child(5) {
+        transform: translate(75%, 50%);
+    }
+
+    &:nth-child(6) {
+        transform: translate(0, 100%);
+    }
+
+    &:nth-child(7) {
+        transform: translate(-75%, 50%);
+    }
+`;
+
+const StyledPolygon = styled.polygon<{ isCenter?: boolean }>`
+    cursor: pointer;
+    fill: ${props => props.isCenter ? '#f7da21' : '#e6e6e6'};
+    transition: all 100ms;
+`;
+
+const StyledText = styled.text`
+    font-weight: 700;
+    font-size: 1.875em;
+    text-anchor: middle;
+    text-transform: uppercase;
+    pointer-events: none;
+`;
 
 export default HiveCell;

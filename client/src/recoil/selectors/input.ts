@@ -8,7 +8,7 @@ export const inputWord = selector({
         const _inputState = get(inputState);
 
         // Return string of characters derived from inputState array
-        return _inputState.map(letter => letter.character)
+        return _inputState.map(letterObj => letterObj.letter)
                 .join('')
                 .toLowerCase();
     }   

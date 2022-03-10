@@ -1,25 +1,26 @@
 import styled from 'styled-components';
-import { LetterType } from '../../recoil/atoms/input';
-
+import { LetterObj } from '../../recoil/atoms/input';
 
 interface LetterProps {
-    letter: LetterType
+    letterObj: LetterObj
 }
 
-function Letter({ letter }: LetterProps) {
+function Letter({ letterObj }: LetterProps) {
     return (
-        <StyledLetter letter={letter}>{letter.character}</StyledLetter>
+        <StyledLetter letterObj={letterObj}>
+            {letterObj.letter}
+        </StyledLetter>
     )
 }
-
-export default Letter;
 
 const yellow = '#f7da21';
 const lightGray = '#dcdcdc';
 
 const StyledLetter = styled.span<LetterProps>`
-    color: ${props => props.letter.isCenterLetter ? yellow : props.letter.isValid ? "#000" : lightGray };
+    color: ${props => props.letterObj.isCenterLetter ? yellow : props.letterObj.isValid ? "#000" : lightGray };
     font-size: 2em;
     font-weight: bold;
     text-transform: uppercase;
 `;
+
+export default Letter;
