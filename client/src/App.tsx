@@ -1,12 +1,12 @@
 import { RecoilRoot } from 'recoil';
-import Input from './components/Input';
-import Hive from './components/Hive';
+import Status from './components/status/Status';
+import Controls from './components/controls/Controls';
 
 function App() {
   return (
     <RecoilRoot>
-      <Input />
-      <Hive />
+      <Status />
+      <Controls />
     </RecoilRoot>
   );
 }
