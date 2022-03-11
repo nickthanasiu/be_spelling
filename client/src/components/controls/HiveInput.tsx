@@ -7,7 +7,7 @@ import { useKeyPressListener } from '../../hooks/useKeyPressListener';
 import { createLetterObj } from '../../utils/createLetterObj';
 
 import Letter from './Letter';
-import { messageBoxState, MessageBoxState } from '../../recoil/atoms/messageBox';
+import { messageBoxState, MessageBoxMessage } from '../../recoil/atoms/messageBox';
 
 function isCharacterLetter(char: string): boolean {
     return char.length === 1 && (/[a-zA-Z]/).test(char);
@@ -25,9 +25,29 @@ function HiveInput() {
         setFoundWordsList([...foundWordsList , word]);
     };
 
-    const showMessage = (message: string) => {
-        window.alert(message);
+    const showMessage = (message: MessageBoxMessage) => {
+        showMessageBox({
+            visible: true,
+            message,
+            isError: true
+        });
+        
         clearInput();
+        delay(1000, hideMessage);
+    };
+
+    const delay = (ms: number, cb: () => any) => {
+        setTimeout(() => {
+            cb();
+        }, ms);
+    };
+
+    const hideMessage = () => {
+        showMessageBox({
+            visible: false,
+            message: '',
+            isError: false
+        });
     };
 
     const submitWord = () => {
@@ -41,11 +61,7 @@ function HiveInput() {
     
         const { message } = useWordValidator(inputValAsString);
 
-        showMessageBox({
-            visible: true,
-            message: 'Bad letters',
-            style: 'error'
-        });
+        showMessage('Not in word list');
     };
 
     const handleBackspace = () => {
