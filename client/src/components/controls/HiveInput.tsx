@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { inputState, LetterObj } from '../../recoil/atoms/input';
 import { inputWord } from '../../recoil/selectors/input';
-import { useKeyPressListener } from '../../hooks/useKeyPressListener';
+import { useBackspace, useKeyPressListener } from '../../hooks/customHooks';
 import { createLetterObj } from '../../utils/createLetterObj';
 
 import Letter from './Letter';
@@ -18,6 +18,7 @@ function HiveInput() {
     const inputValAsString = useRecoilValue(inputWord);
     const [foundWordsList, setFoundWordsList] = useState([] as string[]);
     const showMessageBox = useSetRecoilState(messageBoxState);
+    const backspace = useBackspace();
 
     const clearInput = () => setInputVal([]);
 
@@ -64,10 +65,6 @@ function HiveInput() {
         showMessage('Not in word list');
     };
 
-    const handleBackspace = () => {
-        setInputVal([...inputVal.slice(0, -1)]);
-    };
- 
     const keyPressHandler = ({ key }: React.KeyboardEvent<Window>) => {
         /*
             Keys to listen for
@@ -82,7 +79,7 @@ function HiveInput() {
             console.log('@@@ SPACEBAR');
             return;
         } else if (key === 'Backspace') {
-            handleBackspace();
+            backspace();
             return;
         } else if (key === 'Enter') {
             submitWord();

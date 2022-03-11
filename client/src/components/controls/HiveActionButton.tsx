@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { useBackspace } from '../../hooks/customHooks';
 
 interface HiveActionButtonProps {
     actionType: 'SUBMIT' | 'DELETE' | 'SHUFFLE';
@@ -11,9 +12,7 @@ function HiveActionButton({ actionType, children }: HiveActionButtonProps) {
         console.log('@@@ SUBMIT');
     };
 
-    const backspace = () => {
-        console.log('@@@ DELETE');
-    };
+    const backspace = useBackspace();
 
     const shuffle = () => {
         console.log('@@@ SHUFFLE');
