@@ -52,6 +52,7 @@ function HiveInput() {
         });
     };
 
+    /*
     const submitWord = () => {
 
         function useWordValidator(word: string) {
@@ -65,6 +66,7 @@ function HiveInput() {
 
         showMessage('Not in word list');
     };
+    */
 
     const keyPressHandler = ({ key }: React.KeyboardEvent<Window>) => {
         /*
@@ -83,7 +85,7 @@ function HiveInput() {
             backspace();
             return;
         } else if (key === 'Enter') {
-            submitWord();
+            //submitWord();
             return;
         } else if (isCharacterLetter(key)) {
             const newLetterObj = createLetterObj(key);
