@@ -11,6 +11,7 @@ app.use(express.json());
 app.use(express.static("../client/build"));
 
 app.listen(PORT, () => {
+    // tslint:disable-next-line:no-console
     console.log(`Server listening on ${PORT}`);
 });
 
