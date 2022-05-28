@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { inputState, LetterObj } from '../../recoil/atoms/input';
 import { inputWord } from '../../recoil/selectors/input';
-import { useBackspace, useKeyPressListener } from '../../hooks/customHooks';
+import { useBackspace, useKeyPressListener, useShuffleLetters } from '../../hooks/customHooks';
 import { createLetterObj } from '../../utils/createLetterObj';
 
 import Letter from './Letter';
@@ -19,6 +19,7 @@ function HiveInput() {
     const [foundWordsList, setFoundWordsList] = useState([] as string[]);
     const showMessageBox = useSetRecoilState(messageBoxState);
     const backspace = useBackspace();
+    const shuffle = useShuffleLetters();
 
     const clearInput = () => setInputVal([]);
 
@@ -76,7 +77,7 @@ function HiveInput() {
         */
 
         if (key === ' ' || key === 'Spacebar') {
-            console.log('@@@ SPACEBAR');
+            shuffle();
             return;
         } else if (key === 'Backspace') {
             backspace();

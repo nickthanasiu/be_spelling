@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { useBackspace } from '../../hooks/customHooks';
+import { useBackspace, useShuffleLetters } from '../../hooks/customHooks';
 
 interface HiveActionButtonProps {
     actionType: 'SUBMIT' | 'DELETE' | 'SHUFFLE';
@@ -13,10 +13,7 @@ function HiveActionButton({ actionType, children }: HiveActionButtonProps) {
     };
 
     const backspace = useBackspace();
-
-    const shuffle = () => {
-        console.log('@@@ SHUFFLE');
-    };
+    const shuffle = useShuffleLetters();
 
     const onClick: React.MouseEventHandler<HTMLElement> = () => {
         const clickAction = actionType === 'SUBMIT' ? submitWord

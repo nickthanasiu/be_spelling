@@ -1,9 +1,12 @@
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import data from '../../data/letters.json';
 import HiveCell from './HiveCell';
+import { lettersState } from '../../recoil/atoms/letters';
 
 function Hive() {
-    const { centerLetter, letters } = data;
+    const { centerLetter } = data;
+    const letters = useRecoilValue(lettersState);
 
     return (
         <StyledHiveWrapper>
