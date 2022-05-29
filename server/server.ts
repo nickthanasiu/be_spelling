@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 // Serve the React static files after build
-app.use(express.static("../client/build"));
+app.use(express.static("../dist/client/build"));
 
 app.listen(PORT, () => {
     // tslint:disable-next-line:no-console
