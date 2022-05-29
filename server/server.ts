@@ -8,8 +8,7 @@ const app = express();
 app.use(express.json());
 
 // Serve the React static files after build
-app.use(express.static(path.resolve(__dirname, 'client', 'public', 'static')));
-//app.use('/static', express.static(path.join(__dirname, 'client', 'public')))
+app.use(express.static(path.resolve(__dirname, "public")));
 
 app.listen(PORT, () => {
     // tslint:disable-next-line:no-console
@@ -22,5 +21,5 @@ app.get("/api/hello", (req, res) => {
 
 // All other unmatched requests will return the React app
 app.get("/", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "public", "index.html"));
+    res.sendFile(path.resolve(__dirname, "public", "index.html"));
 });
