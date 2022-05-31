@@ -1,11 +1,17 @@
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { inputState } from "../recoil/atoms/input";
 import { messageBoxAtom } from '../recoil/atoms/messageBox';
+import { inputAsString } from '../recoil/selectors/input';
 import { validateInput } from '../utils/validateInput';
+import { useWordValidator } from './useWordValidator';
+
 
 export const useSubmitWord = () => {
+    console.log('@@@ useSubmitWord');
     const [inputVal, setInputVal] = useRecoilState(inputState);
+    const inputValAsString = useRecoilValue(inputAsString);
     const setMessageBoxState = useSetRecoilState(messageBoxAtom);
+    const validateWord = useWordValidator();
 
     const delay = (ms: number, cb: () => any) => {
         setTimeout(() => {
@@ -34,15 +40,21 @@ export const useSubmitWord = () => {
     };
 
     const submit = () => {
-        const { isValid, errorMessage } = validateInput(inputVal);
+        const inputValidation = validateInput(inputVal);
 
-        if (!isValid) {
-            showErrorMessage(errorMessage);
-            delay(1000, hideMessageBox);
+        if (!inputValidation.isValid) {
+            showErrorMessage(inputValidation.errorMessage);
             return;
         }
 
-        console.log('@@@ CHECK IF WORD VALID');
+        const wordValidation = validateWord(inputValAsString);
+
+        if (!wordValidation.isValid) {
+            showErrorMessage(wordValidation.errorMessage);
+            return;
+        }
+
+        console.log('@@@ GOOD JOB! Add word to found words');
     };
 
     return submit;

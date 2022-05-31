@@ -1,6 +1,6 @@
 import { LetterObj } from "../recoil/atoms/input";
 
-type InvalidInputMessage = "Too short" | "Bad letters";
+export type InvalidInputMessage = "Too short" | "Bad letters";
 
 interface IValidateInput {
     isValid: boolean;
