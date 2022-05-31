@@ -14,7 +14,7 @@ function Hive({ puzzle }: IHiveProps) {
             <StyledHive className="hive">
                 <HiveCell letter={centerLetter} isCenter />
                 {letters.map((letter: any) => (
-                    <HiveCell key={letters.indexOf(letter)} letter={letter} />
+                    <HiveCell letter={letter} />
                 ))}
             </StyledHive>
         </StyledHiveWrapper>

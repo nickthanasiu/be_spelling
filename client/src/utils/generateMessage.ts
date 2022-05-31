@@ -20,8 +20,9 @@ export function generateMessage() {
     //return isInputInvalid ? getErrorMessage() : isWordInValid ? getInvalidWordMessage() : getSuccessMessage();
 }
 
-type InvalidInputMessage = "Too short" | "Bad letters";
+
 type InvalidWordMessage = "Not in word list" | "Already found";
+export type InvalidInputMessage = "Too short" | "Bad letters";
 export type ErrorMessage = InvalidInputMessage | InvalidWordMessage;
 export type SuccessMessage = "Pangram!" | "Good!" | "Nice!" | "Awesome!";
 
@@ -40,15 +41,7 @@ export function getMessage(word: string, score?: number): InvalidInputMessage | 
     return validWordMessage(word.length);
 }*/
 
-function useValidateInput(input: string) {
-    const inputVal = useRecoilValue(inputState);
-    const hasEnoughLetters = input.length >= 4;
-    const allValidLetters = inputVal.every(letter => letter.isValid);
 
-    return {
-        isInputValid: hasEnoughLetters && allValidLetters,
-    };
-}
 /**
  * 
  * POSSIBLE OUTCOMES

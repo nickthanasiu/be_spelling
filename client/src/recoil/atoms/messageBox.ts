@@ -1,19 +1,17 @@
 import { atom } from 'recoil';
 import { ErrorMessage, SuccessMessage } from '../../utils/generateMessage';
 
-export type MessageBoxMessage = ErrorMessage | SuccessMessage | '';
+export type TMessageBoxMessage = ErrorMessage | SuccessMessage | '';
 
-export interface MessageBoxState {
+export interface IMessageBoxAtom {
     visible: boolean;
-    message: MessageBoxMessage;
-    isError: boolean;
+    message: TMessageBoxMessage;
 }
 
-export const messageBoxState = atom({
-    key: 'messageBoxState',
+export const messageBoxAtom = atom<IMessageBoxAtom>({
+    key: 'messageBoxAtom',
     default: {
         visible: false,
-        message: '' as MessageBoxMessage,
-        isError: false
-    } as MessageBoxState
+        message: ''
+    }
 });

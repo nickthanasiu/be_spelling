@@ -2,8 +2,8 @@ import { selector } from "recoil";
 import { inputState } from '../atoms/input';
 
 // @TODO :: Re-name everything here. Getting confusing
-export const inputWord = selector({
-    key: 'inputWord',
+export const inputAsString = selector({
+    key: 'inputAsString',
     get: ({get}) => {
         const _inputState = get(inputState);
 
