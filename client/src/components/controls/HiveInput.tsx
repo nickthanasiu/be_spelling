@@ -79,6 +79,7 @@ const StyledInput = styled.div`
     width: 290px;
     height: 40px;
     border: none;
+    border: 1px solid gray;
     display: flex;
     justify-content: center;
 `;
