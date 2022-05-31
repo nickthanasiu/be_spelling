@@ -14,10 +14,6 @@ import Letter from './Letter';
 function HiveInput() {
     const [inputVal, setInputVal] = useRecoilState(inputState);
 
-
-    // @TODO :: Should be recoil atom
-    const [foundWordsList, setFoundWordsList] = useState([] as string[]);
-
     const createLetterObj = useCreateLetterObj();
     const backspace = useBackspace();
     const shuffle = useShuffleLetters();
@@ -25,9 +21,7 @@ function HiveInput() {
 
     const clearInput = () => setInputVal([]);
 
-    const addToFoundWordsList = (word: string) => {
-        setFoundWordsList([...foundWordsList , word]);
-    };
+    
 
     const keyPressHandler = ({ key }: React.KeyboardEvent<Window>) => {
         /*

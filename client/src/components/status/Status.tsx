@@ -1,5 +1,11 @@
+import FoundWordsList from './FoundWordsList';
+
 function Status() {
-    return <></>;
+    return (
+        <>
+            <FoundWordsList />
+        </>
+    );
 }
 
 export default Status;

@@ -1,4 +1,5 @@
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
+import { foundWordsAtom } from '../recoil/atoms/foundWords';
 import { inputState } from "../recoil/atoms/input";
 import { messageBoxAtom } from '../recoil/atoms/messageBox';
 import { inputAsString } from '../recoil/selectors/input';
@@ -10,8 +11,9 @@ export type SuccessMessage = "Pangram!" | "Good!" | "Nice!" | "Awesome!";
 
 export const useSubmitWord = () => {
     console.log('@@@ useSubmitWord');
-    const [inputVal, setInputVal] = useRecoilState(inputState);
-    const inputValAsString = useRecoilValue(inputAsString);
+    const inputVal = useRecoilValue(inputState);
+    const newWord = useRecoilValue(inputAsString);
+    const [foundWordsList, setFoundWordsList] = useRecoilState(foundWordsAtom);
     const setMessageBoxState = useSetRecoilState(messageBoxAtom);
     const validateWord = useWordValidator();
 
@@ -60,7 +62,7 @@ export const useSubmitWord = () => {
             return;
         }
 
-        const wordValidation = validateWord(inputValAsString);
+        const wordValidation = validateWord(newWord);
 
         if (!wordValidation.isValid) {
             showErrorMessage(wordValidation.errorMessage);
@@ -68,10 +70,10 @@ export const useSubmitWord = () => {
         }
 
         // If input is valid and word is valid, we can add the word to foundWordsList
-        
+        setFoundWordsList([...foundWordsList, newWord]);
 
         // Generate message
-        const successMessage = getSuccessMessage(inputValAsString.length, wordValidation.isPangram);
+        const successMessage = getSuccessMessage(newWord.length, wordValidation.isPangram);
         showSuccessMessage(successMessage);
 
         // Calculate store
