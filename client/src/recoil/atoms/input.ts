@@ -6,7 +6,7 @@ export interface LetterObj {
     isCenterLetter: boolean;
 }
 
-export const inputState = atom({
+export const inputState = atom<LetterObj[]>({
     key: 'inputState',
-    default: [] as LetterObj[]
-})
+    default: [] 
+});

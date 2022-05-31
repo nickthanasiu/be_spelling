@@ -8,7 +8,7 @@ interface IHiveProps {
 
 function Hive({ puzzle }: IHiveProps) {
     const { centerLetter, letters } = puzzle;
-
+    
     return (
         <StyledHiveWrapper>
             <StyledHive className="hive">
