@@ -1,19 +1,20 @@
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import data from '../../data/letters.json';
+import { PuzzleState } from '../../recoil/atoms/puzzle';
 import HiveCell from './HiveCell';
-import { lettersState } from '../../recoil/atoms/letters';
 
-function Hive() {
-    const { centerLetter } = data;
-    const letters = useRecoilValue(lettersState);
+interface IHiveProps {
+    puzzle: PuzzleState;
+}
 
+function Hive({ puzzle }: IHiveProps) {
+    const { centerLetter, letters } = puzzle;
+    
     return (
         <StyledHiveWrapper>
             <StyledHive className="hive">
                 <HiveCell letter={centerLetter} isCenter />
-                {letters.map((letter) => (
-                    <HiveCell letter={letter} />
+                {letters.map((letter: any) => (
+                    <HiveCell key={letters.indexOf(letter)} letter={letter} />
                 ))}
             </StyledHive>
         </StyledHiveWrapper>

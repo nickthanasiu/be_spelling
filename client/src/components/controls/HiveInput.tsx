@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { inputState, LetterObj } from '../../recoil/atoms/input';
 import { inputWord } from '../../recoil/selectors/input';
-import { useBackspace, useKeyPressListener, useShuffleLetters } from '../../hooks/customHooks';
-import { createLetterObj } from '../../utils/createLetterObj';
+import { useCreateLetterObj } from '../../hooks/useCreateLetterObj';
+import { useBackspace } from '../../hooks/useBackspace';
+import { useShuffleLetters } from '../../hooks/useShuffleLetters';
+import { useKeyPressListener } from '../../hooks/useKeyPressListener';
 
 import Letter from './Letter';
 import { messageBoxState, MessageBoxMessage } from '../../recoil/atoms/messageBox';
@@ -15,9 +17,11 @@ function isCharacterLetter(char: string): boolean {
 
 function HiveInput() {
     const [inputVal, setInputVal] = useRecoilState(inputState);
+    console.log('@@@ inputVal :: ', inputVal);
     const inputValAsString = useRecoilValue(inputWord);
     const [foundWordsList, setFoundWordsList] = useState([] as string[]);
     const showMessageBox = useSetRecoilState(messageBoxState);
+    const createLetterObj = useCreateLetterObj();
     const backspace = useBackspace();
     const shuffle = useShuffleLetters();
 

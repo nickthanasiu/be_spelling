@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { inputState } from '../../recoil/atoms/input';
-import { createLetterObj } from '../../utils/createLetterObj';
+import { useCreateLetterObj } from '../../hooks/useCreateLetterObj';
 
 type HiveCellProps = {
     letter: string,
@@ -10,6 +10,8 @@ type HiveCellProps = {
 }
 const HiveCell: FunctionComponent<HiveCellProps> = ({ letter, isCenter }) => {
     const [inputVal, setInputVal] = useRecoilState(inputState);
+
+    const createLetterObj = useCreateLetterObj();
     
     const onClick = ({ target }: React.MouseEvent<SVGSVGElement>) => {
       
