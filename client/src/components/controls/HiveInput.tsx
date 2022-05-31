@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { inputState, LetterObj } from '../../recoil/atoms/input';
-import { inputWord } from '../../recoil/selectors/input';
+import { inputAsString } from '../../recoil/selectors/input';
 import { useCreateLetterObj } from '../../hooks/useCreateLetterObj';
 import { useBackspace } from '../../hooks/useBackspace';
 import { useShuffleLetters } from '../../hooks/useShuffleLetters';
 import { useKeyPressListener } from '../../hooks/useKeyPressListener';
+import { useSubmitWord } from '../../hooks/useSubmitWord';
 
 import Letter from './Letter';
-import { messageBoxState, MessageBoxMessage } from '../../recoil/atoms/messageBox';
+import { messageBoxAtom, TMessageBoxMessage } from '../../recoil/atoms/messageBox';
 
 function isCharacterLetter(char: string): boolean {
     return char.length === 1 && (/[a-zA-Z]/).test(char);
@@ -17,13 +18,13 @@ function isCharacterLetter(char: string): boolean {
 
 function HiveInput() {
     const [inputVal, setInputVal] = useRecoilState(inputState);
-    console.log('@@@ inputVal :: ', inputVal);
-    const inputValAsString = useRecoilValue(inputWord);
+    const inputString = useRecoilValue(inputAsString);
     const [foundWordsList, setFoundWordsList] = useState([] as string[]);
-    const showMessageBox = useSetRecoilState(messageBoxState);
+    const showMessageBox = useSetRecoilState(messageBoxAtom);
     const createLetterObj = useCreateLetterObj();
     const backspace = useBackspace();
     const shuffle = useShuffleLetters();
+    const submit = useSubmitWord();
 
     const clearInput = () => setInputVal([]);
 
@@ -31,7 +32,7 @@ function HiveInput() {
         setFoundWordsList([...foundWordsList , word]);
     };
 
-    const showMessage = (message: MessageBoxMessage) => {
+    const showMessage = (message: TMessageBoxMessage) => {
         showMessageBox({
             visible: true,
             message,
@@ -57,7 +58,7 @@ function HiveInput() {
     };
 
     /*
-    const submitWord = () => {
+    const _submitWord = () => {
 
         function useWordValidator(word: string) {
             return {
@@ -66,20 +67,20 @@ function HiveInput() {
             }
         }
     
-        const { message } = useWordValidator(inputValAsString);
+        //const { message } = useWordValidator(inputValAsString);
 
-        showMessage('Not in word list');
+        //showMessage('Not in word list');
     };
-    */
 
+    */
     const keyPressHandler = ({ key }: React.KeyboardEvent<Window>) => {
         /*
             Keys to listen for
 
-            * Letters
-            * Enter (Submit word)
-            * Backspace
             * Spacebar (shuffle letters)
+            * Backspace
+            * Enter (Submit word)
+            * Letters
         */
 
         if (key === ' ' || key === 'Spacebar') {
@@ -89,7 +90,8 @@ function HiveInput() {
             backspace();
             return;
         } else if (key === 'Enter') {
-            //submitWord();
+            clearInput();
+            submit();
             return;
         } else if (isCharacterLetter(key)) {
             const newLetterObj = createLetterObj(key);
@@ -118,6 +120,8 @@ const StyledInput = styled.div`
     width: 290px;
     height: 40px;
     border: none;
+    display: flex;
+    justify-content: center;
 `;
 
 export default HiveInput;

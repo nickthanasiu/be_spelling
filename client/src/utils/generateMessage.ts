@@ -40,15 +40,7 @@ export function getMessage(word: string, score?: number): InvalidInputMessage | 
     return validWordMessage(word.length);
 }*/
 
-function useValidateInput(input: string) {
-    const inputVal = useRecoilValue(inputState);
-    const hasEnoughLetters = input.length >= 4;
-    const allValidLetters = inputVal.every(letter => letter.isValid);
 
-    return {
-        isInputValid: hasEnoughLetters && allValidLetters,
-    };
-}
 /**
  * 
  * POSSIBLE OUTCOMES

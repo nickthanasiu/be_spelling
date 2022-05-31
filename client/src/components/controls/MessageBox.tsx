@@ -1,9 +1,9 @@
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { messageBoxState } from '../../recoil/atoms/messageBox';
+import { messageBoxAtom } from '../../recoil/atoms/messageBox';
 
 function MessageBox() {
-    const { visible, message, isError } = useRecoilValue(messageBoxState);
+    const { visible, message, isError } = useRecoilValue(messageBoxAtom);
 
     return (
         <>
