@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { messageBoxAtom } from '../../recoil/atoms/messageBox';
 
 function MessageBox() {
-    const { visible, message, isError } = useRecoilValue(messageBoxAtom);
+    const { visible, message } = useRecoilValue(messageBoxAtom);
 
     return (
         <>

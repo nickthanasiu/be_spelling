@@ -6,14 +6,12 @@ export type TMessageBoxMessage = ErrorMessage | SuccessMessage | '';
 export interface IMessageBoxAtom {
     visible: boolean;
     message: TMessageBoxMessage;
-    isError: boolean;
 }
 
 export const messageBoxAtom = atom<IMessageBoxAtom>({
     key: 'messageBoxAtom',
     default: {
         visible: false,
-        message: '',
-        isError: false
+        message: ''
     }
 });

@@ -5,22 +5,45 @@ import { validateInput } from '../utils/validateInput';
 
 export const useSubmitWord = () => {
     const [inputVal, setInputVal] = useRecoilState(inputState);
-    const showMessageBox = useSetRecoilState(messageBoxAtom);
+    const setMessageBoxState = useSetRecoilState(messageBoxAtom);
 
-    function submit() {
-        const { isValid, error } = validateInput(inputVal);
+    const delay = (ms: number, cb: () => any) => {
+        setTimeout(() => {
+            cb();
+        }, ms);
+    };
+
+    const hideMessageBox = () => {
+        setMessageBoxState({
+            visible: false,
+            message: ''
+        });
+    };
+
+    const showMessageBox = (message: any) => {
+        setMessageBoxState({
+            visible: true,
+            message
+        });
+
+        delay(1000, hideMessageBox);
+    };
+
+    const showErrorMessage = (errorMessage: any) => {
+        showMessageBox(errorMessage);
+    };
+
+    const submit = () => {
+        const { isValid, errorMessage } = validateInput(inputVal);
 
         if (!isValid) {
-            showMessageBox({
-                visible: true,
-                message: error,
-                isError: true
-            });
+            showErrorMessage(errorMessage);
+            delay(1000, hideMessageBox);
             return;
         }
 
         console.log('@@@ CHECK IF WORD VALID');
-    }
+    };
 
     return submit;
 };

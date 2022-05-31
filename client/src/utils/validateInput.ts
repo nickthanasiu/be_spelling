@@ -4,7 +4,7 @@ type InvalidInputMessage = "Too short" | "Bad letters";
 
 interface IValidateInput {
     isValid: boolean;
-    error: InvalidInputMessage | "";
+    errorMessage: InvalidInputMessage | "";
 }
 
 export const validateInput = (input: LetterObj[]): IValidateInput => {
@@ -13,6 +13,6 @@ export const validateInput = (input: LetterObj[]): IValidateInput => {
 
     return {
         isValid: hasEnoughLetters && allValidLetters,
-        error: !hasEnoughLetters ? "Too short" : !allValidLetters ? "Bad letters" : "",
+        errorMessage: !hasEnoughLetters ? "Too short" : !allValidLetters ? "Bad letters" : "",
     };
 };
