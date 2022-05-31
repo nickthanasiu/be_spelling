@@ -5,6 +5,8 @@ import { inputAsString } from '../recoil/selectors/input';
 import { validateInput } from '../utils/validateInput';
 import { useWordValidator } from './useWordValidator';
 
+export type SuccessMessage = "Pangram!" | "Good!" | "Nice!" | "Awesome!";
+
 
 export const useSubmitWord = () => {
     console.log('@@@ useSubmitWord');
@@ -39,6 +41,17 @@ export const useSubmitWord = () => {
         showMessageBox(errorMessage);
     };
 
+    const showSuccessMessage = (successMessage: any) => {
+        showMessageBox(successMessage);
+    };
+
+    const getSuccessMessage = (wordLength: number, isPangram?: boolean): SuccessMessage => {
+        return isPangram ? 'Pangram!' // Pangram
+            : wordLength > 6 ? 'Awesome!' // 7+ letter word
+            : wordLength > 4 ? 'Nice!' // 5 or 6 letter word
+            : 'Good!'; // 4 letter word
+    };
+
     const submit = () => {
         const inputValidation = validateInput(inputVal);
 
@@ -54,7 +67,14 @@ export const useSubmitWord = () => {
             return;
         }
 
-        console.log('@@@ GOOD JOB! Add word to found words');
+        // If input is valid and word is valid, we can add the word to foundWordsList
+        
+
+        // Generate message
+        const successMessage = getSuccessMessage(inputValAsString.length, wordValidation.isPangram);
+        showSuccessMessage(successMessage);
+
+        // Calculate store
     };
 
     return submit;
