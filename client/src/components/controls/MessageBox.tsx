@@ -22,6 +22,15 @@ const StyledErrorMessageBox = styled.div`
     height: 30px;
     width: fit-content;
     border-radius: 3px;
+
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translate(-50%, 0);
 `;
 
 export default MessageBox;
