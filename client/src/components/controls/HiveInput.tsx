@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
+import { useRecoilState } from 'recoil';
 import { inputState, LetterObj } from '../../recoil/atoms/input';
 import { useCreateLetterObj } from '../../hooks/useCreateLetterObj';
 import { useBackspace } from '../../hooks/useBackspace';
@@ -13,6 +13,7 @@ import Letter from './Letter';
 
 function HiveInput() {
     const [inputVal, setInputVal] = useRecoilState(inputState);
+    const hasContent = inputVal.length > 0;
 
     const createLetterObj = useCreateLetterObj();
     const backspace = useBackspace();
@@ -20,8 +21,6 @@ function HiveInput() {
     const submit = useSubmitWord();
 
     const clearInput = () => setInputVal([]);
-
-    
 
     const keyPressHandler = ({ key }: React.KeyboardEvent<Window>) => {
         /*
@@ -54,7 +53,6 @@ function HiveInput() {
             const newLetterObj = createLetterObj(key);
 
             setInputVal([...inputVal, newLetterObj]);
-
         }
     };
 
@@ -66,11 +64,11 @@ function HiveInput() {
 
     return (
         <StyledInput className='hive-input'>
-            <span className="hive-input-content">
+            <InputContent className="hive-input-content" hasContent={hasContent}>
                 {inputVal.map((letterObj: LetterObj) => (
                     <Letter letterObj={letterObj} />
                 ))}
-            </span>
+            </InputContent>
         </StyledInput>
     );
 }
@@ -79,9 +77,34 @@ const StyledInput = styled.div`
     width: 290px;
     height: 40px;
     border: none;
-    border: 1px solid gray;
     display: flex;
     justify-content: center;
+`;
+
+const cursorBlinkAnimation = keyframes`
+    0% { opacity: 0 }
+`;
+
+const InputContent = styled.span<{ hasContent: boolean }>`
+    height: 100%;
+    display: inline-block;
+    position: relative;
+    transform: translateY(0%);
+    min-width: 1px;
+
+    &:after {
+        right: ${props => props.hasContent ? '-4px' : '0'};
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        width: 2px;
+        height: 100%;
+        background: #f7da21;
+        animation-name: ${cursorBlinkAnimation};
+        animation-duration: 1000ms;
+        animation-iteration-count: infinite;
+    }
 `;
 
 export default HiveInput;
