@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import FoundWordsList from './FoundWordsList';
+import WordList from './WordList';
 
 function Status() {
     return (
         <StyledStatus>
-            <FoundWordsList />
+            <WordList />
         </StyledStatus>
     );
 }
