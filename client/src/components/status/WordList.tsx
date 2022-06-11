@@ -120,6 +120,4 @@ const WordListDrawer = styled.div<{ expanded: boolean }>`
     }
 `;
 
-const WordListWindow = styled.div``;
-
 export default WordList;
