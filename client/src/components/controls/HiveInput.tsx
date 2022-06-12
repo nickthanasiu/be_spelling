@@ -1,7 +1,7 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import React, { useState } from 'react';
+import styled, { css, keyframes } from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { inputState, LetterObj } from '../../recoil/atoms/input';
+import { inputState, inputTouchedAtom, LetterObj } from '../../recoil/atoms/input';
 import { useCreateLetterObj } from '../../hooks/useCreateLetterObj';
 import { useBackspace } from '../../hooks/useBackspace';
 import { useShuffleLetters } from '../../hooks/useShuffleLetters';
@@ -13,6 +13,7 @@ import Letter from './Letter';
 
 function HiveInput() {
     const [inputVal, setInputVal] = useRecoilState(inputState);
+    const [inputTouched, setInputTouched]=  useRecoilState(inputTouchedAtom);
     const hasContent = inputVal.length > 0;
 
     const createLetterObj = useCreateLetterObj();
@@ -53,6 +54,10 @@ function HiveInput() {
             const newLetterObj = createLetterObj(key);
 
             setInputVal([...inputVal, newLetterObj]);
+
+            if (!inputTouched) {
+                setInputTouched(true);
+            }
         }
     };
 
@@ -64,7 +69,9 @@ function HiveInput() {
 
     return (
         <StyledInput className='hive-input'>
+            
             <InputContent className="hive-input-content" hasContent={hasContent}>
+                {!inputTouched && <InputPlaceholder>Type or click</InputPlaceholder>}
                 {inputVal.map((letterObj: LetterObj) => (
                     <Letter letterObj={letterObj} />
                 ))}
@@ -93,7 +100,6 @@ const InputContent = styled.span<{ hasContent: boolean }>`
     min-width: 1px;
 
     &:after {
-        right: ${props => props.hasContent ? '-4px' : '0'};
         content: '';
         display: block;
         position: absolute;
@@ -104,7 +110,17 @@ const InputContent = styled.span<{ hasContent: boolean }>`
         animation-name: ${cursorBlinkAnimation};
         animation-duration: 1000ms;
         animation-iteration-count: infinite;
+
+        ${(props) => props.hasContent && css`
+            right: -4px;
+        `};
     }
+`;
+
+const InputPlaceholder = styled.span`
+    color: lightgrey;
+    font-size: 32px;
+    font-weight: 500;
 `;
 
 export default HiveInput;
