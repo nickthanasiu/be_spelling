@@ -54,6 +54,9 @@ export const useSubmitWord = () => {
     };
 
     const submit = () => {
+        // Do not attempt to submit input if empty
+        if (!inputVal.length) return;
+
         const inputValidation = validateInput(inputVal);
 
         if (!inputValidation.isValid) {
@@ -75,7 +78,7 @@ export const useSubmitWord = () => {
         const successMessage = getSuccessMessage(newWord.length, wordValidation.isPangram);
         showSuccessMessage(successMessage);
 
-        // Calculate store
+        // Calculate score
     };
 
     return submit;
