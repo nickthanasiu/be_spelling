@@ -1,10 +1,10 @@
 import { RecoilRoot } from 'recoil';
-import SpellingBeeWrapper from './components/SpellingBee';
+import SpellingBeeContainer from './components/SpellingBeeContainer';
 
 function App() {
   return (
     <RecoilRoot>
-      <SpellingBeeWrapper />
+      <SpellingBeeContainer />
     </RecoilRoot>
   );
 }

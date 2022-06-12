@@ -2,16 +2,16 @@ import styled from 'styled-components';
 import Status from './status/Status';
 import Controls from './controls/Controls';
 
-function SpellingBeeWrapper() {
+function SpellingBeeContainer() {
     return (
-        <StyledSpellingBeeWrapper>
+        <StyledSpellingBeeContainer>
             <Status />
             <Controls />
-        </StyledSpellingBeeWrapper>
+        </StyledSpellingBeeContainer>
     );
 }
 
-const StyledSpellingBeeWrapper = styled.div`
+const StyledSpellingBeeContainer = styled.div`
     flex-grow: 1;
     width: 100%;
     height: 100%;
@@ -20,4 +20,4 @@ const StyledSpellingBeeWrapper = styled.div`
     align-content: stretch;
 `;
 
-export default SpellingBeeWrapper;
+export default SpellingBeeContainer;
