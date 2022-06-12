@@ -25,6 +25,7 @@ function Controls() {
 }
 
 const StyledControlsWrapper = styled.div`
+    margin-top: 50px;
     padding-top: 10px;
 
     flex: 1;

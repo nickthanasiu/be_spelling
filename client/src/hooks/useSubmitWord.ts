@@ -10,7 +10,6 @@ export type SuccessMessage = "Pangram!" | "Good!" | "Nice!" | "Awesome!";
 
 
 export const useSubmitWord = () => {
-    console.log('@@@ useSubmitWord');
     const inputVal = useRecoilValue(inputState);
     const newWord = useRecoilValue(inputAsString);
     const [foundWordsList, setFoundWordsList] = useRecoilState(foundWordsAtom);
