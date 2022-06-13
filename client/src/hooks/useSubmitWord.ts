@@ -2,18 +2,21 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { foundWordsAtom } from '../recoil/atoms/foundWords';
 import { inputState } from "../recoil/atoms/input";
 import { messageBoxAtom } from '../recoil/atoms/messageBox';
+import { prevWordScoreAtom } from '../recoil/atoms/score';
 import { inputAsString } from '../recoil/selectors/input';
 import { validateInput } from '../utils/validateInput';
 import { useWordValidator } from './useWordValidator';
 
 export type SuccessMessage = "Pangram!" | "Good!" | "Nice!" | "Awesome!";
 
+// @TODO :: Refactor
 export const useSubmitWord = () => {
     const inputVal = useRecoilValue(inputState);
     const newWord = useRecoilValue(inputAsString);
     const [foundWordsList, setFoundWordsList] = useRecoilState(foundWordsAtom);
     const setMessageBoxState = useSetRecoilState(messageBoxAtom);
     const validateWord = useWordValidator();
+    const setPrevWordScore = useSetRecoilState(prevWordScoreAtom);
 
     const delay = (ms: number, cb: () => any) => {
         setTimeout(() => {
@@ -54,6 +57,18 @@ export const useSubmitWord = () => {
             : 'Good!'; // 4 letter word
     };
 
+    const calculatePrevWordsScore = (newWord: string, isPangram: boolean): number => {
+        if (isPangram) {
+            return newWord.length + 7;
+        }
+
+        if (newWord.length > 4) {
+            return newWord.length;
+        }
+
+        return 1;
+    };
+
     const submit = () => {
         // Do not attempt to submit input if empty
         if (!inputVal.length) return;
@@ -75,11 +90,13 @@ export const useSubmitWord = () => {
         // If input is valid and word is valid, we can add the word to foundWordsList
         setFoundWordsList([...foundWordsList, newWord]);
 
+        // Calculate score and update prevWordScore state
+        const prevWordScore = calculatePrevWordsScore(newWord, wordValidation.isPangram);
+        setPrevWordScore(prevWordScore);
+
         // Generate message
         const successMessage = getSuccessMessage(newWord.length, wordValidation.isPangram);
         showSuccessMessage(successMessage);
-
-        // Calculate score
     };
 
     return submit;
