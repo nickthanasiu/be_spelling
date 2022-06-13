@@ -8,7 +8,6 @@ import { useWordValidator } from './useWordValidator';
 
 export type SuccessMessage = "Pangram!" | "Good!" | "Nice!" | "Awesome!";
 
-
 export const useSubmitWord = () => {
     const inputVal = useRecoilValue(inputState);
     const newWord = useRecoilValue(inputAsString);
@@ -25,25 +24,27 @@ export const useSubmitWord = () => {
     const hideMessageBox = () => {
         setMessageBoxState({
             visible: false,
-            message: ''
+            message: '',
+            isError: false
         });
     };
 
-    const showMessageBox = (message: any) => {
+    const showMessageBox = (message: any, isError: boolean) => {
         setMessageBoxState({
             visible: true,
-            message
+            message,
+            isError
         });
 
         delay(1000, hideMessageBox);
     };
 
     const showErrorMessage = (errorMessage: any) => {
-        showMessageBox(errorMessage);
+        showMessageBox(errorMessage, true);
     };
 
     const showSuccessMessage = (successMessage: any) => {
-        showMessageBox(successMessage);
+        showMessageBox(successMessage, false);
     };
 
     const getSuccessMessage = (wordLength: number, isPangram?: boolean): SuccessMessage => {
