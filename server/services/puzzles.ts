@@ -6,7 +6,7 @@ const getDefaultPuzzle = () => {
     const { pangrams, words } = puzzleData;
 
     // Calculate wordCount and add to puzzleData object
-    puzzleData['wordCount'] = pangrams.length + words.length;
+    puzzleData.wordCount = pangrams.length + words.length;
 
     // Pangram is worth its length plus 7
     const calculatePangramScore = (pangram: string): number =>
@@ -22,7 +22,7 @@ const getDefaultPuzzle = () => {
     words.forEach(word => maxScore += calculateWordScore(word));
     pangrams.forEach(pangram => maxScore += calculatePangramScore(pangram));
 
-    puzzleData['naxScore'] = maxScore;
+    puzzleData.maxScore = maxScore;
 
     const percentToScore = (percentage: number) =>
         Math.floor(maxScore * (percentage / 100));
@@ -40,7 +40,7 @@ const getDefaultPuzzle = () => {
         queenBee: maxScore
     };
 
-    puzzleData['rankings'] = rankings;
+    puzzleData.rankings = rankings;
 
     return puzzleData;
 };
