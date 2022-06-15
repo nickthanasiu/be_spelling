@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { scoreAtom } from '../../recoil/atoms/score';
+import { totalScoreAtom } from '../../recoil/atoms/score';
 
 function ProgressBar() {
-    const userScore = useRecoilValue(scoreAtom);
+    const userScore = useRecoilValue(totalScoreAtom);
 
     return (
         <StyledProgressBar>
@@ -15,5 +15,7 @@ function ProgressBar() {
 export default ProgressBar;
 
 const StyledProgressBar = styled.div`
-    border: 1px solid black;
+    background-color: #f7da21;
+    border-radius: 50%;
+    padding: 5px;
 `;

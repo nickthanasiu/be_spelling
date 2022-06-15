@@ -2,7 +2,7 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { foundWordsAtom } from '../recoil/atoms/foundWords';
 import { inputState } from "../recoil/atoms/input";
 import { messageBoxAtom } from '../recoil/atoms/messageBox';
-import { prevWordScoreAtom } from '../recoil/atoms/score';
+import { prevWordScoreAtom, totalScoreAtom } from '../recoil/atoms/score';
 import { inputAsString } from '../recoil/selectors/input';
 import { validateInput } from '../utils/validateInput';
 import { useWordValidator } from './useWordValidator';
@@ -17,6 +17,7 @@ export const useSubmitWord = () => {
     const setMessageBoxState = useSetRecoilState(messageBoxAtom);
     const validateWord = useWordValidator();
     const setPrevWordScore = useSetRecoilState(prevWordScoreAtom);
+    const [totalScore, setTotalScore] = useRecoilState(totalScoreAtom);
 
     const delay = (ms: number, cb: () => any) => {
         setTimeout(() => {
@@ -93,6 +94,9 @@ export const useSubmitWord = () => {
         // Calculate score and update prevWordScore state
         const prevWordScore = calculatePrevWordsScore(newWord, wordValidation.isPangram);
         setPrevWordScore(prevWordScore);
+
+        // Use prevWordScore to update totalScore
+        setTotalScore(totalScore + prevWordScore);
 
         // Generate message
         const successMessage = getSuccessMessage(newWord.length, wordValidation.isPangram);
