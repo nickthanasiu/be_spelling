@@ -3,21 +3,19 @@ import MessageBox from "./MessageBox";
 import HiveInput from "./HiveInput";
 import Hive from "./Hive";
 import HiveActions from "./HiveActions";
-import { useRecoilValueLoadable } from 'recoil';
-import { puzzleState } from '../../recoil/atoms/puzzle';
+import { PuzzleState } from '../../recoil/atoms/puzzle';
 
-const Loading = () => <>Loading...</>;
+interface IControlsProps {
+    puzzle: PuzzleState;
+}
 
-function Controls() {
-    const { state, contents } = useRecoilValueLoadable(puzzleState);
-    const loading = state === 'loading';
-
-    return loading ? <Loading /> : (
+function Controls({ puzzle }: IControlsProps) {
+    return (
         <StyledControlsWrapper>
             <StyledControls>
                 <MessageBox />
                 <HiveInput />
-                <Hive puzzle={contents.puzzle} />
+                <Hive puzzle={puzzle} />
                 <HiveActions />
             </StyledControls> 
         </StyledControlsWrapper>
