@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
-export const scoreAtom = atom<number>({
-    key: 'scoreAtom',
+export const totalScoreAtom = atom<number>({
+    key: 'totalScoreAtom',
     default: 0
 });
 

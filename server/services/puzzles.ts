@@ -28,17 +28,18 @@ const getDefaultPuzzle = () => {
         Math.floor(maxScore * (percentage / 100));
 
     // Generate rankings
-    const rankings = {
-        goodStart: percentToScore(2),
-        movingUp: percentToScore(5),
-        good: percentToScore(8),
-        solid: percentToScore(15),
-        nice: percentToScore(25),
-        great: percentToScore(40),
-        amazing: percentToScore(50),
-        genius: percentToScore(70),
-        queenBee: maxScore
-    };
+    const rankings = [
+        { name: 'Beginner', threshold: 0 },
+        { name: 'Good Start', threshold: percentToScore(2) },
+        { name: 'Moving Up', threshold: percentToScore(5) },
+        { name: 'Good', threshold: percentToScore(8) },
+        { name: 'Solid', threshold: percentToScore(15) },
+        { name: 'Nice', threshold: percentToScore(25) },
+        { name: 'Great', threshold: percentToScore(40) },
+        { name: 'Amazing', threshold: percentToScore(50) },
+        { name: 'Genius', threshold: percentToScore(70) },
+        { name: 'Queen Bee', threshold: maxScore },
+    ];
 
     puzzleData.rankings = rankings;
 
