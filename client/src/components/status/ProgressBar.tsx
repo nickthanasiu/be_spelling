@@ -1,13 +1,18 @@
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import { totalScoreAtom } from '../../recoil/atoms/score';
+import { RankingType } from './Progress';
+import ScoreMarker from './ScoreMarker';
 
-function ProgressBar() {
-    const userScore = useRecoilValue(totalScoreAtom);
+interface IProgressBarProps {
+    ranking: RankingType;
+}
 
+function ProgressBar(props: IProgressBarProps) {
     return (
         <StyledProgressBar>
-            {userScore}
+            <Line>
+                {[...Array(9)].map(a => <Dot />)}
+            </Line>
+            <ScoreMarker {...props} />
         </StyledProgressBar>
     );
 }
@@ -15,7 +20,41 @@ function ProgressBar() {
 export default ProgressBar;
 
 const StyledProgressBar = styled.div`
-    background-color: #f7da21;
-    border-radius: 50%;
-    padding: 5px;
+    margin-left: 12px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+`;
+
+const Line = styled.div`
+    position: relative;
+    background: lightgrey;
+    height: 1px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;
+
+const Dot = styled.span`
+    position: relative;
+
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: -4px;
+        top: -4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: lightgrey;
+    }
+
+    &:last-child:after {
+        border-radius: 0;
+    }
+
 `;

@@ -21,8 +21,6 @@ function HiveInput() {
     const shuffle = useShuffleLetters();
     const submit = useSubmitWord();
 
-    const clearInput = () => setInputVal([]);
-
     const keyPressHandler = ({ key }: React.KeyboardEvent<Window>) => {
         /*
             Keys to listen for
@@ -44,8 +42,6 @@ function HiveInput() {
             return;
 
         } else if (key === 'Enter') {
-
-            clearInput();
             submit();
             return;
 

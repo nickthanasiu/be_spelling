@@ -11,7 +11,7 @@ export type SuccessMessage = "Pangram!" | "Good!" | "Nice!" | "Awesome!";
 
 // @TODO :: Refactor
 export const useSubmitWord = () => {
-    const inputVal = useRecoilValue(inputState);
+    const [inputVal, setInputVal] = useRecoilState(inputState);
     const newWord = useRecoilValue(inputAsString);
     const [foundWordsList, setFoundWordsList] = useRecoilState(foundWordsAtom);
     const setMessageBoxState = useSetRecoilState(messageBoxAtom);
@@ -73,6 +73,9 @@ export const useSubmitWord = () => {
     const submit = () => {
         // Do not attempt to submit input if empty
         if (!inputVal.length) return;
+
+        // Clear input before anything else
+        setInputVal([]);
 
         const inputValidation = validateInput(inputVal);
 
