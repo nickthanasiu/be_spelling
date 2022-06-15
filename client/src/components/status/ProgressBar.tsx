@@ -1,13 +1,18 @@
 import styled from 'styled-components';
+import { RankingType } from './Progress';
 import ScoreMarker from './ScoreMarker';
 
-function ProgressBar() {
+interface IProgressBarProps {
+    ranking: RankingType;
+}
+
+function ProgressBar(props: IProgressBarProps) {
     return (
         <StyledProgressBar>
             <Line>
                 {[...Array(9)].map(a => <Dot />)}
             </Line>
-            <ScoreMarker />
+            <ScoreMarker {...props} />
         </StyledProgressBar>
     );
 }

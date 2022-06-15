@@ -1,17 +1,14 @@
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { totalScoreAtom } from '../../recoil/atoms/score';
+import { RankingType } from './Progress';
 
-// @TODO :: Should this go elsewhere??
-export type RankingType = 
-    'Beginner' | 'Good Start' | 'Moving Up' | 'Good' | 
-    'Solid' | 'Nice' | 'Great' | 'Amazing' | 'Genius' | 'Queen Bee';
+interface IScoreMarkerProps {
+    ranking: RankingType;
+}
 
-function ScoreMarker() {
+function ScoreMarker({ ranking }: IScoreMarkerProps) {
     const userScore = useRecoilValue(totalScoreAtom);
-
-    // @TODO :: Should come from recoil selector, not hard-coded
-    const ranking = 'Beginner';
 
     const calculatePosition = (ranking: RankingType) => {
         switch (ranking) {

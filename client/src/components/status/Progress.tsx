@@ -1,23 +1,21 @@
 import styled from 'styled-components';
-import { useRecoilValueLoadable } from 'recoil';
 import ProgressBar from './ProgressBar';
-import { puzzleState } from '../../recoil/atoms/puzzle';
+import { useRanking } from '../../hooks/useRanking';
+
+// @TODO :: Should this go elsewhere??
+export type RankingType = 
+    'Beginner' | 'Good Start' | 'Moving Up' | 'Good' | 
+    'Solid' | 'Nice' | 'Great' | 'Amazing' | 'Genius' | 'Queen Bee';
 
 function Progress() {
-    const loadable = useRecoilValueLoadable(puzzleState);
-    const puzzle = loadable.contents?.puzzle;
-    const maxScore = puzzle?.maxScore;
-    const rankings = puzzle?.rankings;
-
-    // @TODO :: Should come from recoil selector. Not hard-coded
-    const ranking = 'Beginner';
+    const ranking = useRanking();
 
     return (
         <StyledProgress>
             <Ranking>
                 {ranking}
             </Ranking>
-            <ProgressBar />
+            <ProgressBar ranking={ranking} />
         </StyledProgress>
     );
 }

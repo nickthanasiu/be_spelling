@@ -11,7 +11,6 @@ interface HiveActionButtonProps {
 
 function HiveActionButton({ actionType, children }: HiveActionButtonProps) {
     const submit = useSubmitWord();
-
     const backspace = useBackspace();
     const shuffle = useShuffleLetters();
 
