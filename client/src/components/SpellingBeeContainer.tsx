@@ -1,12 +1,19 @@
 import styled from 'styled-components';
 import Status from './status/Status';
 import Controls from './controls/Controls';
+import { puzzleState } from '../recoil/atoms/puzzle';
+import { useRecoilValueLoadable } from 'recoil';
 
 function SpellingBeeContainer() {
-    return (
+    const { state, contents } = useRecoilValueLoadable(puzzleState);
+    const loading = state === 'loading';
+
+    const Loading = () => <>Loading...</>;
+
+    return loading ? <Loading /> : (
         <StyledSpellingBeeContainer>
             <Status />
-            <Controls />
+            <Controls puzzle={contents.puzzle} />
         </StyledSpellingBeeContainer>
     );
 }
