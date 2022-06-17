@@ -1,26 +1,61 @@
 import { atom, selector } from 'recoil';
 import ApiClient from '../../api/client';
+import { RankingType } from '../../components/status/Progress';
 
 export interface PuzzleState {
+    date: string;
+    maxScore: number;
+    wordCount: number;
+    rankings: { name: RankingType; threshold: number }[];
     centerLetter: string;
     letters: string[];
     pangrams: string[];
     words: string[];
 };
 
-export const initializePuzzleState = selector<PuzzleState>({
-    key: 'puzzleData',
-    get: async ({get}) => {
-        try {
-            const response: any = await ApiClient.get('/puzzles/default');
-            return response;
-        } catch  (error) {
-            console.error(error || 'Unexpected Error encountered while fetching default puzzle');
-        }
+export const puzzleSelector = selector<PuzzleState>({
+    key: 'puzzleSelector',
+    get: async (): Promise<PuzzleState> => {
+        return await ApiClient.get('/puzzles/default');
+    },
+    set: ({ set, get }, newData) => {
+        console.log('@@@ newData ::: ', newData);
+        const currState = get(puzzleAtom);
+        const newState = { ...currState, ...newData };
+
+        set(puzzleAtom, newState);
+    },
+});
+
+export const puzzleAtom = atom<any>({
+    key: 'puzzleAtom',
+    default: puzzleSelector
+});
+
+export const lettersSelector = selector<string[]>({
+    key: 'lettersSelector',
+    get: ({ get }) => {
+        const { puzzle } = get(puzzleAtom);
+
+        return puzzle.letters;
     }
 });
 
-export const puzzleState = atom<PuzzleState>({
-    key: 'puzzleState',
-    default: initializePuzzleState
+export const lettersAtom = atom<string[]>({
+    key: 'lettersAtom',
+    default: lettersSelector
+});
+
+export const centerLetterSelector = selector({
+    key: 'centerLetterSelector',
+    get: ({ get }) => {
+        const { puzzle } = get(puzzleAtom);
+
+        return puzzle.centerLetter;
+    }
+});
+
+export const centerLetterAtom = atom<string>({
+    key: 'centerLetterAtom',
+    default: centerLetterSelector
 });

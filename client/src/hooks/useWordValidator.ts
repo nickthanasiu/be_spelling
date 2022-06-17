@@ -1,6 +1,6 @@
 import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import { foundWordsAtom } from '../recoil/atoms/foundWords';
-import { puzzleState } from '../recoil/atoms/puzzle';
+import { puzzleAtom } from '../recoil/atoms/puzzle';
 
 export type TInvalidWordMessage = "Missing center letter" | "Not in word list" | "Already found";
 
@@ -12,7 +12,7 @@ interface IWordValidation {
 
 export const useWordValidator = () => {
     const foundWords = useRecoilValue(foundWordsAtom);
-    const puzzleLoadable = useRecoilValueLoadable(puzzleState);
+    const puzzleLoadable = useRecoilValueLoadable(puzzleAtom);
 
     const puzzle = puzzleLoadable.contents.puzzle;
     const pangrams = puzzle.pangrams;

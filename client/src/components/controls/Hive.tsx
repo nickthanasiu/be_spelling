@@ -1,13 +1,11 @@
 import styled from 'styled-components';
-import { PuzzleState } from '../../recoil/atoms/puzzle';
+import { useRecoilValue } from 'recoil';
+import { centerLetterAtom, lettersAtom, PuzzleState } from '../../recoil/atoms/puzzle';
 import HiveCell from './HiveCell';
 
-interface IHiveProps {
-    puzzle: PuzzleState;
-}
-
-function Hive({ puzzle }: IHiveProps) {
-    const { centerLetter, letters } = puzzle;
+function Hive() {
+    const letters = useRecoilValue(lettersAtom);
+    const centerLetter = useRecoilValue(centerLetterAtom);
     
     return (
         <StyledHiveWrapper>
