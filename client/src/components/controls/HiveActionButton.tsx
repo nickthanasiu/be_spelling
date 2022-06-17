@@ -36,7 +36,7 @@ const StyledHiveActionButton = styled.div`
     padding: 15px 0;
     width: 33.333%;
     min-width: 100px;
-    height: 50px;
+    height: 30px;
     background-color: #e6e6e6;
     font-size: 1em;
     margin: 0 8px;

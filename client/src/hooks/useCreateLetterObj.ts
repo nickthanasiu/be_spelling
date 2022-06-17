@@ -1,10 +1,10 @@
-import { useRecoilValueLoadable } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { LetterObj } from "../recoil/atoms/input";
-import { puzzleState } from '../recoil/atoms/puzzle';
+import { centerLetterAtom, lettersAtom } from '../recoil/atoms/puzzle';
 
 export const useCreateLetterObj = () => {
-    const { contents } = useRecoilValueLoadable(puzzleState);
-    const { letters, centerLetter } = contents.puzzle;
+    const letters = useRecoilValue(lettersAtom);
+    const centerLetter = useRecoilValue(centerLetterAtom);
 
     const createLetterObj = (letter: string): LetterObj => {    
         const isCenterLetter = letter === centerLetter;

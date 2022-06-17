@@ -1,10 +1,8 @@
-import { useRecoilStateLoadable } from 'recoil';
-import { puzzleState } from '../recoil/atoms/puzzle';
+import { useRecoilState } from 'recoil';
+import { lettersAtom } from '../recoil/atoms/puzzle';
 
 export const useShuffleLetters = () => {
-    const [puzzleLoadable, setPuzzleLoadable] = useRecoilStateLoadable(puzzleState);
-    const { puzzle } = puzzleLoadable.contents;
-    const letters= puzzle.letters;
+    const [letters, updateLetters] = useRecoilState(lettersAtom);
 
     // Taken from: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
     function shuffleArray(array: string[]): string[] {
@@ -29,8 +27,7 @@ export const useShuffleLetters = () => {
 
     return () => {
         const shuffled = shuffleArray(letters);
-        const newPuzzleState = { ...puzzle };
-        
-        setPuzzleLoadable(newPuzzleState);
+
+        updateLetters(shuffled);
     };
 };

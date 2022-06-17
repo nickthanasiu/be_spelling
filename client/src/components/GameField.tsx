@@ -2,13 +2,12 @@ import styled from 'styled-components';
 import { device } from '../styles/device';
 import Status from './status/Status';
 import Controls from './controls/Controls';
-import { PuzzleState } from '../recoil/atoms/puzzle';
 
-function GameField({ puzzle }: { puzzle: PuzzleState }) {
+function GameField() {
     return (
         <StyledGameField>
             <Status />
-            <Controls puzzle={puzzle} />
+            <Controls />
         </StyledGameField>
     )
 }

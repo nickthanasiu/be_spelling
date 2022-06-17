@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import { RankingType } from '../components/status/Progress';
-import { puzzleState } from '../recoil/atoms/puzzle';
+import { puzzleAtom } from '../recoil/atoms/puzzle';
 import { totalScoreAtom } from '../recoil/atoms/score';
 
 // @TODO :: Maybe instead of a hook, this could be a recoil selector??
 export const useRanking = (): RankingType => {
     const userScore = useRecoilValue(totalScoreAtom);
-    const loadable = useRecoilValueLoadable(puzzleState);
+    const loadable = useRecoilValueLoadable(puzzleAtom);
     const puzzle = loadable.contents?.puzzle;
 
     const rankings = puzzle?.rankings;

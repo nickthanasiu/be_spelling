@@ -1,13 +1,17 @@
 import { Dispatch, ReactElement, SetStateAction } from 'react';
+import { useRecoilValueLoadable } from 'recoil';
 import styled from 'styled-components';
+import { puzzleAtom } from '../../recoil/atoms/puzzle';
 import LoadingAnimation from './LoadingAnimation';
 
 interface ILoadingPageProps {
-    loading: boolean;
-    updateDoneLoading: Dispatch<SetStateAction<boolean>>;
+    updateGameStarted: Dispatch<SetStateAction<boolean>>;
 }
 
-function LoadingPage({ loading, updateDoneLoading }: ILoadingPageProps): ReactElement {
+function LoadingPage({ updateGameStarted }: ILoadingPageProps): ReactElement {
+    const { state } = useRecoilValueLoadable(puzzleAtom);
+    const loading = state === 'loading';
+
     return (
         <StyledLoadingPage>
             {loading ? <LoadingAnimation /> : (
@@ -18,7 +22,7 @@ function LoadingPage({ loading, updateDoneLoading }: ILoadingPageProps): ReactEl
                             NYT Spelling Bee
                         </a>
                     </h2>
-                    <PlayButton onClick={() => updateDoneLoading(true)}>Play</PlayButton>
+                    <PlayButton onClick={() => updateGameStarted(true)}>Play</PlayButton>
                 </ContentContainer>
             )}
         </StyledLoadingPage>

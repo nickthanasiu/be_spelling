@@ -3,19 +3,14 @@ import MessageBox from "./MessageBox";
 import HiveInput from "./HiveInput";
 import Hive from "./Hive";
 import HiveActions from "./HiveActions";
-import { PuzzleState } from '../../recoil/atoms/puzzle';
 
-interface IControlsProps {
-    puzzle: PuzzleState;
-}
-
-function Controls({ puzzle }: IControlsProps) {
+function Controls() {
     return (
         <StyledControlsWrapper>
             <StyledControls>
                 <MessageBox />
                 <HiveInput />
-                <Hive puzzle={puzzle} />
+                <Hive />
                 <HiveActions />
             </StyledControls> 
         </StyledControlsWrapper>
