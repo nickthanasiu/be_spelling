@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { device } from '../../styles/device';
 
 interface IWordListDrawerProps {
     expanded: boolean;
@@ -23,6 +24,10 @@ const StyledWordListDrawer = styled.div<{ expanded: boolean }>`
     overflow: hidden;
     max-height: ${props => props.expanded ? 'calc(1vh * 68)' : '0'};
     transition: max-height 200ms ease;
+
+    @media (min-width: ${device.desktop}) {
+        max-height: none;
+    }
 `;
 
 const Window = styled.div`

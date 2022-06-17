@@ -6,12 +6,16 @@ import WordListHeading from './WordListHeading';
 import WordListDrawer from './WordListDrawer';
 
 function WordList() {
-    const [expanded, toggleExpanded] = useState(false);
+    const [expanded, setExpanded] = useState(false);
     const wordList = useRecoilValue(foundWordsAtom);
 
     return (
-        <StyledWordList onClick={() => toggleExpanded(!expanded)}>
-            <WordListHeading expanded={expanded} wordList={wordList} />
+        <StyledWordList>
+            <WordListHeading 
+                expanded={expanded}
+                setExpanded={setExpanded}
+                wordList={wordList} 
+            />
             <WordListDrawer expanded={expanded} wordList={wordList} />
         </StyledWordList>
     );

@@ -24,7 +24,7 @@ export default PrevWordScore;
 
 const StyledPrevWordScore = styled.div`
     font-weight: bold;
-    color: black;
+    color: #f7da21;
     position: absolute;
     right: -30px;
 `;
