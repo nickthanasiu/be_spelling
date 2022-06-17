@@ -1,5 +1,10 @@
 import { atom } from 'recoil';
-import { ErrorMessage, SuccessMessage } from '../../utils/generateMessage';
+
+export type InvalidWordMessage = "Missing center letter" | "Not in word list" | "Already found";
+export type InvalidInputMessage = "Too short" | "Bad letters";
+
+export type ErrorMessage = InvalidInputMessage | InvalidWordMessage;
+export type SuccessMessage = "Pangram!" | "Good!" | "Nice!" | "Awesome!";
 
 export type TMessageBoxMessage = ErrorMessage | SuccessMessage | '';
 
