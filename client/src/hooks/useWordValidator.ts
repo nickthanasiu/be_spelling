@@ -1,12 +1,11 @@
 import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import { foundWordsAtom } from '../recoil/atoms/foundWords';
 import { puzzleAtom } from '../recoil/atoms/puzzle';
-
-export type TInvalidWordMessage = "Missing center letter" | "Not in word list" | "Already found";
+import { InvalidWordMessage } from '../recoil/atoms/messageBox';
 
 interface IWordValidation {
     isValid: boolean;
-    errorMessage: TInvalidWordMessage | "";
+    errorMessage: InvalidWordMessage | "";
     isPangram: boolean;
 }
 

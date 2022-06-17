@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { device } from '../../styles/device';
 import { useRecoilValue } from 'recoil';
 import { messageBoxAtom } from '../../recoil/atoms/messageBox';
 import PrevWordScore from './PrevWordScore';
@@ -20,15 +21,19 @@ function MessageBox() {
 
 const StyledMessageBox = styled.div`
     position: absolute;
-    top: -50px;
+    top: -45px;
     left: 50%;
     transform: translate(-50%, 0);
+
+    @media (min-width: ${device.desktop}) {
+        top: -50px;
+    }
 `;
 
 const Message = styled.div<{ isError: boolean }>`
     font-weight: 500;
     height: 30px;
-    width: fit-content;
+    width: max-content;
     border-radius: 5px;
     padding: 0 10px;
     display: flex;
