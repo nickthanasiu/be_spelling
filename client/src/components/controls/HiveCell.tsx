@@ -33,7 +33,7 @@ const HiveCell: FunctionComponent<HiveCellProps> = ({ letter, isCenter }) => {
         <StyledSvg viewBox='0 0 120 103.92304845413263' onClick={onClick}>
             <StyledPolygon 
                 points='0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263'
-                stroke='white'
+                stroke='#242424'
                 strokeWidth='7.5'
                 isCenter={isCenter}
             />

@@ -23,7 +23,7 @@ function Progress() {
 export default Progress;
 
 const StyledProgress = styled.div`
-    margin: 12px 12px 0;
+    margin: 24px 12px;
     padding-right: 12px;
     display: flex;
     align-items: center;

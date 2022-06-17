@@ -48,9 +48,9 @@ const StyledScoreMarker = styled.div<{ leftPosition: number }>`
     height: 30px;
     position: absolute;
     transform: translate(-50%, 0);
-
+    
     left: ${({ leftPosition }) => leftPosition * 100}%;
-
+    
     span {
         position: absolute;
         display: flex;
@@ -61,6 +61,7 @@ const StyledScoreMarker = styled.div<{ leftPosition: number }>`
         font-size: 12px;
         border-radius: 50%;
         background: #f7da21;
+        color: #000;
         font-weight: 500;
     }
 `;

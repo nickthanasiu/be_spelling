@@ -31,6 +31,7 @@ const StyledLoadingPage = styled.div`
     width: 100vw;
     height: 100vh;
     background-color: #f7da21;
+    color: black;
 
     display: flex;
     justify-content: center;

@@ -17,7 +17,7 @@ const yellow = '#f7da21';
 const lightGray = '#dcdcdc';
 
 const StyledLetter = styled.span<LetterProps>`
-    color: ${props => props.letterObj.isCenterLetter ? yellow : props.letterObj.isValid ? "#000" : lightGray };
+    color: ${props => props.letterObj.isCenterLetter ? yellow : props.letterObj.isValid ? "#fff" : 'gray' };
     font-size: 2em;
     font-weight: bold;
     text-transform: uppercase;

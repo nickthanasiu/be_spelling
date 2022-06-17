@@ -7,7 +7,9 @@ function HiveActions() {
             <HiveActionButton actionType="DELETE">
                 Delete
             </HiveActionButton>
-            <HiveActionButton actionType="SHUFFLE" />
+            <HiveActionButton actionType="SHUFFLE">
+                Shuffle
+            </HiveActionButton>
             <HiveActionButton actionType="SUBMIT">
                 Enter
             </HiveActionButton>

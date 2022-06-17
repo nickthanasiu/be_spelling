@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useBackspace } from '../../hooks/useBackspace';
 import { useShuffleLetters } from '../../hooks/useShuffleLetters';
 import { useSubmitWord } from '../../hooks/useSubmitWord';
@@ -23,37 +23,28 @@ function HiveActionButton({ actionType, children }: HiveActionButtonProps) {
     };
 
     return (
-        <StyledHiveActionButton actionType={actionType} onClick={onClick}>
+        <StyledHiveActionButton onClick={onClick}>
             {children}
         </StyledHiveActionButton>
     );
 }
 
-const StyledHiveActionButton = styled.div<HiveActionButtonProps>`
+const StyledHiveActionButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 15px 0;
-    width: 5.5em;
-    min-width: 5.5em;
-    height: 3em;
-    background-color: white;
+    width: 33.333%;
+    min-width: 100px;
+    height: 50px;
+    background-color: #e6e6e6;
     font-size: 1em;
     margin: 0 8px;
     color: #333;
-    border: 1px solid #dcdcdc;
-    border-radius: 2.5em;
+    border-radius: 5px;
     letter-spacing: 0.01em;
     user-select: none;
     cursor: pointer;
-
-    ${({ actionType }) => actionType === 'SHUFFLE' && css`
-        background: url(https://www.nytimes.com/games-assets/v2/assets/shuffle.svg) center no-repeat;
-        background-size: 60%;
-        height: 3em;
-        width: 3em;
-        min-width: 3em;
-    `}
 `;
 
 export default HiveActionButton;

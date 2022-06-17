@@ -1,17 +1,20 @@
+import { Dispatch, SetStateAction } from 'react';
 import styled, { css } from 'styled-components';
+import { device } from '../../styles/device';
 
 interface IWordListHeadingProps {
     expanded: boolean;
+    setExpanded: Dispatch<SetStateAction<boolean>>
     wordList: string[];
 }
 
-function WordListHeading({ expanded, wordList }: IWordListHeadingProps) {
+function WordListHeading({ expanded, setExpanded, wordList }: IWordListHeadingProps) {
     const wordCount = wordList.length;
     const placeholder = <li style={{ color: 'gray' }}>Your words...</li>;
     const wordlistPreview = !wordCount ? placeholder : wordList.map(word => <li>{word}</li>);
 
     return (
-        <StyledWordListHeading>
+        <StyledWordListHeading onClick={() => setExpanded(!expanded)}>
             <div className="wordlist-heading-container">
                 <WordCount expanded={expanded}>
                     You have found {wordCount} word{wordCount !== 1 ? 's' : ''}
@@ -34,6 +37,10 @@ const StyledWordListHeading = styled.div`
     overflow: hidden;
     height: 45px;
     line-height: 45px;
+
+    @media (min-width: ${device.desktop}) {
+        pointer-events: none;
+    }
 `;
 
 interface IExpandedProps {
@@ -55,6 +62,11 @@ const WordCount = styled.div<IExpandedProps>`
         top: 0;
         opacity: 1;
     `}
+
+    @media (min-width: ${device.desktop}) {
+        top: 0;
+        opacity: 1;
+    }
 `;
 
 const PreviewWrapper = styled.div<IExpandedProps>`
@@ -68,6 +80,11 @@ const PreviewWrapper = styled.div<IExpandedProps>`
         top: 0;
         opacity: 0;
     `}
+
+    @media (min-width: ${device.desktop}) {
+        top: 0;
+        opacity: 0;
+    }
 
     & > ul {
         white-space: nowrap;
@@ -88,17 +105,21 @@ const Toggle = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #fff;
-    box-shadow: 0px 0px 20px 5px #fff;
+    background-color: #242424;
+    box-shadow: 0px 0px 20px 5px #242424;
+
+    @media (min-width: ${device.desktop}) {
+        display: none;
+    }
 
     .toggle-icon {
-        display: block;
-        position: relative;
-        width: 18px;
-        height: 18px;
-        background: url(https://www.nytimes.com/games-assets/v2/assets/back.svg) center no-repeat;
-        background-size: 50%;
-        transform: rotate(270deg);
+        border: solid #fff;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 4px;
+        margin-top: --4px;
+
+        transform: rotate(45deg);
     }
 `;
 
