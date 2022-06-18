@@ -1,8 +1,29 @@
-import puzzleData from '../data/puzzles.json';
+import puzzle1 from '../data/puzzles.json';
+import puzzle2 from '../data/puzzle2.json';
 
 // @TODO :: Refactor logic here. Should it all be in this file?
 const getDefaultPuzzle = () => {
+
     // @TODO :: Should come from DB, not hard-coded json
+    const puzzleData = puzzle1;
+
+    const puzzle = buildPuzzle(puzzleData);
+
+    return puzzle;
+};
+
+const getRandomPuzzle = () => {
+    const puzzleChoices = [puzzle1, puzzle2];
+    const random = Math.floor(Math.random() * puzzleChoices.length);
+    const puzzleData = puzzleChoices[random];
+    const puzzle = buildPuzzle(puzzleData);
+    
+    return puzzle;
+};
+
+export default { getDefaultPuzzle, getRandomPuzzle };
+
+function buildPuzzle(puzzleData) {
     const { pangrams, words } = puzzleData;
 
     // Calculate wordCount and add to puzzleData object
@@ -44,6 +65,4 @@ const getDefaultPuzzle = () => {
     puzzleData.rankings = rankings;
 
     return puzzleData;
-};
-
-export default { getDefaultPuzzle };
+}

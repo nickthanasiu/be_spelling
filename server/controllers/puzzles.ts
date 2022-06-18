@@ -6,4 +6,10 @@ function getDefaultPuzzle(req, res) {
     res.send({ puzzle: defaultPuzzle });
 }
 
-export default { getDefaultPuzzle };
+function getRandomPuzzle(req, res) {
+    const randomPuzzle = PuzzlesService.getRandomPuzzle();
+
+    res.send({ puzzle: randomPuzzle });
+}
+
+export default { getDefaultPuzzle, getRandomPuzzle };

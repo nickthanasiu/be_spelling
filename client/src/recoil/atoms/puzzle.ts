@@ -16,10 +16,9 @@ export interface PuzzleState {
 export const puzzleSelector = selector<PuzzleState>({
     key: 'puzzleSelector',
     get: async (): Promise<PuzzleState> => {
-        return await ApiClient.get('/puzzles/default');
+        return await ApiClient.get('/puzzles');
     },
     set: ({ set, get }, newData) => {
-        console.log('@@@ newData ::: ', newData);
         const currState = get(puzzleAtom);
         const newState = { ...currState, ...newData };
 

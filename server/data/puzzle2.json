@@ -11,7 +11,9 @@
     ],
     "pangrams": [
         "ethanol",
-        "nonlethal",
+        "nonlethal"
+    ],
+    "words": [
         "aloha",
         "athlete",
         "ethane",
