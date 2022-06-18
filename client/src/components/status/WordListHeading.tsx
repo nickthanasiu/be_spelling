@@ -1,17 +1,19 @@
 import { Dispatch, SetStateAction } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
+import { wordListPreviewSelector } from '../../recoil/atoms/foundWords';
 import { device } from '../../styles/device';
 
 interface IWordListHeadingProps {
     expanded: boolean;
     setExpanded: Dispatch<SetStateAction<boolean>>
-    wordList: string[];
 }
 
-function WordListHeading({ expanded, setExpanded, wordList }: IWordListHeadingProps) {
-    const wordCount = wordList.length;
+function WordListHeading({ expanded, setExpanded }: IWordListHeadingProps) {
     const placeholder = <li style={{ color: 'gray' }}>Your words...</li>;
-    const wordlistPreview = !wordCount ? placeholder : wordList.map(word => <li>{word}</li>);
+    const wordListPreview = useRecoilValue(wordListPreviewSelector);
+    const wordCount = wordListPreview.length;
+    const previewContent = !wordCount ? placeholder : wordListPreview.map(word => <li>{word}</li>);
 
     return (
         <StyledWordListHeading onClick={() => setExpanded(!expanded)}>
@@ -21,7 +23,7 @@ function WordListHeading({ expanded, setExpanded, wordList }: IWordListHeadingPr
                 </WordCount>
                 <PreviewWrapper expanded={expanded}>
                     <ul>
-                        {wordlistPreview}
+                        {previewContent}
                     </ul>
                 </PreviewWrapper>
                 <Toggle>

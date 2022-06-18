@@ -1,18 +1,21 @@
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { alphabetizedWordSelector } from '../../recoil/atoms/foundWords';
 import { device } from '../../styles/device';
 
 interface IWordListDrawerProps {
     expanded: boolean;
-    wordList: string[];
 }
 
-function WordListDrawer({ expanded, wordList }: IWordListDrawerProps) {
+function WordListDrawer({ expanded }: IWordListDrawerProps) {
+    const alphabetizedWordList = useRecoilValue(alphabetizedWordSelector);
+
     return (
         <StyledWordListDrawer className="wordlist-drawer" expanded={expanded}>
             <Window>
                 <ListWrapper>
                     <List>
-                        {wordList.map(word => <li>{word}</li>)}
+                        {alphabetizedWordList.map(word => <li>{word}</li>)}
                     </List>
                 </ListWrapper>
             </Window>
