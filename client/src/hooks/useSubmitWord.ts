@@ -29,26 +29,28 @@ export const useSubmitWord = () => {
         setMessageBoxState({
             visible: false,
             message: '',
-            isError: false
+            isError: false,
+            isPangram: false
         });
     };
 
-    const showMessageBox = (message: any, isError: boolean) => {
+    const showMessageBox = (message: any, isError: boolean, isPangram: boolean) => {
         setMessageBoxState({
             visible: true,
             message,
-            isError
+            isError,
+            isPangram,
         });
 
         delay(1000, hideMessageBox);
     };
 
     const showErrorMessage = (errorMessage: any) => {
-        showMessageBox(errorMessage, true);
+        showMessageBox(errorMessage, true, false);
     };
 
-    const showSuccessMessage = (successMessage: any) => {
-        showMessageBox(successMessage, false);
+    const showSuccessMessage = (successMessage: any, isPangram: boolean) => {
+        showMessageBox(successMessage, false, isPangram);
     };
 
     const getSuccessMessage = (wordLength: number, isPangram?: boolean): SuccessMessage => {
@@ -103,7 +105,7 @@ export const useSubmitWord = () => {
 
         // Generate message
         const successMessage = getSuccessMessage(newWord.length, wordValidation.isPangram);
-        showSuccessMessage(successMessage);
+        showSuccessMessage(successMessage, wordValidation.isPangram);
     };
 
     return submit;

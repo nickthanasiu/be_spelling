@@ -5,12 +5,13 @@ import { messageBoxAtom } from '../../recoil/atoms/messageBox';
 import PrevWordScore from './PrevWordScore';
 
 function MessageBox() {
-    const { visible, message, isError } = useRecoilValue(messageBoxAtom);
+    const { visible, message, isError, isPangram } = useRecoilValue(messageBoxAtom);
+
 
     return (
         <StyledMessageBox>
             {visible && (
-                <Message isError={isError}>
+                <Message isError={isError} isPangram={isPangram}>
                     <span>{message}</span>
                     <PrevWordScore isError={isError} />
                 </Message>
@@ -30,7 +31,7 @@ const StyledMessageBox = styled.div`
     }
 `;
 
-const Message = styled.div<{ isError: boolean }>`
+const Message = styled.div<{ isError: boolean; isPangram: boolean; }>`
     font-weight: 500;
     height: 30px;
     width: max-content;
@@ -39,7 +40,7 @@ const Message = styled.div<{ isError: boolean }>`
     display: flex;
     align-items: center;
     position: relative;
-    
+
     background-color: white;
     color: black;
     border: 1px solid lightgray;
@@ -49,6 +50,12 @@ const Message = styled.div<{ isError: boolean }>`
         color: white;
         border: 1px solid black;
     `};
+
+    ${({ isPangram }) => isPangram && css`
+        background-color: #f7da21;
+        color: black;
+        border: 1px solid #f7da21;
+    `}
 `;
 
 export default MessageBox;
