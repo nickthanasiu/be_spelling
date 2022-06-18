@@ -12,6 +12,7 @@ export interface IMessageBoxAtom {
     visible: boolean;
     message: TMessageBoxMessage;
     isError: boolean;
+    isPangram: boolean;
 }
 
 export const messageBoxAtom = atom<IMessageBoxAtom>({
@@ -19,6 +20,7 @@ export const messageBoxAtom = atom<IMessageBoxAtom>({
     default: {
         visible: false,
         message: '',
-        isError: false
+        isError: false,
+        isPangram: false,
     }
 });

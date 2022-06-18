@@ -54,8 +54,3 @@ export const centerLetterSelector = selector({
         return puzzle.centerLetter;
     }
 });
-
-export const centerLetterAtom = atom<string>({
-    key: 'centerLetterAtom',
-    default: centerLetterSelector
-});

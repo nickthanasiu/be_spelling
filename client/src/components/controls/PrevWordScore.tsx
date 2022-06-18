@@ -13,7 +13,7 @@ function PrevWordScore({ isError }: IPrevWordScoreProps) {
         <>
             {!isError && (
                 <StyledPrevWordScore>
-                    +{prevWordScore}
+                    <span>+{prevWordScore}</span>
                 </StyledPrevWordScore>
             )}
         </>
@@ -26,5 +26,5 @@ const StyledPrevWordScore = styled.div`
     font-weight: bold;
     color: #f7da21;
     position: absolute;
-    right: -30px;
+    left: 110%;
 `;
