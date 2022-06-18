@@ -26,12 +26,9 @@ class ApiClient implements IApiClient {
         try {
             const response = await this.client.get<TResponse>(path);
             return response.data;
-        } catch (err) {
-            // @TODO :: Catch errors
-            console.log('@@@ ERROR :: ', err);
+        } catch (error) {
+            throw error;
         }
-
-        return {} as TResponse;
     }
 }
 
