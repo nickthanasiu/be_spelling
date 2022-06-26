@@ -1,0 +1,37 @@
+{
+    "date": "June 20, 2022",
+    "centerLetter": "n",
+    "letters": [
+        "c",
+        "e",
+        "l",
+        "t",
+        "x",
+        "y"
+    ],
+    "pangrams": [
+        "excellently"
+    ],
+    "words": [
+        "cent",
+        "entente",
+        "excellence",
+        "excellency",
+        "excellent",
+        "extent",
+        "lent",
+        "lynx",
+        "nene",
+        "nettle",
+        "netty",
+        "next",
+        "teen",
+        "teeny",
+        "tenet",
+        "tent",
+        "yente"
+    ],
+    "wordCount": null,
+    "maxScore": null,
+    "rankings": null
+}
