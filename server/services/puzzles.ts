@@ -1,11 +1,13 @@
-import puzzle1 from '../data/puzzles.json';
-import puzzle2 from '../data/puzzle2.json';
+import june11 from '../data/06-11-22.json';
+import june12 from '../data/06-12-22.json';
+import june20 from '../data/06-20-22.json';
+import june24 from '../data/06-24-22.json';
 
 // @TODO :: Refactor logic here. Should it all be in this file?
 const getDefaultPuzzle = () => {
 
     // @TODO :: Should come from DB, not hard-coded json
-    const puzzleData = puzzle1;
+    const puzzleData = june11;
 
     const puzzle = buildPuzzle(puzzleData);
 
@@ -13,11 +15,11 @@ const getDefaultPuzzle = () => {
 };
 
 const getRandomPuzzle = () => {
-    const puzzleChoices = [puzzle1, puzzle2];
+    const puzzleChoices = [june11, june12, june20, june24];
     const random = Math.floor(Math.random() * puzzleChoices.length);
     const puzzleData = puzzleChoices[random];
     const puzzle = buildPuzzle(puzzleData);
-    
+
     return puzzle;
 };
 
