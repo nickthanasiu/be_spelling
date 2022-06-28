@@ -1,0 +1,51 @@
+{
+    "date": "June 25, 2022",
+    "centerLetter": "u",
+    "letters": [
+        "f",
+        "g",
+        "h",
+        "l",
+        "o",
+        "t"
+    ],
+    "pangrams": [
+        "thoughtful"
+    ],
+    "words": [
+        "flout",
+        "fluff",
+        "fought",
+        "foul",
+        "fugu",
+        "full",
+        "ghoul",
+        "glug",
+        "glut",
+        "gout",
+        "guff",
+        "gulf",
+        "gull",
+        "huff",
+        "hull",
+        "lout",
+        "lull",
+        "lulu",
+        "ought",
+        "outfought",
+        "outgo",
+        "outthough",
+        "thou",
+        "though",
+        "thought",
+        "thug",
+        "tofu",
+        "tough",
+        "tout",
+        "tuft",
+        "tutu"
+    ],
+    "wordCount": null,
+    "maxScore": null,
+    "rankings": null
+}
