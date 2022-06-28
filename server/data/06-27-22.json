@@ -1,0 +1,48 @@
+{
+    "date": "June 27, 2022",
+    "centerLetter": "u",
+    "letters": [
+        "c",
+        "d",
+        "i",
+        "n",
+        "o",
+        "t"
+    ],
+    "pangrams": [
+        "conduction",
+        "conduit",
+        "induction"
+    ],
+    "words": [
+       "coconut",
+       "conduct",
+       "count",
+       "cutout",
+       "donut",
+       "duct",
+       "dunno",
+       "induct",
+       "intuit",
+       "intuition",
+       "noun",
+       "outdid",
+       "outdo",
+       "tout",
+       "tuition",
+       "tunic",
+       "tutti",
+       "tutu",
+       "udon",
+       "unction",
+       "uncut",
+       "undid",
+       "undo",
+       "union",
+       "unit",
+       "unto"
+    ],
+    "wordCount": null,
+    "maxScore": null,
+    "rankings": null
+}
