@@ -5,6 +5,8 @@ import june24 from '../data/06-24-22.json';
 import june25 from '../data/06-25-22.json';
 import june27 from '../data/06-27-22.json';
 import july4 from '../data/07-04-22.json';
+import july6 from '../data/07-06-22.json';
+import july7 from '../data/07-07-22.json';
 
 // @TODO :: Refactor logic here. Should it all be in this file?
 const getDefaultPuzzle = () => {
@@ -26,6 +28,8 @@ const getRandomPuzzle = () => {
         june25,
         june27,
         july4,
+        july6,
+        july7
     ];
 
     const random = Math.floor(Math.random() * puzzleChoices.length);
