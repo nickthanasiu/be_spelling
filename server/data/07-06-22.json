@@ -1,0 +1,38 @@
+{
+    "date": "July 6, 2022",
+    "centerLetter": "h",
+    "letters": [
+       "a",
+       "c",
+       "p",
+       "t",
+       "u",
+       "z"
+    ],
+    "pangrams": [
+        "chutzpah"
+    ],
+    "words": [
+        "attach",
+        "captcha",
+        "catch",
+        "catchup",
+        "chap",
+        "chat",
+        "chuppah",
+        "hatch",
+        "hath",
+        "hatha",
+        "hutch",
+        "huzzah",
+        "patch",
+        "path",
+        "phat",
+        "tach",
+        "that",
+        "thatch"
+    ],
+    "wordCount": null,
+    "maxScore": null,
+    "rankings": null
+}
