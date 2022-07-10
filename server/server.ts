@@ -16,10 +16,12 @@ mongoose.connect(`mongodb+srv://${mongodbUsername}:${mongodbPassword}@cluster0.3
 const db = mongoose.connection;
 
 db.on('error', (error) => {
+    // tslint:disable-next-line:no-console
     console.log(error);
 });
 
 db.once('open', () => {
+    // tslint:disable-next-line:no-console
     console.log('Database Connected');
 });
 
