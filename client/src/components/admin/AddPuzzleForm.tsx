@@ -3,17 +3,9 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import ApiClient from '../../api/client';
 import { addPuzzleFormAtom, TAddPuzzleFormState } from '../../recoil/atoms/admin';
+import { TNewPuzzleRequestObj } from '../../../../shared/types';
 
 const AddPuzzleForm = () => {
-
-    type TNewPuzzleRequestObj = {
-        date: Date,
-        centerLetter: string,
-        letters: string[],
-        pangrams: string[],
-        words: string[],
-    }
-
     const [formState, setFormState] = useRecoilState<TAddPuzzleFormState>(addPuzzleFormAtom);
     const resetFormState = useResetRecoilState(addPuzzleFormAtom);
     

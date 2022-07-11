@@ -1,38 +1,20 @@
 import PuzzlesService from '../services/puzzles';
-import { Puzzle } from '../models/Puzzle';
 
-function getDefaultPuzzle(req, res) {
-    const defaultPuzzle = PuzzlesService.getDefaultPuzzle();
-
-    res.send({ puzzle: defaultPuzzle });
-}
-
-function getRandomPuzzle(req, res) {
+const getRandomPuzzle = (req, res) => {
     const randomPuzzle = PuzzlesService.getRandomPuzzle();
 
     res.send({ puzzle: randomPuzzle });
 }
 
-function addPuzzle(req, res, next) {
-    const { date, centerLetter, letters, pangrams, words } = req.body;
+const addPuzzle = async (req, res, next) => {
+    const puzzle = req.body;
 
-    // @TODO Move this to a service
     // @TODO :: Add error handling!!
 
-    const newPuzzle = new Puzzle({
-        date,
-        centerLetter,
-        letters,
-        pangrams,
-        words
-    });
-
     // Save new puzzle to db
-    newPuzzle.save((error) => {
-        next(error);
-    });
+    await PuzzlesService.savePuzzle(puzzle);
 
-    res.send({ addedPuzzle: newPuzzle });
+    res.send('Added successfully');
 }
 
-export default { getDefaultPuzzle, getRandomPuzzle, addPuzzle };
+export default { getRandomPuzzle, addPuzzle };
