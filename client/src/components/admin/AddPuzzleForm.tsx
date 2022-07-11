@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import ApiClient from '../../api/client';
 import { addPuzzleFormAtom, TAddPuzzleFormState } from '../../recoil/atoms/admin';
@@ -15,6 +15,7 @@ const AddPuzzleForm = () => {
     }
 
     const [formState, setFormState] = useRecoilState<TAddPuzzleFormState>(addPuzzleFormAtom);
+    const resetFormState = useResetRecoilState(addPuzzleFormAtom);
     
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormState({ ...formState, [e.target.name]: e.target.value });
@@ -38,6 +39,8 @@ const AddPuzzleForm = () => {
         const requestObject = formatPuzzleRequestObject(formState);
 
         await ApiClient.post('/puzzles', requestObject);
+
+        resetFormState();
     };
 
     return (
@@ -96,6 +99,7 @@ const Input = styled.input`
 const TextArea = styled.textarea`
     display: block;
     width: 100%;
+    padding: 10px;
     margin-bottom: 5px;
     margin-right: 0;
 `;
