@@ -14,4 +14,4 @@ const PuzzleSchema = new mongoose.Schema({
 
 const Puzzle = mongoose.model("Puzzle", PuzzleSchema);
 
-module.exports = Puzzle;
+export { Puzzle };
