@@ -10,7 +10,7 @@ class ApiClient implements IApiClient {
 
     protected createAxiosClient(): AxiosInstance {
         return Axios.create({
-            baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api' : 'https://spelling-bee.onrender.com/api',
+            baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api' : 'https://be-spelling.onrender.com/api',
             responseType: 'json' as const,
             headers: {
                 'Content-Type': 'application/json'
