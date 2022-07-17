@@ -50,7 +50,7 @@ const ListWrapper = styled.div`
 `;
 
 const List = styled.ul`
-    display: block;
+    display: flex;
     width: 100%;
     flex-flow: column wrap;
     align-content: flex-start;
