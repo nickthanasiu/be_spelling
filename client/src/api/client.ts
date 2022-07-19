@@ -2,7 +2,8 @@ import Axios, { AxiosInstance} from 'axios';
 
 // @TODO :: Extend api client to handle all crud operations
 export interface IApiClient {
-    get<TResponse>(path: string): Promise<TResponse>
+    get<TResponse>(path: string): Promise<TResponse>,
+    post<T>(path: string, date: any): Promise<T>,
 }
 
 class ApiClient implements IApiClient {
@@ -25,6 +26,15 @@ class ApiClient implements IApiClient {
     async get<TResponse>(path: string): Promise<TResponse> {
         try {
             const response = await this.client.get<TResponse>(path);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async post<TResponse>(path: string, data: any): Promise<TResponse> {
+        try{
+            const response = await this.client.post<TResponse>(path, data);
             return response.data;
         } catch (error) {
             throw error;

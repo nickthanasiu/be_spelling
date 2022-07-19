@@ -4,8 +4,6 @@ import { RankingType } from '../../components/status/Progress';
 
 export interface PuzzleState {
     date: string;
-    maxScore: number;
-    wordCount: number;
     rankings: { name: RankingType; threshold: number }[];
     centerLetter: string;
     letters: string[];
@@ -29,6 +27,11 @@ export const puzzleSelector = selector<PuzzleState>({
 export const puzzleAtom = atom<any>({
     key: 'puzzleAtom',
     default: puzzleSelector
+});
+
+export const puzzleAtom__NEW = atom<any>({
+    key: 'puzzleAtom__NEW',
+    default: {}
 });
 
 export const lettersSelector = selector<string[]>({

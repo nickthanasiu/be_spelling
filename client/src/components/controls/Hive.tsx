@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { centerLetterSelector, lettersAtom, PuzzleState } from '../../recoil/atoms/puzzle';
+import { centerLetterSelector, lettersAtom } from '../../recoil/atoms/puzzle';
 import HiveCell from './HiveCell';
 
 function Hive() {
