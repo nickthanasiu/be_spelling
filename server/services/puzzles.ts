@@ -9,7 +9,7 @@ const getById = async (puzzleId) => {
     return puzzle;
 };
 
-const getAllPuzzleIds = async (): Promise<Partial<TPuzzleResponseObj[]>> => {
+const getOptions = async (): Promise<Partial<TPuzzleResponseObj[]>> => {
     // Returns array of all puzzle dates paired with puzzle _id
     const puzzleDocuments = await Puzzle.find({}, 'date');
     const puzzleObjects = puzzleDocuments.map(pd => pd.toObject());
@@ -43,7 +43,7 @@ const savePuzzle = async (puzzle: TNewPuzzleRequestObj): Promise<void> => {
     });
 };
 
-export default { getById, getRandomPuzzle, savePuzzle, getAllPuzzleIds };
+export default { getById, getRandomPuzzle, savePuzzle, getOptions };
 
 // Helpers
 

@@ -29,6 +29,11 @@ export const puzzleAtom = atom<any>({
     default: puzzleSelector
 });
 
+export const puzzleAtom__NEW = atom<any>({
+    key: 'puzzleAtom__NEW',
+    default: {}
+});
+
 export const lettersSelector = selector<string[]>({
     key: 'lettersSelector',
     get: ({ get }) => {
