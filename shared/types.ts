@@ -1,6 +1,6 @@
 import { Types as MongooseTypes } from "mongoose";
 
-export type TNewPuzzleRequestObj = {
+export type TAddPuzzleRequestBody = {
     date: Date,
     centerLetter: string,
     letters: string[],
@@ -20,3 +20,18 @@ export type TPuzzleResponseObj = {
     // @TODO :: Update rankings type
     rankings?: any,
 }
+
+export type TPuzzleRanking = 
+    'Beginner' 
+    | 'Good Start'
+    | 'Moving Up'
+    | 'Good'
+    | 'Solid'
+    | 'Nice'
+    | 'Great'
+    | 'Amazing'
+    | 'Genius'
+    | 'Queen Bee'
+;
+
+export type TPuzzleRankings = { name: TPuzzleRanking, threshold: number }[];

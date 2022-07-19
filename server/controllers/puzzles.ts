@@ -1,6 +1,8 @@
 import PuzzlesService from '../services/puzzles';
 import { Puzzle } from '../models/Puzzle';
 
+// @TODO :: Add error handling to all controllers!!
+
 const getOptions = async (req, res) => {
     const options = await PuzzlesService.getOptions();
 
@@ -13,22 +15,16 @@ const getById = async (req, res) => {
     res.send({ puzzle });
 };
 
-const getRandomPuzzle = async (req, res) => {
-    //const randomPuzzle = PuzzlesService.getRandomPuzzle();
-    const allPuzzles = await Puzzle.find();
+const getRandom = async (req, res) => {
+    const puzzle = PuzzlesService.getRandom();
 
-    res.send({ puzzle: allPuzzles });
+    res.send({ puzzle });
+}
+ 
+const add = async (req, res) => {
+    const puzzle = await PuzzlesService.add(req.body);
+
+    res.status(201).send({ puzzle });
 }
 
-const addPuzzle = async (req, res, next) => {
-    const puzzle = req.body;
-
-    // @TODO :: Add error handling!!
-
-    // Save new puzzle to db
-    await PuzzlesService.savePuzzle(puzzle);
-
-    res.send('Added successfully');
-}
-
-export default { getById, getRandomPuzzle, addPuzzle, getOptions };
+export default { getOptions, getById, getRandom, add };

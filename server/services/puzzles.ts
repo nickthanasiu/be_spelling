@@ -1,16 +1,14 @@
 import { Puzzle } from '../models/Puzzle';
-import { TNewPuzzleRequestObj, TPuzzleResponseObj } from '../../shared/types';
+import { TAddPuzzleRequestBody, TPuzzleResponseObj } from '../../shared/types';
 
-const getById = async (puzzleId) => {
-    const puzzle = await Puzzle.findById(puzzleId);
-
-    console.log('@@@ puzzle with id 62cb871701d5d92df718bf67 :: ', puzzle);
+const getById = async (id) => {
+    const puzzle = await Puzzle.findById(id);
     
     return puzzle;
 };
 
+// Returns array of all puzzle dates paired with puzzle _id
 const getOptions = async (): Promise<Partial<TPuzzleResponseObj[]>> => {
-    // Returns array of all puzzle dates paired with puzzle _id
     const puzzleDocuments = await Puzzle.find({}, 'date');
     const puzzleObjects = puzzleDocuments.map(pd => pd.toObject());
     const puzzlePartials = puzzleObjects.map(po => ({ ...po, _id: po._id.toString() }));
@@ -18,7 +16,7 @@ const getOptions = async (): Promise<Partial<TPuzzleResponseObj[]>> => {
     return puzzlePartials;
 }
 
-const getRandomPuzzle = async () => {
+const getRandom = async (): Promise<any> => {
     const puzzleChoices = [];
 
     // Return all puzzles from db and add to puzzleChoices array
@@ -30,20 +28,22 @@ const getRandomPuzzle = async () => {
     const randomIdx = Math.floor(Math.random() * puzzleChoices.length);
     const puzzleData = puzzleChoices[randomIdx];
 
-    return buildPuzzle(puzzleData);
+    return {};
 };
 
-const savePuzzle = async (puzzle: TNewPuzzleRequestObj): Promise<void> => {
+const add = async (requestBody: TAddPuzzleRequestBody): Promise<any> => {
+    const puzzle = buildPuzzle(requestBody);
+
     // Create new Puzzle instance
     const newPuzzle = new Puzzle(puzzle);
 
     // Save new puzzle to db
-    await newPuzzle.save((err) => {
-        // console.log('ERROR while saving new puzzle to db :: ', err);
-    });
+    await newPuzzle.save();
+
+    return newPuzzle;
 };
 
-export default { getById, getRandomPuzzle, savePuzzle, getOptions };
+export default { getOptions, getById, getRandom, add };
 
 // Helpers
 

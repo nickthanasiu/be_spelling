@@ -3,7 +3,7 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import ApiClient from '../../api/client';
 import { addPuzzleFormAtom, TAddPuzzleFormState } from '../../recoil/atoms/admin';
-import { TNewPuzzleRequestObj } from '../../../../shared/types';
+import { TAddPuzzleRequestBody } from '../../../../shared/types';
 
 const AddPuzzleForm = () => {
     const [formState, setFormState] = useRecoilState<TAddPuzzleFormState>(addPuzzleFormAtom);
@@ -13,10 +13,10 @@ const AddPuzzleForm = () => {
         setFormState({ ...formState, [e.target.name]: e.target.value });
     }
 
-    const formatPuzzleRequestObject = (formState: TAddPuzzleFormState): TNewPuzzleRequestObj => {
+    const formatPuzzleRequestObject = (formState: TAddPuzzleFormState): TAddPuzzleRequestBody => {
         let { date, centerLetter, letters, pangrams, words } = formState;
 
-        const requestObject: TNewPuzzleRequestObj = {
+        const requestObject: TAddPuzzleRequestBody = {
             date: new Date(date),
             centerLetter,
             letters: letters.split(""),
@@ -30,6 +30,7 @@ const AddPuzzleForm = () => {
     const submit = async () => {
         const requestObject = formatPuzzleRequestObject(formState);
 
+        // @TODO :: Should display added puzzle on add puzzle form page
         await ApiClient.post('/puzzles', requestObject);
 
         resetFormState();
