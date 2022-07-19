@@ -1,9 +1,23 @@
 import PuzzlesService from '../services/puzzles';
+import { Puzzle } from '../models/Puzzle';
 
-const getRandomPuzzle = (req, res) => {
-    const randomPuzzle = PuzzlesService.getRandomPuzzle();
+const getAllPuzzleIds = async (req, res) => {
+    const ids = await PuzzlesService.getAllPuzzleIds();
 
-    res.send({ puzzle: randomPuzzle });
+    res.send({ ids });
+};
+
+const getById = async (req, res) => {
+    const puzzle = await PuzzlesService.getById(req.params.id);
+
+    res.send({ puzzle });
+};
+
+const getRandomPuzzle = async (req, res) => {
+    //const randomPuzzle = PuzzlesService.getRandomPuzzle();
+    const allPuzzles = await Puzzle.find();
+
+    res.send({ puzzle: allPuzzles });
 }
 
 const addPuzzle = async (req, res, next) => {
@@ -17,4 +31,4 @@ const addPuzzle = async (req, res, next) => {
     res.send('Added successfully');
 }
 
-export default { getRandomPuzzle, addPuzzle };
+export default { getById, getRandomPuzzle, addPuzzle, getAllPuzzleIds };

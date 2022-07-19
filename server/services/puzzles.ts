@@ -1,5 +1,22 @@
 import { Puzzle } from '../models/Puzzle';
-import { TNewPuzzleRequestObj } from '../../shared/types';
+import { TNewPuzzleRequestObj, TPuzzleResponseObj } from '../../shared/types';
+
+const getById = async (puzzleId) => {
+    const puzzle = await Puzzle.findById(puzzleId);
+
+    console.log('@@@ puzzle with id 62cb871701d5d92df718bf67 :: ', puzzle);
+    
+    return puzzle;
+};
+
+const getAllPuzzleIds = async (): Promise<Partial<TPuzzleResponseObj[]>> => {
+    // Returns array of all puzzle dates paired with puzzle _id
+    const puzzleDocuments = await Puzzle.find({}, 'date');
+    const puzzleObjects = puzzleDocuments.map(pd => pd.toObject());
+    const puzzlePartials = puzzleObjects.map(po => ({ ...po, _id: po._id.toString() }));
+
+    return puzzlePartials;
+}
 
 const getRandomPuzzle = async () => {
     const puzzleChoices = [];
@@ -22,11 +39,11 @@ const savePuzzle = async (puzzle: TNewPuzzleRequestObj): Promise<void> => {
 
     // Save new puzzle to db
     await newPuzzle.save((err) => {
-        console.log('ERROR while saving new puzzle to db :: ', err);
+        // console.log('ERROR while saving new puzzle to db :: ', err);
     });
 };
 
-export default { getRandomPuzzle, savePuzzle };
+export default { getById, getRandomPuzzle, savePuzzle, getAllPuzzleIds };
 
 // Helpers
 

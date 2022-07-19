@@ -5,7 +5,10 @@ const PuzzleSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         auto: true,
     },
-    date: Date,
+    date: {
+        type: Date,
+        required: true
+    },
     centerLetter: String,
     letters: [String],
     pangrams: [String],
