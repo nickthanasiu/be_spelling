@@ -2,21 +2,21 @@ import { ChangeEvent } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import ApiClient from '../../api/client';
-import { addPuzzleFormAtom, TAddPuzzleFormState } from '../../recoil/atoms/admin';
-import { TAddPuzzleRequestBody } from '../../../../shared/types';
+import { addPuzzleFormAtom, AddPuzzleFormState } from '../../recoil/atoms/admin';
+import { AddPuzzleRequestBody } from '../../../../shared/types';
 
 const AddPuzzleForm = () => {
-    const [formState, setFormState] = useRecoilState<TAddPuzzleFormState>(addPuzzleFormAtom);
+    const [formState, setFormState] = useRecoilState<AddPuzzleFormState>(addPuzzleFormAtom);
     const resetFormState = useResetRecoilState(addPuzzleFormAtom);
     
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormState({ ...formState, [e.target.name]: e.target.value });
     }
 
-    const formatPuzzleRequestObject = (formState: TAddPuzzleFormState): TAddPuzzleRequestBody => {
+    const formatPuzzleRequestObject = (formState: AddPuzzleFormState): AddPuzzleRequestBody => {
         let { date, centerLetter, letters, pangrams, words } = formState;
 
-        const requestObject: TAddPuzzleRequestBody = {
+        const requestObject: AddPuzzleRequestBody = {
             date: new Date(date),
             centerLetter,
             letters: letters.split(""),

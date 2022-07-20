@@ -1,8 +1,6 @@
-import { setDefaultResultOrder } from 'dns/promises';
 import { useState, Dispatch, ReactElement, SetStateAction } from 'react';
 import { useRecoilValueLoadable } from 'recoil';
 import styled from 'styled-components';
-import { TPuzzleResponseObj } from '../../../../shared/types';
 import { puzzleAtom } from '../../recoil/atoms/puzzle';
 import LoadingAnimation from './LoadingAnimation';
 import ApiClient from '../../api/client';

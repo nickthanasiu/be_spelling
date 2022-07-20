@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-export type TAddPuzzleFormState = {
+export type AddPuzzleFormState = {
     date: string,
     centerLetter: string,
     letters: string,
@@ -8,7 +8,7 @@ export type TAddPuzzleFormState = {
     words: string,
 }
 
-export const addPuzzleFormAtom = atom<TAddPuzzleFormState>({
+export const addPuzzleFormAtom = atom<AddPuzzleFormState>({
     key: 'addPuzzleFormAtom',
     default: {
         date: '',

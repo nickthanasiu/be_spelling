@@ -1,6 +1,4 @@
-import { Types as MongooseTypes } from "mongoose";
-
-export type TAddPuzzleRequestBody = {
+export type AddPuzzleRequestBody = {
     date: Date,
     centerLetter: string,
     letters: string[],
@@ -8,7 +6,7 @@ export type TAddPuzzleRequestBody = {
     words: string[],
 }
 
-export type TPuzzleResponseObj = {
+export type PuzzleResponseObj = {
     _id: string,
     // @TODO :: Date should be required...update puzzles in database to reflect this
     date?: Date,
@@ -21,7 +19,7 @@ export type TPuzzleResponseObj = {
     rankings?: any,
 }
 
-export type TPuzzleRanking = 
+export type PuzzleRankingLevel = 
     'Beginner' 
     | 'Good Start'
     | 'Moving Up'
@@ -34,4 +32,4 @@ export type TPuzzleRanking =
     | 'Queen Bee'
 ;
 
-export type TPuzzleRankings = { name: TPuzzleRanking, threshold: number }[];
+export type PuzzleRanking = { name: PuzzleRankingLevel, threshold: number };

@@ -3,16 +3,16 @@ import { useRecoilValue } from 'recoil';
 import { centerLetterSelector, lettersAtom } from '../../recoil/atoms/puzzle';
 import HiveCell from './HiveCell';
 
-function Hive() {
-    const letters = useRecoilValue(lettersAtom);
-    const centerLetter = useRecoilValue(centerLetterSelector);
-    
+const Hive = () => {
+    const letters = useRecoilValue<string[]>(lettersAtom);
+    const centerLetter = useRecoilValue<string>(centerLetterSelector);
+        
     return (
         <StyledHiveWrapper>
             <StyledHive className="hive">
                 <HiveCell letter={centerLetter} isCenter />
-                {letters.map((letter: any) => (
-                    <HiveCell letter={letter} />
+                {letters.map((letter, i) => (
+                    <HiveCell key={i} letter={letter} />
                 ))}
             </StyledHive>
         </StyledHiveWrapper>

@@ -1,5 +1,5 @@
 import { Puzzle } from '../models/Puzzle';
-import { TAddPuzzleRequestBody, TPuzzleResponseObj } from '../../shared/types';
+import { AddPuzzleRequestBody, PuzzleResponseObj } from '../../shared/types';
 
 const getById = async (id) => {
     const puzzle = await Puzzle.findById(id);
@@ -8,7 +8,7 @@ const getById = async (id) => {
 };
 
 // Returns array of all puzzle dates paired with puzzle _id
-const getOptions = async (): Promise<Partial<TPuzzleResponseObj[]>> => {
+const getOptions = async (): Promise<Partial<PuzzleResponseObj[]>> => {
     const puzzleDocuments = await Puzzle.find({}, 'date');
     const puzzleObjects = puzzleDocuments.map(pd => pd.toObject());
     const puzzlePartials = puzzleObjects.map(po => ({ ...po, _id: po._id.toString() }));
@@ -31,7 +31,7 @@ const getRandom = async (): Promise<any> => {
     return {};
 };
 
-const add = async (requestBody: TAddPuzzleRequestBody): Promise<any> => {
+const add = async (requestBody: AddPuzzleRequestBody): Promise<any> => {
     const puzzle = buildPuzzle(requestBody);
 
     // Create new Puzzle instance

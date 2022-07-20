@@ -1,15 +1,15 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { inputState, inputTouchedAtom } from '../../recoil/atoms/input';
+import { inputAtom, inputTouchedAtom } from '../../recoil/atoms/input';
 import { useCreateLetterObj } from '../../hooks/useCreateLetterObj';
 
-type HiveCellProps = {
+interface HiveCellProps {
     letter: string,
     isCenter?: boolean,
 }
-const HiveCell: FunctionComponent<HiveCellProps> = ({ letter, isCenter }) => {
-    const [inputVal, setInputVal] = useRecoilState(inputState);
+const HiveCell = ({ letter, isCenter }: HiveCellProps) => {
+    const [inputState, setInputState] = useRecoilState(inputAtom);
     const [inputTouched, setInputTouched] = useRecoilState(inputTouchedAtom);
 
     const createLetterObj = useCreateLetterObj();
@@ -22,7 +22,7 @@ const HiveCell: FunctionComponent<HiveCellProps> = ({ letter, isCenter }) => {
 
         const newLetterObj = createLetterObj(text);
 
-        setInputVal([...inputVal, newLetterObj]);
+        setInputState([...inputState, newLetterObj]);
         
         if (!inputTouched) {
             setInputTouched(true);

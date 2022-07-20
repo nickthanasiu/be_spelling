@@ -1,9 +1,9 @@
-import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { foundWordsAtom } from '../recoil/atoms/foundWords';
 import { puzzleAtom } from '../recoil/atoms/puzzle';
 import { InvalidWordMessage } from '../recoil/atoms/messageBox';
 
-interface IWordValidation {
+interface WordValidation {
     isValid: boolean;
     errorMessage: InvalidWordMessage | "";
     isPangram: boolean;
@@ -11,14 +11,12 @@ interface IWordValidation {
 
 export const useWordValidator = () => {
     const foundWords = useRecoilValue(foundWordsAtom);
-    const puzzleLoadable = useRecoilValueLoadable(puzzleAtom);
-
-    const puzzle = puzzleLoadable.contents.puzzle;
+    const puzzle = useRecoilValue(puzzleAtom);
     const pangrams = puzzle.pangrams;
     const words = puzzle.words;
     const centerLetter = puzzle.centerLetter;
 
-    const wordValidator = (word: string): IWordValidation => {
+    const wordValidator = (word: string): WordValidation => {
         const isAlreadyFound = foundWords.includes(word);
         const isPangram = pangrams.includes(word);
         const isInWordList = isPangram || words.includes(word);

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { TPuzzleRankings } from "../../shared/types";
+import { PuzzleRanking } from "../../shared/types";
 
 const PuzzleSchema = new mongoose.Schema({
     _id: {
@@ -27,7 +27,7 @@ const PuzzleSchema = new mongoose.Schema({
         required: true
     },
     rankings: {
-        type: [] as TPuzzleRankings,
+        type: [] as PuzzleRanking[],
         required: true
     }
 });

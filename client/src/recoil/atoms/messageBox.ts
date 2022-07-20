@@ -6,16 +6,16 @@ export type InvalidInputMessage = "Too short" | "Bad letters";
 export type ErrorMessage = InvalidInputMessage | InvalidWordMessage;
 export type SuccessMessage = "Pangram!" | "Good!" | "Nice!" | "Awesome!";
 
-export type TMessageBoxMessage = ErrorMessage | SuccessMessage | '';
+export type MessageBoxMessage = ErrorMessage | SuccessMessage | '';
 
-export interface IMessageBoxAtom {
+export interface MessageBoxAtom {
     visible: boolean;
-    message: TMessageBoxMessage;
+    message: MessageBoxMessage;
     isError: boolean;
     isPangram: boolean;
 }
 
-export const messageBoxAtom = atom<IMessageBoxAtom>({
+export const messageBoxAtom = atom<MessageBoxAtom>({
     key: 'messageBoxAtom',
     default: {
         visible: false,
