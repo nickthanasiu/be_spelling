@@ -1,5 +1,6 @@
-import { atom, selector } from 'recoil';
-import { PuzzleRanking } from "../../../../shared/types";
+import { atom, selector } from "recoil";
+import ApiClient from "../../api/client";
+import { PuzzleRanking, PuzzleOption } from "../../../../shared/types";
 
 export interface PuzzleState {
     date: string;
@@ -9,6 +10,23 @@ export interface PuzzleState {
     words: string[];
     rankings: PuzzleRanking[];
 };
+
+export const puzzleOptionsSelector = selector<PuzzleOption[]>({
+    key: 'puzzleOptionsSelector',
+    get: async (): Promise<PuzzleOption[]> => {
+        return await ApiClient.get('/puzzles');
+    },
+    set: ({ set, get }, data) => {
+        const currState = get(puzzleOptionsAtom);
+        const nextState = { ...currState, ...data };
+        set(puzzleOptionsAtom, nextState);
+    }
+});
+
+export const puzzleOptionsAtom = atom<PuzzleOption[]>({
+    key: 'puzzleOptionsAtom',
+    default: puzzleOptionsSelector
+});
 
 export const puzzleAtom = atom<PuzzleState>({
     key: 'puzzleAtom',

@@ -1,11 +1,11 @@
 import { useRecoilValueLoadable } from 'recoil';
 import styled from 'styled-components';
-import { puzzleAtom } from '../recoil/atoms/puzzle';
+import { puzzleOptionsAtom } from '../recoil/atoms/puzzle';
 import LoadingAnimation from './loading/LoadingAnimation';
 import PuzzleSelectForm from './PuzzleSelectForm';
 
 const LandingPage = () => {
-    const { state, contents } = useRecoilValueLoadable(puzzleAtom);
+    const { state, contents } = useRecoilValueLoadable(puzzleOptionsAtom);
     const loading = state === 'loading';
 
     return (
@@ -18,6 +18,7 @@ const LandingPage = () => {
                             NYT Spelling Bee
                         </a>
                     </h2>
+                    
                     <PuzzleSelectForm options={contents.puzzle_options} />
                 </ContentContainer>
             )}
