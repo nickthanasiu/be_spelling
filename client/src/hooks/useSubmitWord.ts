@@ -2,7 +2,7 @@ import { useRecoilState, useSetRecoilState, useRecoilValue, useResetRecoilState 
 
 import { 
     inputAtom,
-    inputStringSelector,
+    inputWordSelector,
     foundWordsAtom,
     messageBoxAtom,
     prevWordScoreAtom,
@@ -15,20 +15,16 @@ import { useWordValidator } from "./useWordValidator";
 
 // @TODO :: Refactor
 export const useSubmitWord = () => {
-    const [inputState, setInputState] = useRecoilState(inputAtom);
-    const [foundWordsList, setFoundWordsList] = useRecoilState(foundWordsAtom);
-    const newWord = useRecoilValue(inputStringSelector);
-    const setMessageBoxState = useSetRecoilState(messageBoxAtom);
-    const validateWord = useWordValidator();
+    const inputState = useRecoilValue(inputAtom);
+    const inputWord = useRecoilValue(inputWordSelector);
+
     const clearInput = useResetRecoilState(inputAtom);
+    const validateWord = useWordValidator();
+
+    const [foundWordsList, setFoundWordsList] = useRecoilState(foundWordsAtom);
+    const setMessageBoxState = useSetRecoilState(messageBoxAtom);
     const setPrevWordScore = useSetRecoilState(prevWordScoreAtom);
     const [totalScore, setTotalScore] = useRecoilState(totalScoreAtom);
-
-    const delay = (ms: number, cb: () => any) => {
-        setTimeout(() => {
-            cb();
-        }, ms);
-    };
 
     const hideMessageBox = () => {
         setMessageBoxState({
@@ -47,7 +43,9 @@ export const useSubmitWord = () => {
             isPangram,
         });
 
-        delay(1000, hideMessageBox);
+        setTimeout(() => {
+            hideMessageBox()
+        }, 1000);
     };
 
     const showErrorMessage = (errorMessage: ErrorMessage | "") => {
@@ -81,8 +79,6 @@ export const useSubmitWord = () => {
         // Do not attempt to submit input if empty
         if (!inputState.length) return;
 
-        console.log('@@@ submit inputState :: ', inputState);
-
         // Clear input before anything else
         clearInput();
 
@@ -93,7 +89,7 @@ export const useSubmitWord = () => {
             return;
         }
 
-        const wordValidation = validateWord(newWord);
+        const wordValidation = validateWord(inputWord);
 
         if (!wordValidation.isValid) {
             showErrorMessage(wordValidation.errorMessage);
@@ -101,17 +97,17 @@ export const useSubmitWord = () => {
         }
 
         // If input is valid and word is valid, we can add the word to foundWordsList
-        setFoundWordsList([...foundWordsList, newWord]);
+        setFoundWordsList([...foundWordsList, inputWord]);
 
         // Calculate score and update prevWordScore state
-        const prevWordScore = calculatePrevWordsScore(newWord, wordValidation.isPangram);
+        const prevWordScore = calculatePrevWordsScore(inputWord, wordValidation.isPangram);
         setPrevWordScore(prevWordScore);
 
         // Use prevWordScore to update totalScore
         setTotalScore(totalScore + prevWordScore);
 
         // Generate message
-        const successMessage = getSuccessMessage(newWord.length, wordValidation.isPangram);
+        const successMessage = getSuccessMessage(inputWord.length, wordValidation.isPangram);
         showSuccessMessage(successMessage, wordValidation.isPangram);
     };
 
