@@ -1,9 +1,9 @@
-import { useState, Dispatch, ReactElement, SetStateAction } from 'react';
-import { useRecoilValueLoadable } from 'recoil';
-import styled from 'styled-components';
-import { puzzleAtom } from '../../recoil/atoms/puzzle';
-import LoadingAnimation from './LoadingAnimation';
-import ApiClient from '../../api/client';
+import { useState, Dispatch, ReactElement, SetStateAction } from "react";
+import { useRecoilValueLoadable } from "recoil";
+import styled from "styled-components";
+import { puzzleAtom } from "../../state";
+import LoadingAnimation from "./LoadingAnimation";
+import ApiClient from "../../api/client";
 
 interface ILoadingPageProps {
     updateGameStarted: Dispatch<SetStateAction<boolean>>;

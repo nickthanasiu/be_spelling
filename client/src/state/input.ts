@@ -1,14 +1,9 @@
-import { atom, selector } from 'recoil';
+import { atom, selector } from "recoil";
+import { InputState } from "./types";
 
-export type LetterObj = {
-    letter: string;
-    isValid: boolean;
-    isCenterLetter: boolean;
-}
-
-export const inputAtom = atom<LetterObj[]>({
+export const inputAtom = atom<InputState>({
     key: 'inputAtom',
-    default: [] as LetterObj[]
+    default: [] as InputState
 });
 
 export const inputStringSelector = selector({

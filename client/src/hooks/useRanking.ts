@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
-import { PuzzleRankingLevel } from '../../../shared/types';
-import { puzzleAtom } from '../recoil/atoms/puzzle';
-import { totalScoreAtom } from '../recoil/atoms/score';
+import { useState, useEffect } from "react";
+import { useRecoilValue } from "recoil";
+import { PuzzleRankingLevel } from "../../../shared/types";
+import { puzzleAtom, totalScoreAtom } from "../state";
+
 
 export const useRanking = (): PuzzleRankingLevel => {
 

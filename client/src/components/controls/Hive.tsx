@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import { centerLetterSelector, lettersAtom } from '../../recoil/atoms/puzzle';
+import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { lettersSelector, centerLetterSelector } from "../../state";
 import HiveCell from './HiveCell';
 
 const Hive = () => {
-    const letters = useRecoilValue<string[]>(lettersAtom);
-    const centerLetter = useRecoilValue<string>(centerLetterSelector);
+    const letters = useRecoilValue(lettersSelector);
+    const centerLetter = useRecoilValue(centerLetterSelector);
         
     return (
         <StyledHiveWrapper>

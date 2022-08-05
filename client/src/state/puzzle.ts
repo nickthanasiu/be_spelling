@@ -1,15 +1,8 @@
 import { atom, selector } from "recoil";
-import ApiClient from "../../api/client";
-import { PuzzleRanking, PuzzleOption } from "../../../../shared/types";
+import ApiClient from "../api/client";
+import { PuzzleOption } from "../../../shared/types";
+import { PuzzleState } from "./types";
 
-export interface PuzzleState {
-    date: string;
-    centerLetter: string;
-    letters: string[];
-    pangrams: string[];
-    words: string[];
-    rankings: PuzzleRanking[];
-};
 
 export const puzzleOptionsSelector = selector<PuzzleOption[]>({
     key: 'puzzleOptionsSelector',
@@ -33,12 +26,12 @@ export const puzzleAtom = atom<PuzzleState>({
     default: {} as PuzzleState
 });
 
-export const lettersSelector = selector<string[]>({
+export const lettersSelector = selector({
     key: 'lettersSelector',
     get: ({ get }) => {
-        const puzzle = get(puzzleAtom);
+        const { letters } = get(puzzleAtom);
 
-        return puzzle.letters;
+        return letters;
     }
 });
 
@@ -50,8 +43,8 @@ export const lettersAtom = atom<string[]>({
 export const centerLetterSelector = selector({
     key: 'centerLetterSelector',
     get: ({ get }) => {
-        const puzzle = get(puzzleAtom);
+        const { centerLetter } = get(puzzleAtom);
 
-        return puzzle.centerLetter;
+        return centerLetter;
     }
 });

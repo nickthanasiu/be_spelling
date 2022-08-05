@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import { totalScoreAtom } from '../../recoil/atoms/score';
-import { PuzzleRankingLevel } from '../../../../shared/types';
-import { useRanking } from '../../hooks/useRanking';
+import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { totalScoreAtom } from "../../state";
+import { PuzzleRankingLevel } from "../../../../shared/types";
+import { useRanking } from "../../hooks/useRanking";
 
 
 function ScoreMarker() {

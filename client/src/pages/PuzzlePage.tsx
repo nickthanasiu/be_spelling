@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilState,  } from "recoil";
 import ApiClient from "../api/client";
-import { puzzleAtom } from "../recoil/atoms/puzzle";
+import { puzzleAtom } from "../state";
 import GameField from "../components/GameField";
 import LoadingAnimation from "../components/loading/LoadingAnimation";
 
@@ -22,7 +22,11 @@ const PuzzlePage = () => {
         getPuzzleById();
     }, [id]);
 
-    return !loaded ? <LoadingAnimation /> : <GameField />;
+    return (
+        <>
+            {!loaded ? <LoadingAnimation /> : <GameField />}
+        </>
+    );
 };
 
 export default PuzzlePage;

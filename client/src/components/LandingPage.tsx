@@ -1,8 +1,8 @@
-import { useRecoilValueLoadable } from 'recoil';
-import styled from 'styled-components';
-import { puzzleOptionsAtom } from '../recoil/atoms/puzzle';
-import LoadingAnimation from './loading/LoadingAnimation';
-import PuzzleSelectForm from './PuzzleSelectForm';
+import { useRecoilValueLoadable } from "recoil";
+import styled from "styled-components";
+import { puzzleOptionsAtom } from "../state";
+import LoadingAnimation from "./loading/LoadingAnimation";
+import PuzzleSelectForm from "./PuzzleSelectForm";
 
 const LandingPage = () => {
     const { state, contents } = useRecoilValueLoadable(puzzleOptionsAtom);

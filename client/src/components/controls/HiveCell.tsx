@@ -1,28 +1,24 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
-import { inputAtom, inputTouchedAtom } from '../../recoil/atoms/input';
-import { useCreateLetterObj } from '../../hooks/useCreateLetterObj';
+import React from "react";
+import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import { inputTouchedAtom } from "../../state";
+import { useUpdateInputState } from "../../hooks/useUpdateInputState";
 
 interface HiveCellProps {
     letter: string,
     isCenter?: boolean,
 }
 const HiveCell = ({ letter, isCenter }: HiveCellProps) => {
-    const [inputState, setInputState] = useRecoilState(inputAtom);
+    const updateInputState = useUpdateInputState();
     const [inputTouched, setInputTouched] = useRecoilState(inputTouchedAtom);
 
-    const createLetterObj = useCreateLetterObj();
-    
     const onClick = ({ target }: React.MouseEvent<SVGSVGElement>) => {
       
         const polygon = target as HTMLElement;
         const textElement = polygon.nextElementSibling as SVGTextElement;
         const text = textElement.textContent as string;
 
-        const newLetterObj = createLetterObj(text);
-
-        setInputState([...inputState, newLetterObj]);
+        updateInputState(text);
         
         if (!inputTouched) {
             setInputTouched(true);

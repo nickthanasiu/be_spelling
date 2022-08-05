@@ -1,11 +1,17 @@
-import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
-import { foundWordsAtom } from '../recoil/atoms/foundWords';
-import { inputAtom, inputStringSelector} from "../recoil/atoms/input";
-import { ErrorMessage, messageBoxAtom } from '../recoil/atoms/messageBox';
-import { prevWordScoreAtom, totalScoreAtom } from '../recoil/atoms/score';
-import { validateInput } from '../utils/validateInput';
-import { useWordValidator } from './useWordValidator';
-import { SuccessMessage } from '../recoil/atoms/messageBox';
+import { useRecoilState, useSetRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+
+import { 
+    inputAtom,
+    inputStringSelector,
+    foundWordsAtom,
+    messageBoxAtom,
+    prevWordScoreAtom,
+    totalScoreAtom,
+} from "../state";
+import { ErrorMessage, SuccessMessage } from "../state/types";
+
+import { validateInput } from "../utils/validateInput";
+import { useWordValidator } from "./useWordValidator";
 
 // @TODO :: Refactor
 export const useSubmitWord = () => {
@@ -14,6 +20,7 @@ export const useSubmitWord = () => {
     const newWord = useRecoilValue(inputStringSelector);
     const setMessageBoxState = useSetRecoilState(messageBoxAtom);
     const validateWord = useWordValidator();
+    const clearInput = useResetRecoilState(inputAtom);
     const setPrevWordScore = useSetRecoilState(prevWordScoreAtom);
     const [totalScore, setTotalScore] = useRecoilState(totalScoreAtom);
 
@@ -74,8 +81,10 @@ export const useSubmitWord = () => {
         // Do not attempt to submit input if empty
         if (!inputState.length) return;
 
+        console.log('@@@ submit inputState :: ', inputState);
+
         // Clear input before anything else
-        setInputState([]);
+        clearInput();
 
         const inputValidation = validateInput(inputState);
 

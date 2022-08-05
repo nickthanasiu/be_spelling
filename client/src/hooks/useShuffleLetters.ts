@@ -1,5 +1,5 @@
-import { useRecoilState } from 'recoil';
-import { lettersAtom } from '../recoil/atoms/puzzle';
+import { useRecoilState } from "recoil";
+import { lettersAtom } from "../state";
 
 export const useShuffleLetters = () => {
     const [letters, updateLetters] = useRecoilState(lettersAtom);

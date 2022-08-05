@@ -1,6 +1,6 @@
-import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
-import { addPuzzleFormAtom } from '../../recoil/atoms/admin';
+import { useRecoilValue } from "recoil";
+import styled from "styled-components";
+import { addPuzzleFormAtom } from "../../state";
 
 const AddPuzzlePreview = () => {
 
