@@ -1,12 +1,8 @@
-import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import { prevWordScoreAtom } from '../../recoil/atoms/score';
+import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { prevWordScoreAtom } from "../../state";
 
-interface IPrevWordScoreProps {
-    isError: boolean;
-}
-
-function PrevWordScore({ isError }: IPrevWordScoreProps) {
+const PrevWordScore = ({ isError }: { isError: boolean }) => {
     const prevWordScore = useRecoilValue(prevWordScoreAtom);
 
     return (

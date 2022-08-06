@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import styled, { css, keyframes } from 'styled-components';
-import { useRecoilState } from 'recoil';
-import { inputState, inputTouchedAtom, LetterObj } from '../../recoil/atoms/input';
-import { useCreateLetterObj } from '../../hooks/useCreateLetterObj';
-import { useBackspace } from '../../hooks/useBackspace';
-import { useShuffleLetters } from '../../hooks/useShuffleLetters';
-import { useKeyPressListener } from '../../hooks/useKeyPressListener';
-import { useSubmitWord } from '../../hooks/useSubmitWord';
-import { isCharacterLetter } from '../../utils/isCharacterLetter';
-import Letter from './Letter';
+import React from "react";
+import styled, { css, keyframes } from "styled-components";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { inputAtom, inputTouchedAtom } from "../../state";
+import { useUpdateInputState } from "../../hooks/useUpdateInputState";
+import { useBackspace } from "../../hooks/useBackspace";
+import { useShuffleLetters } from "../../hooks/useShuffleLetters";
+import { useKeyPressListener } from "../../hooks/useKeyPressListener";
+import { useSubmitWord } from "../../hooks/useSubmitWord";
+import { isCharacterLetter } from "../../utils/isCharacterLetter";
+import Letter from "./Letter";
 
 
-function HiveInput() {
-    const [inputVal, setInputVal] = useRecoilState(inputState);
+const HiveInput = () => {
+    const inputState = useRecoilValue(inputAtom);
+    const updateInputState = useUpdateInputState();
     const [inputTouched, setInputTouched]=  useRecoilState(inputTouchedAtom);
-    const hasContent = inputVal.length > 0;
+    const hasContent = inputState.length > 0;
 
-    const createLetterObj = useCreateLetterObj();
     const backspace = useBackspace();
     const shuffle = useShuffleLetters();
     const submit = useSubmitWord();
@@ -47,9 +47,15 @@ function HiveInput() {
 
         } else if (isCharacterLetter(key)) {
 
+            /*
+
             const newLetterObj = createLetterObj(key);
 
-            setInputVal([...inputVal, newLetterObj]);
+            setInputState([...inputState, newLetterObj]);
+
+            */
+            
+            updateInputState(key);
 
             if (!inputTouched) {
                 setInputTouched(true);
@@ -68,7 +74,7 @@ function HiveInput() {
             
             <InputContent className="hive-input-content" hasContent={hasContent}>
                 {!inputTouched && <InputPlaceholder>Type or click</InputPlaceholder>}
-                {inputVal.map((letterObj: LetterObj) => (
+                {inputState.map((letterObj) => (
                     <Letter letterObj={letterObj} />
                 ))}
             </InputContent>

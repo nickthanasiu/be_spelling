@@ -1,15 +1,54 @@
-import { Dispatch, ReactElement, SetStateAction } from 'react';
-import { useRecoilValueLoadable } from 'recoil';
-import styled from 'styled-components';
-import { puzzleAtom } from '../../recoil/atoms/puzzle';
-import LoadingAnimation from './LoadingAnimation';
+import { useState, Dispatch, ReactElement, SetStateAction } from "react";
+import { useRecoilValueLoadable } from "recoil";
+import styled from "styled-components";
+import { puzzleAtom } from "../../state";
+import LoadingAnimation from "./LoadingAnimation";
+import ApiClient from "../../api/client";
 
 interface ILoadingPageProps {
     updateGameStarted: Dispatch<SetStateAction<boolean>>;
 }
 
+interface IPuzzleSelectMenuProps {
+    options: { _id: string, date: Date }[]
+}
+
+const PuzzleMenu = ({ options }: IPuzzleSelectMenuProps) => {
+    const [selectedPuzzleId, setSelectedPuzzleId] = useState('');
+
+    const handleChange = (e: any) => {
+        setSelectedPuzzleId(e.target.value);
+    };
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        
+        const response = await ApiClient.get(`/puzzles/${selectedPuzzleId}`);
+        console.log('@@@ API response :: ', response);
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <select name="puzzles" id="puzzles" defaultValue="" onChange={handleChange}>
+                <option value="" disabled>Select date</option>
+
+                {options.map((option) => {
+                    const date = new Date(option.date);
+                    const formattedDate = date.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+                    return (
+                        <option value={option._id}>{formattedDate}</option>
+                    )
+                })}
+            </select>
+
+            <button type="submit" disabled={selectedPuzzleId === ''}>Submit</button>
+        </form>
+    );
+};
+
 function LoadingPage({ updateGameStarted }: ILoadingPageProps): ReactElement {
-    const { state } = useRecoilValueLoadable(puzzleAtom);
+    const { state, contents } = useRecoilValueLoadable(puzzleAtom);
     const loading = state === 'loading';
 
     return (
@@ -23,6 +62,7 @@ function LoadingPage({ updateGameStarted }: ILoadingPageProps): ReactElement {
                         </a>
                     </h2>
                     <PlayButton onClick={() => updateGameStarted(true)}>Play</PlayButton>
+                    <PuzzleMenu options={contents.puzzle_options} />
                 </ContentContainer>
             )}
         </StyledLoadingPage>

@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { LetterObj } from '../../recoil/atoms/input';
+import styled from "styled-components";
+import { LetterObj } from "../../state/types";
 
 interface LetterProps {
     letterObj: LetterObj
@@ -14,7 +14,6 @@ function Letter({ letterObj }: LetterProps) {
 }
 
 const yellow = '#f7da21';
-const lightGray = '#dcdcdc';
 
 const StyledLetter = styled.span<LetterProps>`
     color: ${props => props.letterObj.isCenterLetter ? yellow : props.letterObj.isValid ? "#fff" : 'gray' };

@@ -1,16 +1,15 @@
-import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import { totalScoreAtom } from '../../recoil/atoms/score';
-import { RankingType } from './Progress';
+import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { totalScoreAtom } from "../../state";
+import { PuzzleRankingLevel } from "../../../../shared/types";
+import { useRanking } from "../../hooks/useRanking";
 
-interface IScoreMarkerProps {
-    ranking: RankingType;
-}
 
-function ScoreMarker({ ranking }: IScoreMarkerProps) {
+function ScoreMarker() {
     const userScore = useRecoilValue(totalScoreAtom);
+    const ranking = useRanking();
 
-    const calculatePosition = (ranking: RankingType) => {
+    const calculatePosition = (ranking: PuzzleRankingLevel) => {
         switch (ranking) {
             case 'Good Start':
                 return 1/8;

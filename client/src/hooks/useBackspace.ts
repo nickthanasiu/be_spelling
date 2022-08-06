@@ -1,11 +1,11 @@
-import { useRecoilState } from 'recoil';
-import { inputState } from "../recoil/atoms/input";
+import { useRecoilState } from "recoil";
+import { inputAtom } from "../state";
 
 export const useBackspace = () => {
-    const [inputVal, setInputVal] = useRecoilState(inputState);
+    const [inputState, setInputState] = useRecoilState(inputAtom);
 
     function backspace() {
-        setInputVal([...inputVal.slice(0, -1)]);
+        setInputState([...inputState.slice(0, -1)]);
     }
 
     return backspace;

@@ -1,8 +1,8 @@
-import styled, { css } from 'styled-components';
-import { device } from '../../styles/device';
-import { useRecoilValue } from 'recoil';
-import { messageBoxAtom } from '../../recoil/atoms/messageBox';
-import PrevWordScore from './PrevWordScore';
+import styled, { css } from "styled-components";
+import { device } from "../../styles/device";
+import { useRecoilValue } from "recoil";
+import { messageBoxAtom } from "../../state";
+import PrevWordScore from "./PrevWordScore";
 
 function MessageBox() {
     const { visible, message, isError, isPangram } = useRecoilValue(messageBoxAtom);

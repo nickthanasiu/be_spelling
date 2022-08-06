@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useBackspace } from '../../hooks/useBackspace';
-import { useShuffleLetters } from '../../hooks/useShuffleLetters';
-import { useSubmitWord } from '../../hooks/useSubmitWord';
+import React from "react";
+import styled from "styled-components";
+import { useBackspace } from "../../hooks/useBackspace";
+import { useShuffleLetters } from "../../hooks/useShuffleLetters";
+import { useSubmitWord } from "../../hooks/useSubmitWord";
 
 interface HiveActionButtonProps {
     actionType: 'SUBMIT' | 'DELETE' | 'SHUFFLE';

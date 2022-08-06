@@ -1,9 +1,8 @@
-import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
-import { foundWordsAtom } from '../recoil/atoms/foundWords';
-import { puzzleAtom } from '../recoil/atoms/puzzle';
-import { InvalidWordMessage } from '../recoil/atoms/messageBox';
+import { useRecoilValue } from "recoil";
+import { foundWordsAtom, puzzleAtom } from "../state";
+import { InvalidWordMessage } from "../state/types";
 
-interface IWordValidation {
+interface WordValidation {
     isValid: boolean;
     errorMessage: InvalidWordMessage | "";
     isPangram: boolean;
@@ -11,22 +10,20 @@ interface IWordValidation {
 
 export const useWordValidator = () => {
     const foundWords = useRecoilValue(foundWordsAtom);
-    const puzzleLoadable = useRecoilValueLoadable(puzzleAtom);
-
-    const puzzle = puzzleLoadable.contents.puzzle;
+    const puzzle = useRecoilValue(puzzleAtom);
     const pangrams = puzzle.pangrams;
     const words = puzzle.words;
     const centerLetter = puzzle.centerLetter;
 
-    const wordValidator = (word: string): IWordValidation => {
+    const wordValidator = (word: string): WordValidation => {
         const isAlreadyFound = foundWords.includes(word);
         const isPangram = pangrams.includes(word);
         const isInWordList = isPangram || words.includes(word);
-        const isMissingCenterLetter = !word.includes(centerLetter);
+        const hasCenterLetter = word.toLowerCase().includes(centerLetter.toLowerCase());
     
         return {
-            isValid: !isMissingCenterLetter && !isAlreadyFound && isInWordList,
-            errorMessage: isMissingCenterLetter ? "Missing center letter" : isAlreadyFound ? "Already found" : !isInWordList ? "Not in word list" : "",
+            isValid: hasCenterLetter && !isAlreadyFound && isInWordList,
+            errorMessage: !hasCenterLetter ? "Missing center letter" : isAlreadyFound ? "Already found" : !isInWordList ? "Not in word list" : "",
             isPangram
         };
     };
