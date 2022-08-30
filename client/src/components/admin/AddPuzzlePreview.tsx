@@ -16,7 +16,7 @@ const AddPuzzlePreview = () => {
                 <Heading>Puzzle Preview</Heading>
             </Row>
             <Row>Date: {addPuzzleFormState.date}</Row>
-            <Row>CenterLetter: {addPuzzleFormState.centerLetter}</Row>
+            <Row>Center Letter: {addPuzzleFormState.centerLetter}</Row>
             <Row>Letters: {addPuzzleFormState.letters.split('').join(', ')}</Row>
             <Row>Pangrams: {formatListWithCommas(addPuzzleFormState.pangrams)}</Row>
             <Row>Words: {formatListWithCommas(addPuzzleFormState.words)}</Row>

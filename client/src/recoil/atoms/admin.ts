@@ -8,6 +8,7 @@ export type AddPuzzleFormState = {
     words: string,
 }
 
+
 export const addPuzzleFormAtom = atom<AddPuzzleFormState>({
     key: 'addPuzzleFormAtom',
     default: {

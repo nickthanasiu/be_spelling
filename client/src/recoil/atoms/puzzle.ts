@@ -1,6 +1,7 @@
 import { atom, selector } from 'recoil';
 import ApiClient from '../../api/client';
 import { RankingType } from '../../components/status/Progress';
+import { PuzzleOption } from '../../../../shared/types';
 
 export interface PuzzleState {
     date: string;
@@ -11,28 +12,33 @@ export interface PuzzleState {
     words: string[];
 };
 
-export const puzzleSelector = selector<PuzzleState>({
-    key: 'puzzleSelector',
-    get: async (): Promise<PuzzleState> => {
+export const puzzleOptionsSelector = selector<PuzzleOption[]>({
+    key: 'puzzleOptionsSelector',
+    get: async (): Promise<PuzzleOption[]> => {
         return await ApiClient.get('/puzzles');
     },
-    set: ({ set, get }, newData) => {
-        const currState = get(puzzleAtom);
-        const newState = { ...currState, ...newData };
+    set: ({ set, get }, data) => {
+        const currState = get(puzzleOptionsAtom);
+        const nextState = { ...currState, ...data };
 
-        set(puzzleAtom, newState);
-    },
+        set(puzzleOptionsAtom, nextState);
+    }
+});
+
+export const puzzleOptionsAtom = atom<PuzzleOption[]>({
+    key: 'puzzleOptionsAtom',
+    default: puzzleOptionsSelector
 });
 
 export const puzzleAtom = atom<any>({
     key: 'puzzleAtom',
-    default: puzzleSelector
+    default: {} as PuzzleState
 });
 
 export const lettersSelector = selector<string[]>({
     key: 'lettersSelector',
     get: ({ get }) => {
-        const { puzzle } = get(puzzleAtom);
+        const puzzle = get(puzzleAtom);
 
         return puzzle.letters;
     }
@@ -46,7 +52,7 @@ export const lettersAtom = atom<string[]>({
 export const centerLetterSelector = selector({
     key: 'centerLetterSelector',
     get: ({ get }) => {
-        const { puzzle } = get(puzzleAtom);
+        const puzzle = get(puzzleAtom);
 
         return puzzle.centerLetter;
     }
