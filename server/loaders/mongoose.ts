@@ -1,0 +1,25 @@
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+
+dotenv.config();
+
+export default async () => {
+
+    // DB setup
+    const mongodbUsername = process.env.MONGODB_USERNAME;
+    const mongodbPassword = process.env.MONGODB_PASSWORD;
+
+    mongoose.connect(`mongodb+srv://${mongodbUsername}:${mongodbPassword}@cluster0.3l6s1.mongodb.net/?retryWrites=true&w=majority`);
+
+    const dbConnection = mongoose.connection;
+
+    dbConnection.on('error', (error) => {
+        // tslint:disable-next-line:no-console
+        console.log('Error connecting to database: ', error);
+    });
+
+    dbConnection.once('open', () => {
+        // tslint:disable-next-line:no-console
+        console.log('Database Connected');
+    });
+};
