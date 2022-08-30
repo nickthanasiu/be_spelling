@@ -4,8 +4,6 @@ import { RankingType } from '../../components/status/Progress';
 
 export interface PuzzleState {
     date: string;
-    maxScore: number;
-    wordCount: number;
     rankings: { name: RankingType; threshold: number }[];
     centerLetter: string;
     letters: string[];
