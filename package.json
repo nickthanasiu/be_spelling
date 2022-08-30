@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "node dist/index.js",
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc --project .",
     "build-prod": "cd client && npm install && npm run build && cd .. && npm install && npm run build",
-    "server": "nodemon --verbose --watch \"server\" --ext \"ts,json\" --exec ts-node server/server.ts",
+    "server": "nodemon --verbose --watch \"server\" --ext \"ts,json\" --exec ts-node server/index.ts",
     "client": "cd client && npm start && cd ..",
     "dev": "concurrently \"npm run client\" \"npm run server\""
   },
