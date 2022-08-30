@@ -5,8 +5,8 @@ dotenv.config();
 
 const production = process.env.NODE_ENV !== 'development';
 
-let REACT_STATIC_FILES_PATH: string, 
-    REACT_APP_PATH: string;
+let REACT_STATIC_FILES_PATH: string;
+let REACT_APP_PATH: string;
 
 if (production) {
     REACT_STATIC_FILES_PATH = path.resolve(__dirname, "public");
