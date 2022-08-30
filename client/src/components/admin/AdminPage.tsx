@@ -1,25 +1,19 @@
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { addPuzzleFormAtom } from "../../recoil/atoms/admin";
 import AddPuzzleForm from "./AddPuzzleForm";
+import AddPuzzlePreview from "./AddPuzzlePreview";
 
 const AdminPage: React.FC = () => {
-    const addPuzzleFormState = useRecoilValue(addPuzzleFormAtom);
 
     return (
         <StyledAdminPage>
-            <Column>
-                <AddPuzzleForm />
-            </Column>
-
-            <Column>
-                <div style={{ marginBottom: '5px' }}><b>Puzzle Preview</b></div>
-                <div>Date: {addPuzzleFormState.date}</div>
-                <div>CenterLetter: {addPuzzleFormState.centerLetter}</div>
-                <div>Letters: {addPuzzleFormState.letters}</div>
-                <div>Pangrams: {addPuzzleFormState.pangrams}</div>
-                <div>Words: {addPuzzleFormState.words}</div>
-            </Column>
+            <Wrapper>
+                <Column>
+                    <AddPuzzleForm />
+                </Column>
+                <Column>
+                    <AddPuzzlePreview />
+                </Column>
+            </Wrapper>
         </StyledAdminPage>
     );
 };
@@ -29,8 +23,12 @@ export default AdminPage;
 const StyledAdminPage = styled.div`
     background-color: white;
     color: black;
-    width: 100%;
     height: 100vh;
+    padding-top: 40px;
+    padding: 60px 20px 0;
+`;
+
+const Wrapper = styled.div`
     display: flex;
 `;
 
