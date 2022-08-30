@@ -1,3 +1,4 @@
+import Puzzle from "../models/Puzzle";
 import PuzzlesService from '../services/puzzles';
 
 function getDefaultPuzzle(req, res) {
@@ -12,4 +13,14 @@ function getRandomPuzzle(req, res) {
     res.send({ puzzle: randomPuzzle });
 }
 
-export default { getDefaultPuzzle, getRandomPuzzle };
+function add(req, res, next) {
+    const newPuzzle = new Puzzle(req.body);
+
+    newPuzzle.save((error) => {
+        next(error);
+    });
+
+    res.send(newPuzzle);
+}
+
+export default { getDefaultPuzzle, getRandomPuzzle, add };

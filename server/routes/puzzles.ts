@@ -6,6 +6,7 @@ function getPuzzlesRoutes() {
 
     router.get('/default', PuzzlesController.getDefaultPuzzle);
     router.get('/', PuzzlesController.getRandomPuzzle);
+    router.post('/', PuzzlesController.add);
 
     return router;
 }
