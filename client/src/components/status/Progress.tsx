@@ -2,12 +2,7 @@ import styled from 'styled-components';
 import ProgressBar from './ProgressBar';
 import { useRanking } from '../../hooks/useRanking';
 
-// @TODO :: Should this go elsewhere??
-export type RankingType = 
-    'Beginner' | 'Good Start' | 'Moving Up' | 'Good' | 
-    'Solid' | 'Nice' | 'Great' | 'Amazing' | 'Genius' | 'Queen Bee';
-
-function Progress() {
+const Progress = () => {
     const ranking = useRanking();
 
     return (
@@ -15,10 +10,10 @@ function Progress() {
             <Ranking>
                 {ranking}
             </Ranking>
-            <ProgressBar ranking={ranking} />
+            <ProgressBar />
         </StyledProgress>
     );
-}
+};
 
 export default Progress;
 
