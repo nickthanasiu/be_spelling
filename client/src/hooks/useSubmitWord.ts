@@ -1,18 +1,15 @@
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { foundWordsAtom } from '../recoil/atoms/foundWords';
-import { inputState } from "../recoil/atoms/input";
-import { messageBoxAtom } from '../recoil/atoms/messageBox';
+import { inputAtom, inputStringSelector } from "../recoil/atoms/input";
+import { messageBoxAtom, type ErrorMessage, type SuccessMessage } from '../recoil/atoms/messageBox';
 import { prevWordScoreAtom, totalScoreAtom } from '../recoil/atoms/score';
-import { inputAsString } from '../recoil/selectors/input';
 import { validateInput } from '../utils/validateInput';
 import { useWordValidator } from './useWordValidator';
 
-export type SuccessMessage = "Pangram!" | "Good!" | "Nice!" | "Awesome!";
-
 // @TODO :: Refactor
 export const useSubmitWord = () => {
-    const [inputVal, setInputVal] = useRecoilState(inputState);
-    const newWord = useRecoilValue(inputAsString);
+    const [inputState, setInputState] = useRecoilState(inputAtom);
+    const newWord = useRecoilValue(inputStringSelector);
     const [foundWordsList, setFoundWordsList] = useRecoilState(foundWordsAtom);
     const setMessageBoxState = useSetRecoilState(messageBoxAtom);
     const validateWord = useWordValidator();
@@ -45,11 +42,11 @@ export const useSubmitWord = () => {
         delay(1000, hideMessageBox);
     };
 
-    const showErrorMessage = (errorMessage: any) => {
+    const showErrorMessage = (errorMessage: ErrorMessage | "") => {
         showMessageBox(errorMessage, true, false);
     };
 
-    const showSuccessMessage = (successMessage: any, isPangram: boolean) => {
+    const showSuccessMessage = (successMessage: SuccessMessage, isPangram: boolean) => {
         showMessageBox(successMessage, false, isPangram);
     };
 
@@ -74,12 +71,12 @@ export const useSubmitWord = () => {
 
     const submit = () => {
         // Do not attempt to submit input if empty
-        if (!inputVal.length) return;
+        if (!inputState.length) return;
 
         // Clear input before anything else
-        setInputVal([]);
+        setInputState([]);
 
-        const inputValidation = validateInput(inputVal);
+        const inputValidation = validateInput(inputState);
 
         if (!inputValidation.isValid) {
             showErrorMessage(inputValidation.errorMessage);

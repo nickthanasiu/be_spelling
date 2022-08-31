@@ -1,28 +1,28 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import ApiClient from "../api/client";
 import { puzzleAtom } from "../recoil/atoms/puzzle";
+import ApiClient from "../api/client";
 import GameField from "../components/GameField";
-import type { PuzzleResponse } from "../../../shared/types";
+import LoadingAnimation from "./loading/LoadingAnimation";
 
 const PuzzlePage = () => {
     const { id } = useParams();
 
-    const setPuzzleState = useSetRecoilState(puzzleAtom);
+    const [puzzleState, setPuzzleState] = useRecoilState(puzzleAtom);
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
         async function getPuzzleById() {
-            const response = await ApiClient.get<{ puzzle: PuzzleResponse }>(`/puzzles/${id}`);
-            setPuzzleState(response.puzzle);
+            const response = await ApiClient.get<any>(`/puzzles/${id}`);
+            setPuzzleState(response);
+            setLoaded(true);
         }
 
         getPuzzleById();
     }, [id]);
 
-    return (
-        <GameField />
-    );
+    return !loaded ? <LoadingAnimation /> : <GameField />;
 };
 
 export default PuzzlePage;

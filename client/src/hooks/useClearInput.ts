@@ -1,11 +1,11 @@
 import { useSetRecoilState } from "recoil";
-import { inputState } from "../recoil/atoms/input";
+import { inputAtom } from "../recoil/atoms/input";
 
 export const useClearInput = () => {
-    const setInputVal = useSetRecoilState(inputState);
+    const setInputState = useSetRecoilState(inputAtom);
 
     const clearInput = () => {
-        setInputVal([]);
+        setInputState([]);
     };
 
     return clearInput;

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { KeyboardEvent } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { inputState, inputTouchedAtom, LetterObj } from '../../recoil/atoms/input';
+import { inputAtom, inputTouchedAtom, LetterObj } from '../../recoil/atoms/input';
 import { useCreateLetterObj } from '../../hooks/useCreateLetterObj';
 import { useBackspace } from '../../hooks/useBackspace';
 import { useShuffleLetters } from '../../hooks/useShuffleLetters';
@@ -12,16 +12,16 @@ import Letter from './Letter';
 
 
 function HiveInput() {
-    const [inputVal, setInputVal] = useRecoilState(inputState);
+    const [inputState, setInputState] = useRecoilState(inputAtom);
     const [inputTouched, setInputTouched]=  useRecoilState(inputTouchedAtom);
-    const hasContent = inputVal.length > 0;
+    const hasContent = inputState.length > 0;
 
     const createLetterObj = useCreateLetterObj();
     const backspace = useBackspace();
     const shuffle = useShuffleLetters();
     const submit = useSubmitWord();
 
-    const keyPressHandler = ({ key }: React.KeyboardEvent<Window>) => {
+    const keyPressHandler = ({ key }: KeyboardEvent<Window>) => {
         /*
             Keys to listen for
 
@@ -49,7 +49,7 @@ function HiveInput() {
 
             const newLetterObj = createLetterObj(key);
 
-            setInputVal([...inputVal, newLetterObj]);
+            setInputState([...inputState, newLetterObj]);
 
             if (!inputTouched) {
                 setInputTouched(true);
@@ -68,7 +68,7 @@ function HiveInput() {
             
             <InputContent className="hive-input-content" hasContent={hasContent}>
                 {!inputTouched && <InputPlaceholder>Type or click</InputPlaceholder>}
-                {inputVal.map((letterObj: LetterObj) => (
+                {inputState.map((letterObj) => (
                     <Letter letterObj={letterObj} />
                 ))}
             </InputContent>
