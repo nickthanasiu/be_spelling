@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { prevWordScoreAtom } from '../../recoil/atoms/score';
+import { prevWordScoreAtom } from '../../state';
 
 interface Props {
     isError: boolean;

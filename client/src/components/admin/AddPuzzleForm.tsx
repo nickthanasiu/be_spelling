@@ -1,7 +1,10 @@
 import { ChangeEvent } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import styled from "styled-components";
-import { addPuzzleFormAtom, AddPuzzleFormState } from "../../recoil/atoms/admin";
+import { 
+    addPuzzleFormAtom,
+    type AddPuzzleFormState,
+} from "../../state";
 import ApiClient from "../../api/client";
 import type { AddPuzzleRequest } from "../../../../shared/types";
 

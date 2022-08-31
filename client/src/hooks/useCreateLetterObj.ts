@@ -1,6 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { LetterObj } from "../recoil/atoms/input";
-import { centerLetterSelector, lettersAtom } from '../recoil/atoms/puzzle';
+import { lettersAtom, centerLetterSelector, type LetterObj } from '../state';
 
 export const useCreateLetterObj = () => {
     const letters = useRecoilValue(lettersAtom);

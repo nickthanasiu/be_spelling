@@ -1,8 +1,14 @@
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
-import { foundWordsAtom } from '../recoil/atoms/foundWords';
-import { inputAtom, inputStringSelector } from "../recoil/atoms/input";
-import { messageBoxAtom, type ErrorMessage, type SuccessMessage } from '../recoil/atoms/messageBox';
-import { prevWordScoreAtom, totalScoreAtom } from '../recoil/atoms/score';
+import {
+    foundWordsAtom,
+    inputAtom,
+    inputStringSelector,
+    messageBoxAtom,
+    prevWordScoreAtom,
+    totalScoreAtom,
+    type ErrorMessage,
+    type SuccessMessage,
+} from '../state';
 import { validateInput } from '../utils/validateInput';
 import { useWordValidator } from './useWordValidator';
 

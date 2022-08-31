@@ -1,15 +1,7 @@
-import { atom, selector } from 'recoil';
-import ApiClient from '../../api/client';
-import { PuzzleOption, PuzzleRanking } from '../../../../shared/types';
-
-export interface PuzzleState {
-    date: string;
-    centerLetter: string;
-    letters: string[];
-    pangrams: string[];
-    words: string[];
-    rankings: PuzzleRanking[];
-};
+import { atom, selector } from "recoil";
+import ApiClient from "../api/client";
+import { PuzzleState } from "./types";
+import { PuzzleOption } from '../../../shared/types';
 
 export const puzzleOptionsSelector = selector<PuzzleOption[]>({
     key: 'puzzleOptionsSelector',

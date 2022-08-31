@@ -1,5 +1,5 @@
 import { useRecoilState } from 'recoil';
-import { inputAtom } from "../recoil/atoms/input";
+import { inputAtom } from "../state";
 
 export const useBackspace = () => {
     const [inputState, setInputState] = useRecoilState(inputAtom);

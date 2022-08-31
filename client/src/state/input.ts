@@ -1,10 +1,6 @@
 import { atom, selector } from 'recoil';
+import { LetterObj } from './types';
 
-export type LetterObj = {
-    letter: string;
-    isValid: boolean;
-    isCenterLetter: boolean;
-}
 
 export const inputAtom = atom<LetterObj[]>({
     key: 'inputAtom',

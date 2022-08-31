@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { alphabetizedWordSelector } from '../../recoil/atoms/foundWords';
+import { alphabetizedWordSelector } from '../../state';
 import { device } from '../../styles/device';
 
 interface IWordListDrawerProps {

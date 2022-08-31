@@ -1,6 +1,6 @@
 import { useRecoilValueLoadable } from 'recoil';
 import styled from 'styled-components';
-import { puzzleOptionsAtom } from '../recoil/atoms/puzzle';
+import { puzzleOptionsAtom } from '../state';
 import LoadingAnimation from './loading/LoadingAnimation';
 import PuzzleSelectForm from './PuzzleSelectForm';
 

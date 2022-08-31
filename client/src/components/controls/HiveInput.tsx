@@ -1,7 +1,7 @@
 import { KeyboardEvent } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { inputAtom, inputTouchedAtom, LetterObj } from '../../recoil/atoms/input';
+import { inputAtom, inputTouchedAtom } from '../../state';
 import { useCreateLetterObj } from '../../hooks/useCreateLetterObj';
 import { useBackspace } from '../../hooks/useBackspace';
 import { useShuffleLetters } from '../../hooks/useShuffleLetters';

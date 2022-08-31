@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
-import { inputAtom, inputTouchedAtom } from '../../recoil/atoms/input';
+import { inputAtom, inputTouchedAtom } from '../../state';
 import { useCreateLetterObj } from '../../hooks/useCreateLetterObj';
 
 interface Props {

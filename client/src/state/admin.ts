@@ -1,13 +1,5 @@
 import { atom } from "recoil";
-
-export type AddPuzzleFormState = {
-    date: string,
-    centerLetter: string,
-    letters: string,
-    pangrams: string,
-    words: string,
-}
-
+import { AddPuzzleFormState } from "./types";
 
 export const addPuzzleFormAtom = atom<AddPuzzleFormState>({
     key: 'addPuzzleFormAtom',

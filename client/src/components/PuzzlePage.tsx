@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
-import { puzzleAtom } from "../recoil/atoms/puzzle";
+import { puzzleAtom } from "../state";
 import ApiClient from "../api/client";
 import GameField from "../components/GameField";
 import LoadingAnimation from "./loading/LoadingAnimation";

@@ -1,7 +1,7 @@
 import { Dispatch, ReactElement, SetStateAction } from "react";
 import { useRecoilValueLoadable } from 'recoil';
 import styled from 'styled-components';
-import { puzzleAtom } from '../../recoil/atoms/puzzle';
+import { puzzleAtom } from '../../state';
 import LoadingAnimation from './LoadingAnimation';
 
 interface ILoadingPageProps {
