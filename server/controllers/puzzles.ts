@@ -18,7 +18,7 @@ const add = async (req, res, next) => {
 
     const puzzle = await PuzzlesService.save(puzzleData);
 
-    res.send(puzzle);
+    res.status(201).send(puzzle);
 }
 
 export default { getOptions, getbyId, add };

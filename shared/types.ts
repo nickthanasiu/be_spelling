@@ -17,3 +17,18 @@ export type PuzzleResponse = {
 };
 
 export type PuzzleOption = Pick<PuzzleResponse, "_id" | "date">;
+
+export type PuzzleRankingLevel = 
+    'Beginner' 
+    | 'Good Start'
+    | 'Moving Up'
+    | 'Good'
+    | 'Solid'
+    | 'Nice'
+    | 'Great'
+    | 'Amazing'
+    | 'Genius'
+    | 'Queen Bee'
+;
+
+export type PuzzleRanking = { name: PuzzleRankingLevel, threshold: number };

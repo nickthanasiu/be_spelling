@@ -1,15 +1,14 @@
 import { atom, selector } from 'recoil';
 import ApiClient from '../../api/client';
-import { RankingType } from '../../components/status/Progress';
-import { PuzzleOption } from '../../../../shared/types';
+import { PuzzleOption, PuzzleRanking } from '../../../../shared/types';
 
 export interface PuzzleState {
     date: string;
-    rankings: { name: RankingType; threshold: number }[];
     centerLetter: string;
     letters: string[];
     pangrams: string[];
     words: string[];
+    rankings: PuzzleRanking[];
 };
 
 export const puzzleOptionsSelector = selector<PuzzleOption[]>({
@@ -30,7 +29,7 @@ export const puzzleOptionsAtom = atom<PuzzleOption[]>({
     default: puzzleOptionsSelector
 });
 
-export const puzzleAtom = atom<any>({
+export const puzzleAtom = atom({
     key: 'puzzleAtom',
     default: {} as PuzzleState
 });
