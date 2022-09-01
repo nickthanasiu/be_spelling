@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
 import { puzzleAtom } from "../state";
 import ApiClient from "../api/client";
@@ -9,7 +9,7 @@ import LoadingAnimation from "./loading/LoadingAnimation";
 const PuzzlePage = () => {
     const { id } = useParams();
 
-    const [puzzleState, setPuzzleState] = useRecoilState(puzzleAtom);
+    const setPuzzleState = useSetRecoilState(puzzleAtom);
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
@@ -22,7 +22,11 @@ const PuzzlePage = () => {
         getPuzzleById();
     }, [id]);
 
-    return !loaded ? <LoadingAnimation /> : <GameField />;
+    return (
+        <>
+            {!loaded ? <LoadingAnimation /> : <GameField />}
+        </>
+    );
 };
 
 export default PuzzlePage;

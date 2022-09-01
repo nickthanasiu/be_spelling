@@ -1,6 +1,6 @@
 import { addPuzzleFormAtom } from "./admin";
 import { foundWordsAtom, wordListPreviewSelector, alphabetizedWordSelector } from "./foundWords";
-import { inputAtom, inputStringSelector, inputTouchedAtom } from "./input";
+import { inputAtom, inputWordSelector, inputTouchedAtom } from "./input";
 import { messageBoxAtom } from "./messageBox";
 import { 
     puzzleOptionsSelector,
@@ -33,7 +33,7 @@ export {
 
     // Input
     inputAtom,
-    inputStringSelector,
+    inputWordSelector,
     inputTouchedAtom,
 
     // Message box

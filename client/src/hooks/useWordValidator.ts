@@ -12,14 +12,15 @@ export const useWordValidator = () => {
     const { centerLetter, pangrams, words } = useRecoilValue(puzzleAtom);
 
     const wordValidator = (word: string): WordValidator => {
+
         const isAlreadyFound = foundWords.includes(word);
         const isPangram = pangrams.includes(word);
         const isInWordList = isPangram || words.includes(word);
-        const isMissingCenterLetter = !word.includes(centerLetter);
+        const hasCenterLetter = word.toLowerCase().includes(centerLetter.toLowerCase());
     
         return {
-            isValid: !isMissingCenterLetter && !isAlreadyFound && isInWordList,
-            errorMessage: isMissingCenterLetter ? "Missing center letter" : isAlreadyFound ? "Already found" : !isInWordList ? "Not in word list" : "",
+            isValid: hasCenterLetter && !isAlreadyFound && isInWordList,
+            errorMessage: !hasCenterLetter ? "Missing center letter" : isAlreadyFound ? "Already found" : !isInWordList ? "Not in word list" : "",
             isPangram
         };
     };
