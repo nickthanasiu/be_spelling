@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
-import { wordListPreviewSelector } from '../../recoil/atoms/foundWords';
+import { wordListPreviewSelector } from '../../state';
 import { device } from '../../styles/device';
 
 interface IWordListHeadingProps {

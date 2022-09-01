@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { device } from '../../styles/device';
 import { useRecoilValue } from 'recoil';
-import { messageBoxAtom } from '../../recoil/atoms/messageBox';
+import { messageBoxAtom } from '../../state';
 import PrevWordScore from './PrevWordScore';
 
 function MessageBox() {

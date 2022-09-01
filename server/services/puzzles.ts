@@ -1,51 +1,54 @@
-import june11 from '../data/06-11-22.json';
-import june12 from '../data/06-12-22.json';
-import june20 from '../data/06-20-22.json';
-import june24 from '../data/06-24-22.json';
-import june25 from '../data/06-25-22.json';
-import june27 from '../data/06-27-22.json';
-import july4 from '../data/07-04-22.json';
-import july6 from '../data/07-06-22.json';
-import july7 from '../data/07-07-22.json';
+import Puzzle from "../models/Puzzle";
+import type { AddPuzzleRequest } from "../../shared/types";
 
-// @TODO :: Refactor logic here. Should it all be in this file?
-const getDefaultPuzzle = () => {
-
-    // @TODO :: Should come from DB, not hard-coded json
-    const puzzleData = june11;
-
-    const puzzle = buildPuzzle(puzzleData);
+const getById = async (id: string) => {
+    const puzzle = await Puzzle.findById(id);
 
     return puzzle;
 };
 
-const getRandomPuzzle = () => {
-    const puzzleChoices = [
-        june11,
-        june12,
-        june20,
-        june24,
-        june25,
-        june27,
-        july4,
-        july6,
-        july7
-    ];
+const getOptions = async () => {
+    const puzzles = await Puzzle.find({}, 'date');
 
-    const random = Math.floor(Math.random() * puzzleChoices.length);
-    const puzzleData = puzzleChoices[random];
-    const puzzle = buildPuzzle(puzzleData);
-
-    return puzzle;
+    return puzzles;
 };
 
-export default { getDefaultPuzzle, getRandomPuzzle };
+const getRandomPuzzle = async () => {
+    const puzzleChoices = [];
+
+    // Return all puzzles from db and add to puzzleChoices array
+    await Puzzle.find({}, (error, puzzles) => {
+        puzzles.forEach((puzzle) => puzzleChoices.push(puzzle));
+    });
+
+    const randomIdx = Math.floor(Math.random() * puzzleChoices.length);
+    const puzzleData = puzzleChoices[randomIdx];
+
+    return buildPuzzle(puzzleData);
+};
+
+const save = async (requestBody: AddPuzzleRequest) => {
+    const newPuzzle = new Puzzle(requestBody);
+
+    // Save new puzzle to db
+    await newPuzzle.save((error) => {
+        // tslint:disable-next-line:no-console
+        console.log('Error saving new puzzle ', newPuzzle, ' to database: ', error);
+    });
+
+    return newPuzzle;
+};
+
+
+
+export default { getById, getOptions, getRandomPuzzle, save };
+
+
+
+// Helpers
 
 function buildPuzzle(puzzleData) {
     const { pangrams, words } = puzzleData;
-
-    // Calculate wordCount and add to puzzleData object
-    puzzleData.wordCount = pangrams.length + words.length;
 
     // Pangram is worth its length plus 7
     const calculatePangramScore = (pangram: string): number =>
@@ -55,13 +58,11 @@ function buildPuzzle(puzzleData) {
     const calculateWordScore = (word: string): number =>
         word.length > 4 ? word.length : 1;
 
-    // Calculate maxScore and add to puzzleData object
+    // Calculate maximum score
     let maxScore = 0;
 
     words.forEach(word => maxScore += calculateWordScore(word));
     pangrams.forEach(pangram => maxScore += calculatePangramScore(pangram));
-
-    puzzleData.maxScore = maxScore;
 
     const percentToScore = (percentage: number) =>
         Math.floor(maxScore * (percentage / 100));

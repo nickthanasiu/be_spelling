@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { LetterObj } from '../../recoil/atoms/input';
+import { LetterObj } from '../../state';
 
 interface LetterProps {
     letterObj: LetterObj

@@ -1,15 +1,24 @@
 import PuzzlesService from '../services/puzzles';
 
-function getDefaultPuzzle(req, res) {
-    const defaultPuzzle = PuzzlesService.getDefaultPuzzle();
 
-    res.send({ puzzle: defaultPuzzle });
+const getOptions = async (req, res) => {
+    const options = await PuzzlesService.getOptions();
+
+    res.send(options);
+};
+
+const getbyId = async (req, res) => {
+    const puzzle = await PuzzlesService.getById(req.params.id);
+
+    res.send(puzzle);
+};
+
+const add = async (req, res, next) => {
+    const puzzleData = req.body;
+
+    const puzzle = await PuzzlesService.save(puzzleData);
+
+    res.status(201).send(puzzle);
 }
 
-function getRandomPuzzle(req, res) {
-    const randomPuzzle = PuzzlesService.getRandomPuzzle();
-
-    res.send({ puzzle: randomPuzzle });
-}
-
-export default { getDefaultPuzzle, getRandomPuzzle };
+export default { getOptions, getbyId, add };

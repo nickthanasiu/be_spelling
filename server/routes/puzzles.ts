@@ -4,8 +4,9 @@ import PuzzlesController from '../controllers/puzzles';
 function getPuzzlesRoutes() {
     const router = express.Router();
 
-    router.get('/default', PuzzlesController.getDefaultPuzzle);
-    router.get('/', PuzzlesController.getRandomPuzzle);
+    router.get('/', PuzzlesController.getOptions);
+    router.get('/:id', PuzzlesController.getbyId);
+    router.post('/', PuzzlesController.add);
 
     return router;
 }

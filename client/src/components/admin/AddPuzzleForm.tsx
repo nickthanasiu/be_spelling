@@ -1,19 +1,17 @@
 import { ChangeEvent } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import styled from "styled-components";
-import { addPuzzleFormAtom, AddPuzzleFormState } from "../../recoil/atoms/admin";
+import { 
+    addPuzzleFormAtom,
+    type AddPuzzleFormState,
+} from "../../state";
 import ApiClient from "../../api/client";
+import type { AddPuzzleRequest } from "../../../../shared/types";
 
-interface NewPuzzleRequestObj {
-    date: Date;
-    centerLetter: string;
-    letters: string[];
-    pangrams: string[];
-    words: string[];
-}
 
 const AddPuzzleForm = () => {
     const [formState, setFormState] = useRecoilState(addPuzzleFormAtom);
+    const resetFormState = useResetRecoilState(addPuzzleFormAtom);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -25,10 +23,10 @@ const AddPuzzleForm = () => {
     };
 
     const formatPuzzleRequestObject = (formState: AddPuzzleFormState) => {
-        let { date, centerLetter, letters, pangrams, words } = formState;
+        const { date, centerLetter, letters, pangrams, words } = formState;
 
-        const requestObject: NewPuzzleRequestObj = {
-            date: new Date(date),
+        const requestObject: AddPuzzleRequest = {
+            date,
             centerLetter,
             letters: letters.split(""),
             pangrams: pangrams.split(/\r?\n/),
@@ -42,6 +40,8 @@ const AddPuzzleForm = () => {
         const requestObject = formatPuzzleRequestObject(formState);
 
         await ApiClient.post('/puzzles', requestObject);
+
+        resetFormState();
     };
 
     return (
@@ -98,6 +98,7 @@ const Input = styled.input`
 const TextArea = styled.textarea`
     display: block;
     width: 100%;
+    padding: 10px;
     margin-bottom: 5px;
     margin-right: 0;
 `;
