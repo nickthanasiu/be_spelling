@@ -16,7 +16,7 @@ export default async (app: Express) => {
     app.use('/api', getRoutes());
 
     // All other unmatched requests will return the React app
-    app.get("/", (req, res) => {
+    app.get("/*", (req, res) => {
         res.sendFile(
             path.resolve(__dirname, "..", "public", "index.html")
         );
