@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { totalScoreAtom } from '../../state';
-import { PuzzleRankingLevel } from '../../../../shared/types';
+import { PuzzleRankingLevel } from '../../../../server/shared/types';
 import { useRanking } from '../../hooks/useRanking';
 
 

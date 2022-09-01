@@ -1,7 +1,7 @@
 import { atom, selector } from "recoil";
 import ApiClient from "../api/client";
 import { PuzzleState } from "./types";
-import { PuzzleOption } from '../../../shared/types';
+import { PuzzleOption } from '../../../server/shared/types';
 
 export const puzzleOptionsSelector = selector<PuzzleOption[]>({
     key: 'puzzleOptionsSelector',

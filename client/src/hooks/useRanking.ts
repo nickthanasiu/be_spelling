@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRecoilValue } from "recoil";
-import { type PuzzleRankingLevel } from '../../../shared/types';
+import { type PuzzleRankingLevel } from '../../../server/shared/types';
 import { totalScoreAtom, puzzleAtom } from '../state';
 
 // @TODO :: Maybe instead of a hook, this could be a recoil selector??

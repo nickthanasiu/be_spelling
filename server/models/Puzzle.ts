@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { PuzzleRanking } from "../../shared/types";
+import { PuzzleRanking } from "../shared/types";
 
 const PuzzleSchema = new mongoose.Schema({
     _id: {
