@@ -9,8 +9,6 @@ const getById = async (id: string) => {
 
 const getOptions = async () => {
     const puzzles = await Puzzle.find({}, 'date');
-    // tslint:disable-next-line:no-console
-    console.log('@@@ services getOptions puzzles :: ', puzzles);
 
     return puzzles;
 };

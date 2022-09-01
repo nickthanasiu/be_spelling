@@ -18,18 +18,4 @@ export default async () => {
         // tslint:disable-next-line:no-console
         console.log('Error connecting to database: ', error);
     }
-
-    /*
-    const dbConnection = mongoose.connection;
-
-    dbConnection.on('error', (error) => {
-        // tslint:disable-next-line:no-console
-        console.log('Error connecting to database: ', error);
-    });
-
-    dbConnection.once('open', () => {
-        // tslint:disable-next-line:no-console
-        console.log('Database Connected');
-    });
-    */
 };
