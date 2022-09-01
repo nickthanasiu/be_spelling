@@ -1,4 +1,4 @@
-import { PuzzleRanking } from '../../../shared/types';
+import { PuzzleRanking } from '../../../server/shared/types';
 
 export type AddPuzzleFormState = {
     date: string,

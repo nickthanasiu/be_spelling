@@ -1,5 +1,5 @@
 import Puzzle from "../models/Puzzle";
-import type { AddPuzzleRequest } from "../../shared/types";
+import type { AddPuzzleRequest } from "../shared/types";
 
 const getById = async (id: string) => {
     const puzzle = await Puzzle.findById(id);
@@ -9,6 +9,8 @@ const getById = async (id: string) => {
 
 const getOptions = async () => {
     const puzzles = await Puzzle.find({}, 'date');
+    // tslint:disable-next-line:no-console
+    console.log('@@@ services getOptions puzzles :: ', puzzles);
 
     return puzzles;
 };

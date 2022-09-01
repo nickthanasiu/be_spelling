@@ -6,7 +6,7 @@ import {
     type AddPuzzleFormState,
 } from "../../state";
 import ApiClient from "../../api/client";
-import type { AddPuzzleRequest } from "../../../../shared/types";
+import type { AddPuzzleRequest } from "../../../../server/shared/types";
 
 
 const AddPuzzleForm = () => {
