@@ -7,12 +7,6 @@ export const puzzleOptionsSelector = selector<PuzzleOption[]>({
     key: 'puzzleOptionsSelector',
     get: async (): Promise<PuzzleOption[]> => {
         return await ApiClient.get('/puzzles');
-    },
-    set: ({ set, get }, data) => {
-        const currState = get(puzzleOptionsAtom);
-        const nextState = { ...currState, ...data };
-
-        set(puzzleOptionsAtom, nextState);
     }
 });
 

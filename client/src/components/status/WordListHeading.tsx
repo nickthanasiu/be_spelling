@@ -4,16 +4,16 @@ import styled, { css } from 'styled-components';
 import { wordListPreviewSelector } from '../../state';
 import { device } from '../../styles/device';
 
-interface IWordListHeadingProps {
+interface Props {
     expanded: boolean;
     setExpanded: Dispatch<SetStateAction<boolean>>
 }
 
-function WordListHeading({ expanded, setExpanded }: IWordListHeadingProps) {
+function WordListHeading({ expanded, setExpanded }: Props) {
     const placeholder = <li style={{ color: 'gray' }}>Your words...</li>;
     const wordListPreview = useRecoilValue(wordListPreviewSelector);
     const wordCount = wordListPreview.length;
-    const previewContent = !wordCount ? placeholder : wordListPreview.map(word => <li>{word}</li>);
+    const previewContent = !wordCount ? placeholder : wordListPreview.map((word) => <li key={word}>{word}</li>);
 
     return (
         <StyledWordListHeading onClick={() => setExpanded(!expanded)}>

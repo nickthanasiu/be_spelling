@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { alphabetizedWordSelector } from '../../state';
 import { device } from '../../styles/device';
 
-interface IWordListDrawerProps {
+interface Props {
     expanded: boolean;
 }
 
-function WordListDrawer({ expanded }: IWordListDrawerProps) {
+function WordListDrawer({ expanded }: Props) {
     const alphabetizedWordList = useRecoilValue(alphabetizedWordSelector);
 
     return (
@@ -15,7 +15,7 @@ function WordListDrawer({ expanded }: IWordListDrawerProps) {
             <Window>
                 <ListWrapper>
                     <List>
-                        {alphabetizedWordList.map(word => <li>{word}</li>)}
+                        {alphabetizedWordList.map(word => <li key={word}>{word}</li>)}
                     </List>
                 </ListWrapper>
             </Window>

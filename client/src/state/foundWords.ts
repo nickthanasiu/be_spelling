@@ -1,8 +1,22 @@
 import { atom, selector } from 'recoil';
+import { puzzleAtom } from './puzzle';
+import { loadLocalStorageStateSlice } from '../utils/localStorage';
 
-export const foundWordsAtom = atom<string[]>({
+export const foundWordsSelector = selector<string[]>({
+    key: 'foundWordsSelector',
+    get: ({ get }) => {
+
+        const { _id } = get(puzzleAtom);
+
+        const wordsFromStorage = loadLocalStorageStateSlice("words", _id);
+
+        return wordsFromStorage || [];
+    }
+});
+
+export const foundWordsAtom = atom({
     key: 'foundWordsAtom',
-    default: []
+    default: foundWordsSelector
 });
 
 export const wordListPreviewSelector = selector({

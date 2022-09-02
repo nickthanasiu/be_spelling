@@ -31,6 +31,7 @@ export type MessageBoxAtom = {
 }
 
 export type PuzzleState = {
+    _id: string;
     date: string;
     centerLetter: string;
     letters: string[];
