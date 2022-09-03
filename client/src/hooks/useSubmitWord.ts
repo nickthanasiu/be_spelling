@@ -1,6 +1,5 @@
 import { useRecoilState, useSetRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import {
-    foundWordsAtom,
     inputAtom,
     inputWordSelector,
     messageBoxAtom,
@@ -11,6 +10,7 @@ import {
 } from '../state';
 import { validateInput } from '../utils/validateInput';
 import { useWordValidator } from './useWordValidator';
+import useUpdateFoundWordsState from './useUpdateFoundWordsState';
 
 // @TODO :: Refactor
 export const useSubmitWord = () => {
@@ -23,13 +23,13 @@ export const useSubmitWord = () => {
 
     const validateWord = useWordValidator();
 
-    const [foundWordsList, setFoundWordsList] = useRecoilState(foundWordsAtom);
-
     const [totalScore, setTotalScore] = useRecoilState(totalScoreAtom);
 
     const setPrevWordScore = useSetRecoilState(prevWordScoreAtom);
 
     const setMessageBoxState = useSetRecoilState(messageBoxAtom);
+
+    const updateFoundWordsState = useUpdateFoundWordsState();
 
 
     const hideMessageBox = () => {
@@ -106,7 +106,7 @@ export const useSubmitWord = () => {
         }
 
         // If input is valid and word is valid, we can add the word to foundWordsList
-        setFoundWordsList([...foundWordsList, inputWord]);
+        updateFoundWordsState(inputWord);
 
         // Calculate score and update prevWordScore state
         const prevWordScore = calculatePrevWordsScore(inputWord, wordValidation.isPangram);
