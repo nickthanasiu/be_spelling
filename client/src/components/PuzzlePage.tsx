@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
 import { puzzleAtom } from "../state";
@@ -23,10 +24,15 @@ const PuzzlePage = () => {
     }, [id]);
 
     return (
-        <>
+        <StyledPuzzlePage>
             {!loaded ? <LoadingAnimation /> : <GameField />}
-        </>
+        </StyledPuzzlePage>
     );
 };
 
 export default PuzzlePage;
+
+const StyledPuzzlePage = styled.div`
+    display: flex;
+    height: 80vh;
+`;

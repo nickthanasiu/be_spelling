@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import { centerLetterSelector, lettersAtom } from '../../state';
 import HiveCell from './HiveCell';
 
 interface Props {

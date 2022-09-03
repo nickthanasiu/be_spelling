@@ -16,8 +16,6 @@ export type PuzzleResponse = {
     rankings: any,
 };
 
-export type PuzzleOption = Pick<PuzzleResponse, "_id" | "date">;
-
 export type PuzzleRankingLevel =
     'Beginner'
     | 'Good Start'

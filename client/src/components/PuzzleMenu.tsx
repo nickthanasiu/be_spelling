@@ -10,7 +10,7 @@ const PuzzleMenu = ({ puzzles }: Props) => {
 
     return (
         <StyledPuzzleMenu>
-            {puzzles.map((puzzle) => <PuzzleCard puzzle={puzzle} /> )}
+            {puzzles.map((puzzle) => <PuzzleCard key={puzzle._id} puzzle={puzzle} /> )}
         </StyledPuzzleMenu>
     );
 };

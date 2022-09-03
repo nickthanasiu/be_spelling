@@ -43,7 +43,6 @@ const ellipsis3 = keyframes`
 
 
 const StyledLoadingAnimation = styled.div`
-    display: inline-block;
     position: relative;
     width: 80px;
     height: 80px;
