@@ -1,9 +1,11 @@
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import ProgressBar from './ProgressBar';
-import { useRanking } from '../../hooks/useRanking';
+import { rankingSelector } from '../../state';
 
 const Progress = () => {
-    const ranking = useRanking();
+    
+    const ranking = useRecoilValue(rankingSelector);
 
     return (
         <StyledProgress>

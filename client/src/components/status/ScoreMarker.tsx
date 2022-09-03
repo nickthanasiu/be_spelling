@@ -2,12 +2,13 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { totalScoreAtom } from '../../state';
 import { PuzzleRankingLevel } from '../../../../server/shared/types';
-import { useRanking } from '../../hooks/useRanking';
+import { rankingSelector } from '../../state';
 
 
 const ScoreMarker = () => {
+    
     const userScore = useRecoilValue(totalScoreAtom);
-    const ranking = useRanking();
+    const ranking = useRecoilValue(rankingSelector);
 
     const calculatePosition = (ranking: PuzzleRankingLevel) => {
         switch (ranking) {

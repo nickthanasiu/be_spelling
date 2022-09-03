@@ -11,6 +11,7 @@ import {
     centerLetterSelector,
 } from "./puzzle";
 import { totalScoreAtom, prevWordScoreAtom } from "./score";
+import { rankingAtom, rankingSelector } from "./ranking";
 import {
     AddPuzzleFormState,
     LetterObj,
@@ -50,6 +51,10 @@ export {
     // Score
     totalScoreAtom,
     prevWordScoreAtom,
+
+    // Ranking
+    rankingAtom,
+    rankingSelector,
 
     // Types
     type AddPuzzleFormState,

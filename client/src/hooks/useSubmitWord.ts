@@ -1,6 +1,5 @@
 import { useRecoilState, useSetRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import {
-    foundWordsAtom,
     inputAtom,
     inputWordSelector,
     messageBoxAtom,
@@ -11,7 +10,7 @@ import {
 } from '../state';
 import { validateInput } from '../utils/validateInput';
 import { useWordValidator } from './useWordValidator';
-import { useUpdateFoundWordsState } from './useUpdateFoundWordsState';
+import useUpdateFoundWordsState from './useUpdateFoundWordsState';
 
 // @TODO :: Refactor
 export const useSubmitWord = () => {
@@ -23,8 +22,6 @@ export const useSubmitWord = () => {
     const clearInput = useResetRecoilState(inputAtom);
 
     const validateWord = useWordValidator();
-
-    const [foundWordsList, setFoundWordsList] = useRecoilState(foundWordsAtom);
 
     const [totalScore, setTotalScore] = useRecoilState(totalScoreAtom);
 

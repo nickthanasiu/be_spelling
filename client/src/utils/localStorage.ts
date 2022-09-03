@@ -5,7 +5,11 @@ export type LocalStorageState = {
 
 export type LocalStoragePuzzleState = {
     words: string[];
+    score: number;
 }
+
+const BE_SPELLING_LOCAL_STORAGE_KEY = process.env.NODE_ENV === 'development' ? "be_spelling__DEV" : "be_spelling";
+
 
 export function loadLocalStorageStateSlice(key: keyof LocalStoragePuzzleState, puzzleId: string) {
 
@@ -20,14 +24,16 @@ export function loadLocalStorageStateSlice(key: keyof LocalStoragePuzzleState, p
 }
 
 
-const BE_SPELLING_LOCAL_STORAGE_KEY = "be_spelling";
-
 export function loadLocalStorageState(): LocalStorageState {
 
     let localStorageState = window.localStorage.getItem(BE_SPELLING_LOCAL_STORAGE_KEY);
 
     if (!localStorageState) {
+
+        // If localStorage item BE_SPELLING_LOCAL_STORAGE_KEY doesn't exist, create it
+
         localStorageState = JSON.stringify({});
+
         window.localStorage.setItem(BE_SPELLING_LOCAL_STORAGE_KEY, localStorageState);
     }
 
