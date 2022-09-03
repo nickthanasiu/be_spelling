@@ -1,16 +1,22 @@
 import { useRecoilValueLoadable } from 'recoil';
 import styled from 'styled-components';
 import { puzzleOptionsAtom } from '../state';
+import { allPuzzlesAtom } from '../state/puzzle';
 import LoadingAnimation from './loading/LoadingAnimation';
 import PuzzleSelectForm from './PuzzleSelectForm';
+import PuzzleMenu from "./PuzzleMenu";
+import { PuzzleResponse } from '../../../server/shared/types';
 
 const LandingPage = () => {
     const { state, contents } = useRecoilValueLoadable(puzzleOptionsAtom);
+    const allPuzzlesLoadable = useRecoilValueLoadable<PuzzleResponse[]>(allPuzzlesAtom);
     const loading = state === 'loading';
+    console.log('@@@ contents :: ', contents);
+    const puzzles = allPuzzlesLoadable.contents;
     
     return (
         <StyledLandingPage>
-            {loading ? <LoadingAnimation /> : (
+            {loading  || allPuzzlesLoadable.state === 'loading' ? <LoadingAnimation /> : (
                 <ContentContainer>
                     <h1>Be Spelling</h1>
                     <h2>A clone of the&nbsp;
@@ -18,7 +24,9 @@ const LandingPage = () => {
                             NYT Spelling Bee
                         </a>
                     </h2>
-                    <PuzzleSelectForm options={contents} />
+                    {/*<PuzzleSelectForm options={contents} /> */}
+                    <PuzzleMenu puzzles={puzzles} />
+          
                 </ContentContainer>
             )}
         </StyledLandingPage>

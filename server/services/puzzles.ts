@@ -1,6 +1,12 @@
 import Puzzle from "../models/Puzzle";
 import type { AddPuzzleRequest } from "../shared/types";
 
+const getAll = async () => {
+    const puzzles = await Puzzle.find({});
+
+    return puzzles;
+};
+
 const getById = async (id: string) => {
     const puzzle = await Puzzle.findById(id);
 
@@ -41,7 +47,7 @@ const save = async (requestBody: AddPuzzleRequest) => {
 
 
 
-export default { getById, getOptions, getRandomPuzzle, save };
+export default { getAll, getById, getOptions, getRandomPuzzle, save };
 
 
 

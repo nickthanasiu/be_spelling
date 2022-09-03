@@ -1,7 +1,19 @@
 import { atom, selector } from "recoil";
 import ApiClient from "../api/client";
 import { PuzzleState } from "./types";
-import { PuzzleOption } from '../../../server/shared/types';
+import { PuzzleOption, PuzzleResponse } from '../../../server/shared/types';
+
+const allPuzzlesSelector = selector({
+    key: 'allPuzzlesSelector',
+    get: async (): Promise<PuzzleResponse[]> => {
+        return await ApiClient.get('/puzzles/all');
+    }
+})
+
+export const allPuzzlesAtom = atom({
+    key: 'allPuzzlesAtom',
+    default: allPuzzlesSelector
+})
 
 export const puzzleOptionsSelector = selector<PuzzleOption[]>({
     key: 'puzzleOptionsSelector',
