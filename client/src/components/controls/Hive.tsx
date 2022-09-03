@@ -3,9 +3,12 @@ import { useRecoilValue } from 'recoil';
 import { centerLetterSelector, lettersAtom } from '../../state';
 import HiveCell from './HiveCell';
 
-const Hive = () => {
-    const letters = useRecoilValue(lettersAtom);
-    const centerLetter = useRecoilValue(centerLetterSelector);
+interface Props {
+    centerLetter: string;
+    letters: string[];
+}
+
+const Hive = ({ centerLetter, letters }: Props) => {
     
     return (
         <StyledHiveWrapper>

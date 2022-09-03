@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import MessageBox from "./MessageBox";
 import HiveInput from "./HiveInput";
-import Hive from "./Hive";
+import HiveContainer from "./HiveContainer";
 import HiveActions from "./HiveActions";
 
 function Controls() {
@@ -10,7 +10,7 @@ function Controls() {
             <StyledControls>
                 <MessageBox />
                 <HiveInput />
-                <Hive />
+                <HiveContainer />
                 <HiveActions />
             </StyledControls> 
         </StyledControlsWrapper>
