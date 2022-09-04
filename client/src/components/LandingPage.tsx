@@ -2,8 +2,8 @@ import { useRecoilValueLoadable } from 'recoil';
 import styled from 'styled-components';
 import { allPuzzlesAtom } from '../state/puzzle';
 import LoadingAnimation from './loading/LoadingAnimation';
-import PuzzleMenu from "./PuzzleMenu";
-import { PuzzleResponse } from '../../../server/shared/types';
+import PuzzleMenuContainer from './PuzzleMenuContainer';
+import { type PuzzleResponse } from '../../../server/shared/types';
 
 const LandingPage = () => {
     const { state, contents } = useRecoilValueLoadable<PuzzleResponse[]>(allPuzzlesAtom);
@@ -23,8 +23,7 @@ const LandingPage = () => {
                         puzzles, so you can revisit favorites or play those you missed.
                     </h2>
 
-
-                    <PuzzleMenu puzzles={contents} />
+                    <PuzzleMenuContainer puzzles={contents} />
           
                 </ContentContainer>
             )}
@@ -52,6 +51,11 @@ const ContentContainer = styled.div`
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding-bottom: 50px;
+
+    h1, h2 {
+        text-align: left;
+    }
 
     h1 {
         font-size: 36px;

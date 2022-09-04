@@ -11,15 +11,7 @@ export const totalScoreSelector = selector({
         const foundWords = get(foundWordsAtom);
         const { pangrams } = get(puzzleAtom);
 
-        const totalScore = foundWords
-            .map((word) => {
-
-                const isPangram = pangrams.includes(word);
-                const score = calculateScore(word.length, isPangram);
-
-                return score;
-            })
-            .reduce((prev, curr) => prev + curr, 0);
+        const totalScore = deriveTotalScoreFromWordsList(foundWords, pangrams);
   
         return totalScore;
     }
@@ -44,4 +36,19 @@ function calculateScore(wordLength: number, isPangram: boolean = false) {
         : 1;
 
     return score;
+}
+
+export function deriveTotalScoreFromWordsList(foundWords: string[], pangrams: string[]) {
+
+       const score = foundWords
+            .map((word) => {
+
+                const isPangram = pangrams.includes(word);
+                const score = calculateScore(word.length, isPangram);
+
+                return score;
+            })
+            .reduce((prev, curr) => prev + curr, 0);
+
+        return score;
 }
