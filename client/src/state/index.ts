@@ -3,8 +3,8 @@ import { foundWordsAtom, wordListPreviewSelector, alphabetizedWordSelector } fro
 import { inputAtom, inputWordSelector, inputTouchedAtom } from "./input";
 import { messageBoxAtom } from "./messageBox";
 import { 
-    puzzleOptionsSelector,
-    puzzleOptionsAtom,
+    allPuzzlesSelector,
+    allPuzzlesAtom,
     puzzleAtom,
     lettersSelector,
     lettersAtom,
@@ -41,8 +41,8 @@ export {
     messageBoxAtom,
 
     // Puzzle
-    puzzleOptionsSelector,
-    puzzleOptionsAtom,
+    allPuzzlesSelector,
+    allPuzzlesAtom,
     puzzleAtom,
     lettersSelector,
     lettersAtom,

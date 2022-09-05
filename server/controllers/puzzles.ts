@@ -1,5 +1,10 @@
 import PuzzlesService from '../services/puzzles';
 
+const getAll = async (req, res) => {
+    const puzzles = await PuzzlesService.getAll();
+
+    res.send(puzzles);
+};
 
 const getOptions = async (req, res) => {
     const options = await PuzzlesService.getOptions();
@@ -21,4 +26,4 @@ const add = async (req, res, next) => {
     res.status(201).send(puzzle);
 }
 
-export default { getOptions, getbyId, add };
+export default { getAll, getOptions, getbyId, add };

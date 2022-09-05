@@ -9,13 +9,9 @@ export const rankingSelector = selector<PuzzleRankingLevel>({
         const totalScore = get(totalScoreAtom);
         const { rankings } = get(puzzleAtom);
 
-        // Get index of the first ranking level beyond current score
-        const nextRankingIndex = rankings.findIndex(ranking => totalScore < ranking.threshold);
+        const ranking = deriveRankingFromScore(totalScore, rankings);
 
-        // Get current ranking level by selecting the ranking at index just before above index
-        const currentRankingIndex = nextRankingIndex - 1;
-
-        return rankings[currentRankingIndex].name;
+        return ranking;
     }
 });
 
@@ -23,3 +19,14 @@ export const rankingAtom = atom({
     key: 'rankingAtom',
     default: rankingSelector
 });
+
+export function deriveRankingFromScore(score: number, rankings: any[]) {
+
+    // Get index of the first ranking level beyond current score
+    const nextRankingIndex = rankings.findIndex(ranking => score < ranking.threshold);
+
+    // Get current ranking level by selecting the ranking at index just before above index
+    const currentRankingIndex = nextRankingIndex - 1;
+
+    return rankings[currentRankingIndex].name;
+}
