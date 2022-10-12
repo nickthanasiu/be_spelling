@@ -44,6 +44,7 @@ const save = async (requestBody: AddPuzzleRequest) => {
         // Save new puzzle to db
         await puzzle.save();
     } catch (err) {
+        // tslint:disable-next-line:no-console
         console.error(
             `Error saving new puzzle to database`,
             `Puzzle: ${puzzle}`,
