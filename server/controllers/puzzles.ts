@@ -24,7 +24,7 @@ const add = async (req, res) => {
     const { date, centerLetter, letters, pangrams, words } = puzzleData;
 
     // Check for missing fields in request
-    //@TODO Add better validation
+    // @TODO Add better validation
     if (
         !date ||
         !centerLetter ||
@@ -34,17 +34,19 @@ const add = async (req, res) => {
     ) {
         const errorMessage = `Missing required field on request body: ${puzzleData}`;
 
+        // tslint:disable-next-line:no-console
         console.error(errorMessage);
 
         return res.status(400).send({
             error: errorMessage
         });
     }
-    
+
     // Check if puzzle with given date already exists in database
     const alreadyExists = await PuzzlesService.getByDate(date);
 
     if (alreadyExists) {
+        // tslint:disable-next-line:no-console
         console.error(`Error adding puzzle to database. Puzzle from date: ${date} already exists`);
         return res.status(409).send({
             error: `Puzzle from ${date} already exists`
