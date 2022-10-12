@@ -1,5 +1,5 @@
 import Puzzle from "../models/Puzzle";
-import type { AddPuzzleRequest } from "../shared/types";
+import type { AddPuzzleRequest, PuzzleRanking } from "../shared/types";
 
 const getAll = async () => {
     const puzzles = await Puzzle.find({});
@@ -13,48 +13,63 @@ const getById = async (id: string) => {
     return puzzle;
 };
 
+const getByDate = async (date: string) => {
+    const puzzle = await Puzzle.findOne({ date: date });
+
+    return puzzle;
+};
+
 const getOptions = async () => {
     const puzzles = await Puzzle.find({}, 'date');
 
     return puzzles;
 };
 
-const getRandomPuzzle = async () => {
-    const puzzleChoices = [];
-
-    // Return all puzzles from db and add to puzzleChoices array
-    await Puzzle.find({}, (error, puzzles) => {
-        puzzles.forEach((puzzle) => puzzleChoices.push(puzzle));
-    });
-
-    const randomIdx = Math.floor(Math.random() * puzzleChoices.length);
-    const puzzleData = puzzleChoices[randomIdx];
-
-    return buildPuzzle(puzzleData);
-};
 
 const save = async (requestBody: AddPuzzleRequest) => {
-    const newPuzzle = new Puzzle(requestBody);
 
-    // Save new puzzle to db
-    await newPuzzle.save((error) => {
-        // tslint:disable-next-line:no-console
-        console.log('Error saving new puzzle ', newPuzzle, ' to database: ', error);
-    });
+    const { pangrams, words } = requestBody;
 
-    return newPuzzle;
+    // Generate puzzleData with rankings
+    const rankings = generateRankings(pangrams, words);
+
+    const puzzleData = {
+        ...requestBody,
+        rankings
+    };
+
+    const puzzle = new Puzzle(puzzleData);
+    
+    try {
+        // Save new puzzle to db
+        await puzzle.save();
+    } catch (err) {
+        console.error(
+            `Error saving new puzzle to database`,
+            `Puzzle: ${puzzle}`,
+            `Error: ${err}`);
+    }
+
+    return puzzle;
 };
 
 
-
-export default { getAll, getById, getOptions, getRandomPuzzle, save };
+export default {
+    getAll,
+    getById,
+    getByDate,
+    getOptions,
+    save
+};
 
 
 
 // Helpers
 
-function buildPuzzle(puzzleData) {
-    const { pangrams, words } = puzzleData;
+function generateRankings(
+    pangrams: string[],
+    words: string[]
+): PuzzleRanking[] {
 
     // Pangram is worth its length plus 7
     const calculatePangramScore = (pangram: string): number =>
@@ -74,7 +89,7 @@ function buildPuzzle(puzzleData) {
         Math.floor(maxScore * (percentage / 100));
 
     // Generate rankings
-    const rankings = [
+    const rankings: PuzzleRanking[] = [
         { name: 'Beginner', threshold: 0 },
         { name: 'Good Start', threshold: percentToScore(2) },
         { name: 'Moving Up', threshold: percentToScore(5) },
@@ -87,7 +102,5 @@ function buildPuzzle(puzzleData) {
         { name: 'Queen Bee', threshold: maxScore },
     ];
 
-    puzzleData.rankings = rankings;
-
-    return puzzleData;
+    return rankings;
 }
