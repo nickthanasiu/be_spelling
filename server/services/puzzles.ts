@@ -2,7 +2,8 @@ import Puzzle from "../models/Puzzle";
 import type { AddPuzzleRequest, PuzzleRanking } from "../shared/types";
 
 const getAll = async () => {
-    const puzzles = await Puzzle.find({});
+    // Return most recent puzzles first
+    const puzzles = await Puzzle.find({}).sort({ date: 'desc' });
 
     return puzzles;
 };
@@ -14,7 +15,7 @@ const getById = async (id: string) => {
 };
 
 const getByDate = async (date: string) => {
-    const puzzle = await Puzzle.findOne({ date: date });
+    const puzzle = await Puzzle.findOne({ date });
 
     return puzzle;
 };
@@ -39,7 +40,7 @@ const save = async (requestBody: AddPuzzleRequest) => {
     };
 
     const puzzle = new Puzzle(puzzleData);
-    
+
     try {
         // Save new puzzle to db
         await puzzle.save();
