@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useSetRecoilState } from "recoil";
+import { useSetRecoilState, useResetRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
-import { puzzleAtom } from "../state";
+import { puzzleAtom, foundWordsAtom } from "../state";
 import ApiClient from "../api/client";
 import GameField from "../components/GameField";
 import LoadingAnimation from "./loading/LoadingAnimation";
@@ -12,6 +12,7 @@ const PuzzlePage = () => {
 
     const setPuzzleState = useSetRecoilState(puzzleAtom);
     const [loaded, setLoaded] = useState(false);
+    const clearFoundWordsList = useResetRecoilState(foundWordsAtom);
 
     useEffect(() => {
         async function getPuzzleById() {
@@ -21,6 +22,11 @@ const PuzzlePage = () => {
         }
 
         getPuzzleById();
+
+        return () => {
+            // Reset foundWords atom when leaving puzzle page
+            clearFoundWordsList();
+        };
     }, [id]);
 
     return (

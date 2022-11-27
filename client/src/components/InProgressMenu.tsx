@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import PuzzleMenu from "./PuzzleMenu";
 import { type PuzzleResponse } from "../../../server/shared/types";
-import { loadLocalStorageState } from "../utils/localStorage";
 
 interface Props {
     puzzles: PuzzleResponse[];
