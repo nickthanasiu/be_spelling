@@ -30,15 +30,10 @@ const PuzzlePage = () => {
     }, [id]);
 
     return (
-        <StyledPuzzlePage>
+        <div>
             {!loaded ? <LoadingAnimation /> : <GameField />}
-        </StyledPuzzlePage>
+        </div>
     );
 };
 
 export default PuzzlePage;
-
-const StyledPuzzlePage = styled.div`
-    display: flex;
-    height: 80vh;
-`;
