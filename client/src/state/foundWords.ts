@@ -39,3 +39,8 @@ export const alphabetizedWordSelector = selector({
         return [...foundWords].sort((a, b) => a.localeCompare(b));
     }
 });
+
+export const foundWordsListExpandedAtom = atom({
+    key: 'foundWordsListExpanded',
+    default: false
+});
