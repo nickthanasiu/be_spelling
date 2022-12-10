@@ -1,8 +1,8 @@
 import { useRecoilValueLoadable } from 'recoil';
 import styled from 'styled-components';
 import { allPuzzlesAtom } from '../state/puzzle';
-import LoadingAnimation from './loading/LoadingAnimation';
-import PuzzleMenuContainer from './PuzzleMenuContainer';
+import LoadingAnimation from '../components/loading/LoadingAnimation';
+import PuzzleMenuContainer from '../components/PuzzleMenuContainer';
 import { type PuzzleResponse } from '../../../server/shared/types';
 
 const LandingPage = () => {
@@ -51,6 +51,7 @@ const ContentContainer = styled.div`
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding: 15px;
     padding-bottom: 50px;
 
     h1, h2 {

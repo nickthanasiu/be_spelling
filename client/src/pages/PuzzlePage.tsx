@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useSetRecoilState, useResetRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
 import { puzzleAtom, foundWordsAtom } from "../state";
 import ApiClient from "../api/client";
 import GameField from "../components/GameField";
-import LoadingAnimation from "./loading/LoadingAnimation";
+import LoadingAnimation from "../components/loading/LoadingAnimation";
 
 const PuzzlePage = () => {
     const { id } = useParams();
@@ -30,15 +29,10 @@ const PuzzlePage = () => {
     }, [id]);
 
     return (
-        <StyledPuzzlePage>
+        <div>
             {!loaded ? <LoadingAnimation /> : <GameField />}
-        </StyledPuzzlePage>
+        </div>
     );
 };
 
 export default PuzzlePage;
-
-const StyledPuzzlePage = styled.div`
-    display: flex;
-    height: 80vh;
-`;
