@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { foundWordsListExpandedAtom } from '../../state/foundWords';
 import WordListHeading from './WordListHeading';
 import WordListDrawer from './WordListDrawer';
 
 function WordList() {
-    const [expanded, setExpanded] = useState(false);
+    const [expanded, setExpanded] = useRecoilState(foundWordsListExpandedAtom);
 
     return (
         <StyledWordList>
