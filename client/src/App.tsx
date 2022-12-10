@@ -1,8 +1,7 @@
 import { RecoilRoot } from "recoil";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AdminPage from "./components/admin/AdminPage";
-import LandingPage from "./components/LandingPage";
-import PuzzlePage from "./components/PuzzlePage";
+import LandingPage from "./pages/LandingPage";
+import PuzzlePage from "./pages/PuzzlePage";
 
 function App() {
   return (
@@ -10,7 +9,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/admin" element={<AdminPage />} />
           <Route path="/puzzles/:id" element={<PuzzlePage />} />
         </Routes>
       </BrowserRouter>

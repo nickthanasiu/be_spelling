@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { puzzleAtom, foundWordsAtom } from "../state";
 import ApiClient from "../api/client";
 import GameField from "../components/GameField";
-import LoadingAnimation from "./loading/LoadingAnimation";
+import LoadingAnimation from "../components/loading/LoadingAnimation";
 
 const PuzzlePage = () => {
     const { id } = useParams();
