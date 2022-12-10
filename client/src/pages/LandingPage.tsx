@@ -51,6 +51,7 @@ const ContentContainer = styled.div`
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding: 15px;
     padding-bottom: 50px;
 
     h1, h2 {
