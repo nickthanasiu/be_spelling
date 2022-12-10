@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import styled from "styled-components";
 import { useSetRecoilState, useResetRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
 import { puzzleAtom, foundWordsAtom } from "../state";
