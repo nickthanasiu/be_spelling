@@ -1,46 +1,33 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useCallback } from "react";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 import { centerLetterSelector, inputAtom, lettersSelector, type LetterObj } from "../state";
 
-const useCreateLetterObj = () => {
+
+export const useUpdateInputState = () => {
 
     const letters = useRecoilValue(lettersSelector);
     const centerLetter = useRecoilValue(centerLetterSelector);
+    const setInputState = useSetRecoilState(inputAtom);
 
-    const createLetterObj = (letter: string): LetterObj => {
-        
+    const updateInputState = useCallback((letter: string) => {
+
+        // Create letterObj from character value
+        //const letterObj = createLetterObj(val);
         // Make sure letter is capitalized before comparing, as letters stored in db are capitalized
         letter = letter.toUpperCase();
 
         const isCenterLetter = letter === centerLetter;
         const isInLettersList = letters.includes(letter);
 
-        return {
+        const letterObj = {
             letter,
-            isCenterLetter: isCenterLetter,
-            isValid: isCenterLetter || isInLettersList,
+            isCenterLetter,
+            isValid: isCenterLetter || isInLettersList
         };
 
-    };
-
-    return createLetterObj;
-};
-
-export const useUpdateInputState = () => {
-
-    const [inputState, setInputState] = useRecoilState(inputAtom);
-    const createLetterObj = useCreateLetterObj();
-
-    const updateInputState = (val: string) => {
-
-        // Create letterObj from character value
-        const letterObj = createLetterObj(val);
-
-        // Add new letterObj to inputState array
-        const newState = [...inputState, letterObj];
-
         // Set new state
-        setInputState(newState);
-    };
+        setInputState(prevState => [...prevState, letterObj]);
+    }, []);
 
     return updateInputState;
 };

@@ -1,12 +1,13 @@
-import { useRecoilState } from 'recoil';
+import { useCallback } from 'react';
+import { useSetRecoilState } from 'recoil';
 import { inputAtom } from "../state";
 
 export const useBackspace = () => {
-    const [inputState, setInputState] = useRecoilState(inputAtom);
+    const setInputState = useSetRecoilState(inputAtom);
 
-    function backspace() {
-        setInputState([...inputState.slice(0, -1)]);
-    }
+    const backspace = useCallback(() => {
+        setInputState(prevState => [...prevState.slice(0, -1)]);
+    }, []);
 
     return backspace;
 };
