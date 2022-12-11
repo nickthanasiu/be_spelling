@@ -137,9 +137,13 @@ const StyledPuzzleCard = styled.div`
 // Helpers
 
 function formatDate(dateString: string) {
-
     const date = new Date(dateString);
-    const formatted = date.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    const formatted = date.toLocaleString('en-US', { 
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+        timeZone: 'UTC' 
+    });
 
     return formatted;
 }
