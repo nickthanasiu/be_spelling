@@ -14,7 +14,7 @@ const mongodbPassword = process.env.MONGODB_PASSWORD;
 async function connectToDB() {
     try {
         await mongoose.connect(`mongodb+srv://${mongodbUsername}:${mongodbPassword}@cluster0.3l6s1.mongodb.net/?retryWrites=true&w=majority`);
-    
+
         // tslint:disable-next-line:no-console
         console.log('Database Connected');
     } catch (error) {
@@ -35,7 +35,7 @@ app.use(express.json());
 
 // Serve the React static files after build
 app.use(express.static(
-    path.resolve(__dirname, "..", "public")
+    path.resolve(__dirname, "public")
 ));
 
 // Routes
@@ -43,7 +43,7 @@ app.use('/api', getRoutes());
 
 app.get("/*", (req, res) => {
     res.sendFile(
-        path.resolve(__dirname, "..", "public", "index.html")
+        path.resolve(__dirname, "public", "index.html")
     );
 });
 
