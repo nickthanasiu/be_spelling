@@ -1,11 +1,39 @@
 import Puzzle from "../models/Puzzle";
 import type { AddPuzzleRequest, PuzzleRanking } from "../shared/types";
 
-const getAll = async () => {
-    // Return most recent puzzles first
-    const puzzles = await Puzzle.find({}).sort({ date: 'desc' });
+const get = async (limit: number, cursor: any) => {
 
-    return puzzles;
+    let puzzles;
+
+    if (cursor) {
+
+        puzzles = await Puzzle.find({ date: { $lte: cursor }})
+            .sort({ date: 'desc' })
+            .limit(limit + 1);
+
+    } else {
+
+        // Return most recent puzzles first
+        puzzles = await Puzzle.find({})
+            .sort({ date: 'desc' })
+            .limit(limit + 1)
+    }
+
+    const hasMore = puzzles.length === limit + 1;
+
+    let nextCursor = '';
+
+    if (hasMore) {
+        const nextCursorRecord = puzzles[limit]; // @TODO: encrypt this before sending in response
+
+        nextCursor = (nextCursorRecord.date);
+        puzzles.pop();
+    }
+
+    return {
+        puzzles,
+        nextCursor,
+    };
 };
 
 const getById = async (id: string) => {
@@ -57,7 +85,7 @@ const save = async (requestBody: AddPuzzleRequest) => {
 
 
 export default {
-    getAll,
+    get,
     getById,
     getByDate,
     getOptions,

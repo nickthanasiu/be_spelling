@@ -4,6 +4,8 @@
         "tslint:recommended"
     ],
     "jsRules": {},
-    "rules": {},
+    "rules": {
+        "@typescript-eslint/restrict-plus-operands": "error"
+    },
     "rulesDirectory": []
 }

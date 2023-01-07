@@ -1,32 +1,50 @@
+import { useState, useEffect } from 'react';
 import { useRecoilValueLoadable } from 'recoil';
 import styled from 'styled-components';
 import { allPuzzlesAtom } from '../state/puzzle';
 import LoadingAnimation from '../components/loading/LoadingAnimation';
 import PuzzleMenuContainer from '../components/PuzzleMenuContainer';
 import { type PuzzleResponse } from '../../../server/shared/types';
+import { PuzzlesApiResponse } from '../state/puzzle';
+import ApiClient from '../api/client';
 
 const LandingPage = () => {
-    const { state, contents } = useRecoilValueLoadable<PuzzleResponse[]>(allPuzzlesAtom);
-    const loading = state === 'loading';
+    //const { state, contents } = useRecoilValueLoadable<PuzzlesApiResponse>(allPuzzlesAtom);
+    //const loading = state === 'loading';
+    const [puzzlesData, setPuzzlesData] = useState<PuzzlesApiResponse>();
+    const [isLoading, setLoading] = useState(true);
+
+    useEffect(() => {
+        (async () => {
+            const response = await ApiClient.get<PuzzlesApiResponse>('/puzzles');
+            setPuzzlesData(response);
+            setLoading(false);
+        })();
+    }, []);
+
+    if (isLoading || !puzzlesData) {
+        return (
+            <StyledLandingPage>
+                <LoadingAnimation />
+            </StyledLandingPage>
+        );
+    }
     
     return (
         <StyledLandingPage>
-            {loading ? <LoadingAnimation /> : (
-                <ContentContainer>
+            <ContentContainer>
+                <h1>Be Spelling</h1>
+                <h2>
+                    Archive of old
+                    <a href='https://www.nytimes.com/puzzles/spelling-bee' target="_blank" rel="noopener noreferrer">
+                        &nbsp;NYT Spelling Bee&nbsp;
+                    </a>
+                    puzzles, so you can revisit favorites or play those you missed.
+                </h2>
 
-                    <h1>Be Spelling</h1>
-                    <h2>
-                        Archive of old
-                        <a href='https://www.nytimes.com/puzzles/spelling-bee' target="_blank" rel="noopener noreferrer">
-                            &nbsp;NYT Spelling Bee&nbsp;
-                        </a>
-                        puzzles, so you can revisit favorites or play those you missed.
-                    </h2>
-
-                    <PuzzleMenuContainer puzzles={contents} />
+                <PuzzleMenuContainer puzzlesApiData={puzzlesData} />
           
-                </ContentContainer>
-            )}
+            </ContentContainer>
         </StyledLandingPage>
     );
 };
@@ -34,10 +52,7 @@ const LandingPage = () => {
 export default LandingPage;
 
 const StyledLandingPage = styled.div`
-    width: 100vw;
-    height: 100vh;
     
-    color: #fff;
     display: flex;
     justify-content: center;
 `;
