@@ -3,72 +3,53 @@ import styled from "styled-components";
 import PuzzleCard from "./PuzzleCard";
 import { device } from "../styles/device";
 import { type PuzzleResponse } from "../../../server/shared/types";
-import { Button } from "./Button";
 import ApiClient from '../api/client';
 import LoadingAnimation from "./loading/LoadingAnimation";
-
+import LoadMoreButton from "./LoadMoreButton";
 
 type PuzzleApiResponse = {
     puzzles: PuzzleResponse[];
     nextCursor: string;
 };
 
-const PuzzleMenu = (props: any) => {
+const PuzzleMenu = () => {
 
-    const [puzzles, setPuzzles] = useState<PuzzleResponse[]>([]);
-    const [nextCursor, setNextCursor] = useState('');
-
-    const [loadingMore, setLoadingMore] = useState(false    );
+    const [puzzleData, setPuzzleData] = useState<PuzzleApiResponse>();
 
     useEffect(() => {
-        async function fetchInitialPuzzles() {
-            const response = await ApiClient.get<{ puzzles: PuzzleResponse[], nextCursor: string}>('/puzzles');
-            setPuzzles(response.puzzles);
-            setNextCursor(response.nextCursor);
-        }
-
-        fetchInitialPuzzles();
+        (async function() {
+            const response = await ApiClient.get<PuzzleApiResponse>(`/puzzles`);
+            setPuzzleData(response);
+        })();
     }, []);
-
-
-    const loadMorePuzzles = async () => {
-        setLoadingMore(true);
-
-        const response = await ApiClient.get<PuzzleApiResponse>(`/puzzles?cursor=${nextCursor}`);
-       
-        setPuzzles(prevPuzzles => [
-            ...prevPuzzles,
-            ...response.puzzles
-        ]);
-
-        setNextCursor(response.nextCursor);
-
-        setLoadingMore(false);
-    };
-    
-
-
-
-    if (!puzzles.length) { // @TODO: Replace loading animation with skeleton grid
+      
+    if (!puzzleData) { // @TODO: Replace loading animation with skeleton grid: ;
         return (
             <LoadingAnimation />
         );
     }
 
-    const SeeMore = () => loadingMore ? <LoadingAnimation /> : (
-        <div style={{ marginTop: '40px' }}>
-            <Button onClick={loadMorePuzzles}>
-                See More
-            </Button>
-        </div>
-    );
+    const { puzzles, nextCursor } = puzzleData;
+
+    const loadMorePuzzles = async () => {
+        try {
+            const response = await ApiClient.get<PuzzleApiResponse>(`/puzzles?cursor=${nextCursor}`);
+
+            setPuzzleData({
+                puzzles: [...puzzleData.puzzles, ...response.puzzles],
+                nextCursor: response.nextCursor
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     return (
         <>
             <StyledPuzzleMenu>
                 {puzzles.map(puzzle => <PuzzleCard key={puzzle._id} puzzle={puzzle} />)}
             </StyledPuzzleMenu> 
-            {nextCursor && <SeeMore />}
+            {nextCursor && <LoadMoreButton onClick={loadMorePuzzles}>Load More</LoadMoreButton>}
         </>
     );
 };
@@ -87,4 +68,3 @@ const StyledPuzzleMenu = styled.div`
         grid-template-columns: repeat(2, 1fr);
     }
 `;
-

@@ -13,7 +13,7 @@ const InProgressMenu = ({ puzzles }: Props) => {
         <StyledInProgressMenu>
             <h2>Want to continue?</h2>
 
-            <PuzzleMenu puzzles={puzzles} />
+            <PuzzleMenu />
         </StyledInProgressMenu>
     );
 };

@@ -1,13 +1,12 @@
 import Puzzle from "../models/Puzzle";
 import type { AddPuzzleRequest, PuzzleRanking } from "../shared/types";
 
-const get = async (limit: number, cursor: any) => {
+const get = async (limit: number, cursor: string) => {
 
     let puzzles;
 
     if (cursor) {
-
-        puzzles = await Puzzle.find({ date: { $lte: cursor }})
+        puzzles = await Puzzle.find({ date: { $lte: decodeCursor(cursor) }})
             .sort({ date: 'desc' })
             .limit(limit + 1);
 
@@ -24,9 +23,8 @@ const get = async (limit: number, cursor: any) => {
     let nextCursor = '';
 
     if (hasMore) {
-        const nextCursorRecord = puzzles[limit]; // @TODO: encrypt this before sending in response
-
-        nextCursor = (nextCursorRecord.date);
+        const nextCursorRecord = puzzles[limit];
+        nextCursor = encodeCursor(nextCursorRecord.date);
         puzzles.pop();
     }
 
@@ -133,4 +131,14 @@ function generateRankings(
     ];
 
     return rankings;
+}
+
+function encodeCursor(rawCursor: string) {
+    const buffer = Buffer.from(rawCursor);
+    return buffer.toString('base64');
+}
+
+function decodeCursor(encodedCursor: string) {
+    const buffer = Buffer.from(encodedCursor, 'base64');
+    return buffer.toString('ascii');
 }

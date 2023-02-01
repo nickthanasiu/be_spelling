@@ -23,7 +23,7 @@ const PuzzleMenuContainer = ({ puzzlesApiData }: Props) => {
     const { clientHasPuzzlesInProgress, inProgressPuzzleIds } = checkForInProgressPuzzles();
 
     const puzzleMenu = (
-        <PuzzleMenu puzzles={puzzles} pagination={pagination} />
+        <PuzzleMenu />
     );
 
     if (!clientHasPuzzlesInProgress) {

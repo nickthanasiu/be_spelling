@@ -1,4 +1,3 @@
-import { parse } from 'path';
 import PuzzlesService from '../services/puzzles';
 
 const get = async (req, res) => {
