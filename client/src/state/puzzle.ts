@@ -4,17 +4,9 @@ import { PuzzleState } from "./types";
 import { PuzzleResponse } from '../../../server/shared/types';
 
 export interface PuzzlesApiResponse {
-    data: PuzzleResponse[];
-    pagination: {
-        hasMore: boolean;
-        nextCursor: string;
-    }
+    puzzles: PuzzleResponse[];
+    nextCursor: string;
 }
-
-export const paginationAtom = atom({
-    key: 'paginationAtom',
-    default: { hasMore: false, nextCursor: '' }
-});
 
 export const allPuzzlesSelector = selector({
     key: 'allPuzzlesSelector',

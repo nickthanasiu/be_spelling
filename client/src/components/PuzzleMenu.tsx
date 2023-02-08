@@ -3,6 +3,7 @@ import styled from "styled-components";
 import PuzzleCard from "./PuzzleCard";
 import { device } from "../styles/device";
 import { type PuzzleResponse } from "../../../server/shared/types";
+import { PuzzlesApiResponse } from "../state/puzzle";
 import ApiClient from '../api/client';
 import LoadingAnimation from "./loading/LoadingAnimation";
 import LoadMoreButton from "./LoadMoreButton";
@@ -14,11 +15,11 @@ type PuzzleApiResponse = {
 
 const PuzzleMenu = () => {
 
-    const [puzzleData, setPuzzleData] = useState<PuzzleApiResponse>();
+    const [puzzleData, setPuzzleData] = useState<PuzzlesApiResponse>();
 
     useEffect(() => {
         (async function() {
-            const response = await ApiClient.get<PuzzleApiResponse>(`/puzzles`);
+            const response = await ApiClient.get<PuzzlesApiResponse>(`/puzzles`);
             setPuzzleData(response);
         })();
     }, []);
@@ -33,7 +34,7 @@ const PuzzleMenu = () => {
 
     const loadMorePuzzles = async () => {
         try {
-            const response = await ApiClient.get<PuzzleApiResponse>(`/puzzles?cursor=${nextCursor}`);
+            const response = await ApiClient.get<PuzzlesApiResponse>(`/puzzles?cursor=${nextCursor}`);
 
             setPuzzleData({
                 puzzles: [...puzzleData.puzzles, ...response.puzzles],

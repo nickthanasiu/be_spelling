@@ -1,4 +1,8 @@
-import { useState } from "react";
+export default function PuzzleMenuContainer() {
+    return <></>;
+}
+
+/*import { useState } from "react";
 import { loadLocalStorageState } from "../utils/localStorage";
 import PuzzleMenu from "./PuzzleMenu";
 import InProgressMenu from "./InProgressMenu";
@@ -80,3 +84,4 @@ function checkForInProgressPuzzles() {
         inProgressPuzzleIds,
     }
 }
+*/
