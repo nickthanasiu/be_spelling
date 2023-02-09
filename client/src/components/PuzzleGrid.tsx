@@ -34,8 +34,13 @@ const PuzzleGrid = ({ filterParams }: Props) => {
         <Container>
             <Grid>
                 {puzzles.map(puzzle => <PuzzleCard key={puzzle._id} puzzle={puzzle} />)}
-            </Grid>    
-            {nextCursor && <LoadMoreButton onClick={loadMore}>Load More</LoadMoreButton>}
+            </Grid>
+
+            {nextCursor && (
+                <ButtonWrapper>
+                    <LoadMoreButton onClick={loadMore}>Load More</LoadMoreButton>
+                </ButtonWrapper>
+            )}
         </Container>
     );
 };
@@ -57,6 +62,10 @@ const Grid = styled.div`
     @media (min-width: ${device.desktop}) {
         grid-template-columns: repeat(2, 1fr);
     }
+`;
+
+const ButtonWrapper = styled.div`
+    margin-top: 30px;
 `;
 
 

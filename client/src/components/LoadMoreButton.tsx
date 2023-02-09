@@ -11,7 +11,7 @@ const LoadMoreButton = ({ onClick, children }: Props) => {
     const [isLoading, setIsLoading] = useState(false);
 
     if (isLoading) {
-        return <LoadingAnimation/>;
+        return <LoadingAnimation />;
     }
 
     const handleClick = async () => {
@@ -27,11 +27,9 @@ const LoadMoreButton = ({ onClick, children }: Props) => {
     };
 
     return (
-        <div style={{ marginTop: '40px' }}>
-            <Button onClick={handleClick}>
-                {children}
-            </Button>
-        </div>
+        <Button onClick={handleClick}>
+            {children}
+        </Button>
     );
 };
 

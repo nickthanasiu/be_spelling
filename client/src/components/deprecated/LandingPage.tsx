@@ -1,11 +1,4 @@
-import { useRecoilValueLoadable } from 'recoil';
 import styled from 'styled-components';
-import { allPuzzlesAtom } from '../../state/puzzle';
-import LoadingAnimation from '../loading/LoadingAnimation';
-import PuzzleMenuContainer from './PuzzleMenuContainer';
-import { type PuzzleResponse } from '../../../../server/shared/types';
-import { PuzzlesApiResponse } from '../../state/puzzle';
-import ApiClient from '../../api/client';
 
 const LandingPage = () => {
     //const { state, contents } = useRecoilValueLoadable<PuzzlesApiResponse>(allPuzzlesAtom);

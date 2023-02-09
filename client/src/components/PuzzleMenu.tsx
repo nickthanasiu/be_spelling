@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useState } from "react";
 import PuzzleSortSelect from "./PuzzleSortSelect";
 import PuzzleGrid, { QueryParams, ValueOf } from "./PuzzleGrid";
-import LoadingAnimation from "./loading/LoadingAnimation";
 
 const PuzzleMenu = () => {
     const [filterParams, setFilterParams] = useState<QueryParams>({});
