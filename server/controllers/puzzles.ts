@@ -1,12 +1,13 @@
 import PuzzlesService from '../services/puzzles';
 
 const get = async (req, res) => {
-    const { cursor } = req.query;
+    const { cursor, sort } = req.query;
     const limit = parseInt(req.query.limit);
 
     const puzzles = await PuzzlesService.get(
         limit || 10,
-        cursor
+        cursor,
+        sort
     );
 
     res.send(puzzles);

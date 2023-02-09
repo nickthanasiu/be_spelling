@@ -1,22 +1,28 @@
 import Puzzle from "../models/Puzzle";
 import type { AddPuzzleRequest, PuzzleRanking } from "../shared/types";
 
-const get = async (limit: number, cursor: string) => {
+const get = async (limit: number, cursor: string, sort: string) => {
 
-    let puzzles;
+    let sortByOrder, greaterOrLessThan;
 
-    if (cursor) {
-        puzzles = await Puzzle.find({ date: { $lte: decodeCursor(cursor) }})
-            .sort({ date: 'desc' })
-            .limit(limit + 1);
-
-    } else {
-
-        // Return most recent puzzles first
-        puzzles = await Puzzle.find({})
-            .sort({ date: 'desc' })
-            .limit(limit + 1)
+    switch (sort) {
+        case "oldest":
+            sortByOrder = 'asc';
+            greaterOrLessThan = '$gte';
+            break;
+        case "newest":
+        default:
+            sortByOrder = 'desc';
+            greaterOrLessThan = '$lte';
     }
+
+    const query =
+        cursor ? { date: { [greaterOrLessThan]: decodeCursor(cursor) }}
+        : {};
+
+    const puzzles = await Puzzle.find(query)
+    .sort({ date: sortByOrder })
+    .limit(limit + 1);
 
     const hasMore = puzzles.length === limit + 1;
 
@@ -24,7 +30,7 @@ const get = async (limit: number, cursor: string) => {
 
     if (hasMore) {
         const nextCursorRecord = puzzles[limit];
-        nextCursor = encodeCursor(nextCursorRecord.date);
+        nextCursor = encodeCursor(nextCursorRecord.date.toISOString());
         puzzles.pop();
     }
 

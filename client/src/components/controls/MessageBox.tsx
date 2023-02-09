@@ -7,7 +7,6 @@ import PrevWordScore from './PrevWordScore';
 function MessageBox() {
     const { visible, message, isError, isPangram } = useRecoilValue(messageBoxAtom);
 
-
     return (
         <StyledMessageBox>
             {visible && (
