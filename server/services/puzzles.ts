@@ -3,7 +3,8 @@ import type { AddPuzzleRequest, PuzzleRanking } from "../shared/types";
 
 const get = async (limit: number, cursor: string, sort: string) => {
 
-    let sortByOrder, greaterOrLessThan;
+    let sortByOrder;
+    let greaterOrLessThan;
 
     switch (sort) {
         case "oldest":

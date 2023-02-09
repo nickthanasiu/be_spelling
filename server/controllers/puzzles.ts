@@ -2,7 +2,7 @@ import PuzzlesService from '../services/puzzles';
 
 const get = async (req, res) => {
     const { cursor, sort } = req.query;
-    const limit = parseInt(req.query.limit);
+    const limit = parseInt(req.query.limit, 10);
 
     const puzzles = await PuzzlesService.get(
         limit || 10,
