@@ -60,7 +60,7 @@ const StyledLoadingAnimation = styled.div<Props>`
         bottom: 0;
         margin: auto;
         border-radius: 50%;
-        background: #fff;
+        background: lightgray;
         animation-timing-function: cubic-bezier(0, 1, 1, 0);
 
         &:nth-child(1) {

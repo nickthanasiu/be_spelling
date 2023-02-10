@@ -66,6 +66,8 @@ const Grid = styled.div`
 
 const ButtonWrapper = styled.div`
     margin-top: 30px;
+    display: flex;
+    justify-content: center;
 `;
 
 

@@ -17,8 +17,10 @@ const PuzzleSortSelect = ({ updateQueryParams }: Props) => {
             <select name="sort" id="sort-results" onChange={handleChange}>
                 <option value="newest">Most Recent</option>
                 <option value="oldest">Oldest</option>
-                <option value="hardest">Difficulty (Most Points)</option>
-                <option value="easiest">Difficulty (Fewest points)</option>
+                {/*
+                    <option value="hardest">Difficulty (Most Points)</option>
+                    <option value="easiest">Difficulty (Fewest points)</option>
+                */}
             </select>
         </StyledPuzzleSortSelect>
     );

@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import BigHeading from '../components/BigHeading';
 import PuzzleMenu from '../components/PuzzleMenu';
 
 export default function LandingPage_v2() {
     return (
         <StyledLandingPage>
             <ContentContainer>
-                <h1>Be Spelling</h1>
+                <BigHeading>Be Spelling</BigHeading>
                 <h2>
                     Archive of old
                     <a href='https://www.nytimes.com/puzzles/spelling-bee' target="_blank" rel="noopener noreferrer">
@@ -13,7 +14,6 @@ export default function LandingPage_v2() {
                     </a>
                     puzzles, so you can revisit favorites or play those you missed.
                 </h2>
-
                 <PuzzleMenu />
             </ContentContainer>
         </StyledLandingPage>
@@ -30,10 +30,6 @@ const ContentContainer = styled.div`
     max-width: 800px;
     height: fit-content;
     margin-top: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
     padding: 15px;
     padding-bottom: 50px;
 
@@ -42,9 +38,11 @@ const ContentContainer = styled.div`
     }
 
     h1 {
-        font-size: 36px;
+        font-family: 'Merriweather', serif;
+        font-weight: 900;
+        font-size: 40px;
         margin: 0;
-        color: #f7da21;
+        
     }
     h2 {
         font-size: 20px;
