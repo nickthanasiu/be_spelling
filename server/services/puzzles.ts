@@ -1,11 +1,44 @@
 import Puzzle from "../models/Puzzle";
 import type { AddPuzzleRequest, PuzzleRanking } from "../shared/types";
 
-const getAll = async () => {
-    // Return most recent puzzles first
-    const puzzles = await Puzzle.find({}).sort({ date: 'desc' });
+const get = async (limit: number, cursor: string, sort: string) => {
 
-    return puzzles;
+    let sortByOrder;
+    let greaterOrLessThan;
+
+    switch (sort) {
+        case "oldest":
+            sortByOrder = 'asc';
+            greaterOrLessThan = '$gte';
+            break;
+        case "newest":
+        default:
+            sortByOrder = 'desc';
+            greaterOrLessThan = '$lte';
+    }
+
+    const query =
+        cursor ? { date: { [greaterOrLessThan]: decodeCursor(cursor) }}
+        : {};
+
+    const puzzles = await Puzzle.find(query)
+    .sort({ date: sortByOrder })
+    .limit(limit + 1);
+
+    const hasMore = puzzles.length === limit + 1;
+
+    let nextCursor = '';
+
+    if (hasMore) {
+        const nextCursorRecord = puzzles[limit];
+        nextCursor = encodeCursor(nextCursorRecord.date.toISOString());
+        puzzles.pop();
+    }
+
+    return {
+        puzzles,
+        nextCursor,
+    };
 };
 
 const getById = async (id: string) => {
@@ -57,7 +90,7 @@ const save = async (requestBody: AddPuzzleRequest) => {
 
 
 export default {
-    getAll,
+    get,
     getById,
     getByDate,
     getOptions,
@@ -105,4 +138,14 @@ function generateRankings(
     ];
 
     return rankings;
+}
+
+function encodeCursor(rawCursor: string) {
+    const buffer = Buffer.from(rawCursor);
+    return buffer.toString('base64');
+}
+
+function decodeCursor(encodedCursor: string) {
+    const buffer = Buffer.from(encodedCursor, 'base64');
+    return buffer.toString('ascii');
 }

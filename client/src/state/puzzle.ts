@@ -3,10 +3,16 @@ import ApiClient from "../api/client";
 import { PuzzleState } from "./types";
 import { PuzzleResponse } from '../../../server/shared/types';
 
+export interface PuzzlesApiResponse {
+    puzzles: PuzzleResponse[];
+    nextCursor: string;
+}
+
 export const allPuzzlesSelector = selector({
     key: 'allPuzzlesSelector',
-    get: async (): Promise<PuzzleResponse[]> => {
-        return await ApiClient.get('/puzzles');
+    get: async (): Promise<PuzzlesApiResponse> => {
+        const response: PuzzlesApiResponse = await ApiClient.get('/puzzles');
+        return response;
     }
 })
 

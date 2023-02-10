@@ -1,32 +1,30 @@
 import styled from "styled-components";
-import PuzzleCard from "./PuzzleCard";
-import { device } from "../styles/device";
-import { type PuzzleResponse } from "../../../server/shared/types";
+import { useState } from "react";
+import PuzzleSortSelect from "./PuzzleSortSelect";
+import PuzzleGrid, { QueryParams, ValueOf } from "./PuzzleGrid";
 
-interface Props {
-    puzzles: PuzzleResponse[];
-}
+const PuzzleMenu = () => {
+    const [filterParams, setFilterParams] = useState<QueryParams>({});
 
-const PuzzleMenu = ({ puzzles }: Props) => {
+    const updateQueryParams = (paramKey: keyof QueryParams, paramValue: ValueOf<QueryParams>) =>
+        setFilterParams({ ...filterParams, [paramKey]: paramValue });
 
     return (
-        <StyledPuzzleMenu>
-            {puzzles.map((puzzle) => <PuzzleCard key={puzzle._id} puzzle={puzzle} /> )}
-        </StyledPuzzleMenu>
+        <>
+            <PuzzleSortSelect updateQueryParams={updateQueryParams} />
+            <GridWrapper>
+                <PuzzleGrid filterParams={filterParams} />
+            </GridWrapper>
+        </>
     );
 };
 
 export default PuzzleMenu;
 
-const StyledPuzzleMenu = styled.div`
+const GridWrapper = styled.div`
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    row-gap: 25px;
-    column-gap: 10px;
-    margin-top: 25px;
-
-    @media (min-width: ${device.desktop}) {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    margin-top: 15px;
+    min-height: 500px;
+    display: flex;
+    justify-content: center;
 `;

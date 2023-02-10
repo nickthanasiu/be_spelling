@@ -1,7 +1,14 @@
 import PuzzlesService from '../services/puzzles';
 
-const getAll = async (req, res) => {
-    const puzzles = await PuzzlesService.getAll();
+const get = async (req, res) => {
+    const { cursor, sort } = req.query;
+    const limit = parseInt(req.query.limit, 10);
+
+    const puzzles = await PuzzlesService.get(
+        limit || 10,
+        cursor,
+        sort
+    );
 
     res.send(puzzles);
 };
@@ -59,4 +66,4 @@ const add = async (req, res) => {
     res.status(201).send(puzzle);
 }
 
-export default { getAll, getOptions, getbyId, add };
+export default { get, getOptions, getbyId, add };

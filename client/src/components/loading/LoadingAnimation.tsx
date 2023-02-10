@@ -1,9 +1,13 @@
 import styled, { keyframes } from 'styled-components';
 
+interface Props {
+  size?: number;
+}
+
 // Copied from: https://loading.io/css/
-function LoadingAnimation() {
+const LoadingAnimation = (props: Props) => {
     return (
-        <StyledLoadingAnimation>
+        <StyledLoadingAnimation {...props}>
             <div></div>
             <div></div>
             <div></div>
@@ -42,19 +46,21 @@ const ellipsis3 = keyframes`
 `;
 
 
-const StyledLoadingAnimation = styled.div`
+const StyledLoadingAnimation = styled.div<Props>`
     position: relative;
-    width: 80px;
-    height: 80px;
     margin: auto;
+    width: ${(props) => `${props.size || 80}px`};
+    height: ${(props) => `${props.size || 80}px`};
 
     div {
         position: absolute;
-        top: 33px;
-        width: 13px;
-        height: 13px;
+        width: 16%;
+        height: 16%;
+        top: 0;
+        bottom: 0;
+        margin: auto;
         border-radius: 50%;
-        background: #fff;
+        background: lightgray;
         animation-timing-function: cubic-bezier(0, 1, 1, 0);
 
         &:nth-child(1) {

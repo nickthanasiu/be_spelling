@@ -1,25 +1,37 @@
-import { useState } from "react";
+export default function PuzzleMenuContainer() {
+    return <></>;
+}
+
+/*import { useState } from "react";
 import { loadLocalStorageState } from "../utils/localStorage";
 import PuzzleMenu from "./PuzzleMenu";
 import InProgressMenu from "./InProgressMenu";
 import { Button } from "./Button";
 
 import { type PuzzleResponse } from "../../../server/shared/types";
+import { PuzzlesApiResponse } from "../state/puzzle";
 
 interface Props {
-    puzzles: PuzzleResponse[];
+    puzzlesApiData: PuzzlesApiResponse;
 }
 
-const PuzzleMenuContainer = ({ puzzles }: Props) => {
+const PuzzleMenuContainer = ({ puzzlesApiData }: Props) => {
+
+    const puzzles = puzzlesApiData.data;
+    const pagination = puzzlesApiData.pagination;
+
+    console.log('PAGINATION ', pagination);
     
     const [showNewPuzzles, setShowNewPuzzles] = useState(false);
 
     const { clientHasPuzzlesInProgress, inProgressPuzzleIds } = checkForInProgressPuzzles();
 
+    const puzzleMenu = (
+        <PuzzleMenu />
+    );
+
     if (!clientHasPuzzlesInProgress) {
-        return (
-            <PuzzleMenu puzzles={puzzles} />
-        );
+        return puzzleMenu;
     }
 
 
@@ -41,7 +53,7 @@ const PuzzleMenuContainer = ({ puzzles }: Props) => {
     const newMenuContainer = (
         <>
             <h2 style={{ color: '#f7da21' }}>Pick a new puzzle</h2>
-            <PuzzleMenu puzzles={untouchedPuzzles} />
+            {puzzleMenu}
         </>
     );
 
@@ -72,3 +84,4 @@ function checkForInProgressPuzzles() {
         inProgressPuzzleIds,
     }
 }
+*/
