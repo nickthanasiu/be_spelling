@@ -50,5 +50,5 @@ export function deriveTotalScoreFromWordsList(foundWords: string[], pangrams: st
             })
             .reduce((prev, curr) => prev + curr, 0);
 
-        return score;
+    return score;
 }
