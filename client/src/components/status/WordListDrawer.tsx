@@ -2,6 +2,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { alphabetizedWordSelector } from '../../state';
 import { device } from '../../styles/device';
+import WordListItem from './WordListItem';
 
 interface Props {
     expanded: boolean;
@@ -15,7 +16,7 @@ function WordListDrawer({ expanded }: Props) {
             <Window>
                 <ListWrapper>
                     <List>
-                        {alphabetizedWordList.map(word => <li key={word}>{word}</li>)}
+                        {alphabetizedWordList.map(word => <WordListItem key={word}>{word}</WordListItem>)}
                     </List>
                 </ListWrapper>
             </Window>

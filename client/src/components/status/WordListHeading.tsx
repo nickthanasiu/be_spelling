@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
 import { wordListPreviewSelector } from '../../state';
 import { device } from '../../styles/device';
+import WordListItem from './WordListItem';
 
 interface Props {
     expanded: boolean;
@@ -13,7 +14,7 @@ function WordListHeading({ expanded, setExpanded }: Props) {
     const placeholder = <li style={{ color: 'gray' }}>Your words...</li>;
     const wordListPreview = useRecoilValue(wordListPreviewSelector);
     const wordCount = wordListPreview.length;
-    const previewContent = !wordCount ? placeholder : wordListPreview.map((word) => <li key={word}>{word}</li>);
+    const previewContent = !wordCount ? placeholder : wordListPreview.map((word) => <WordListItem key={word}>{word}</WordListItem>);
 
     return (
         <StyledWordListHeading onClick={() => setExpanded(!expanded)}>
