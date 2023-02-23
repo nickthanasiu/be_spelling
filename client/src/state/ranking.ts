@@ -9,7 +9,10 @@ export const rankingSelector = selector<PuzzleRankingLevel>({
         const totalScore = get(totalScoreAtom);
         const { rankings } = get(puzzleAtom);
 
+        if (!rankings || !totalScore) return;
+        
         const ranking = deriveRankingFromScore(totalScore, rankings);
+
 
         return ranking;
     }

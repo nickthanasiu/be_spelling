@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useState, useEffect, useRef } from "react";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
-import { puzzleAtom, foundWordsAtom } from "../state";
+import { puzzleAtom, foundWordsAtom, rankingSelector } from "../state";
 import ApiClient from "../api/client";
 import GameField from "../components/GameField";
 import LoadingAnimation from "../components/loading/LoadingAnimation";
@@ -13,6 +13,7 @@ const PuzzlePage = () => {
 
     const [puzzle, setPuzzle] = useRecoilState(puzzleAtom);
     const [loaded, setLoaded] = useState(false);
+    const ranking = useRecoilValue(rankingSelector);
     const clearFoundWordsList = useResetRecoilState(foundWordsAtom);
 
     useEffect(() => {
@@ -30,12 +31,17 @@ const PuzzlePage = () => {
         };
     }, [id]);
 
-    const formattedDate =new Date(puzzle.date).toLocaleDateString('en-US', {
+    const formattedDate = new Date(puzzle.date).toLocaleDateString('en-US', {
         month: 'long',
         day: 'numeric',
         year: 'numeric',
         timeZone: 'UTC'
     });
+
+
+
+    const [displayModal, hideModal] = useDisplayGeniusModal();
+    const [displayQueenBee, hideQueenBee] = useDisplayQueenBeeModal();
 
     return (
         <div>
@@ -50,8 +56,65 @@ const PuzzlePage = () => {
                 </BigHeading>
             </div>
             {!loaded ? <LoadingAnimation /> : <GameField />}
+            {displayModal && (
+                <div style={{ position: 'absolute', bottom: 0, left: 0, width: '600px', minHeight: '600px', backgroundColor: 'orange', zIndex: 1000000 }}>
+                    <h1>GENIUS!!!!</h1>
+                    <button type="button" onClick={hideModal}>Hide Modal</button>
+                </div>
+            )}
+
+            {displayQueenBee && (
+                <div style={{ position: 'absolute', bottom: 0, left: 0, width: '600px', minHeight: '600px', backgroundColor: 'orange', zIndex: 1000000 }}>
+                    <h1>Queen Bee</h1>
+                    <button type="button" onClick={hideQueenBee}>Hide Modal</button>
+                </div>
+            )}
         </div>
     );
 };
 
 export default PuzzlePage;
+
+function useDisplayGeniusModal() {
+    const [displayModal, setDisplayModal] = useState(false);
+    const ranking = useRecoilValue(rankingSelector);
+    const mostRecentRanking = useRef(ranking);
+
+
+    useEffect(() => {
+        console.log('mostRecent ', mostRecentRanking.current);
+        console.log('ranking ', ranking);
+        console.log(mostRecentRanking.current === ranking);
+        if (mostRecentRanking.current !== ranking && ranking === "Genius") {
+            setDisplayModal(true);
+        }
+        
+        mostRecentRanking.current = ranking;
+    }, [ranking]);
+
+    const hideModal = () => {
+        setDisplayModal(false);
+    };
+
+    return [displayModal, hideModal] as const;
+}
+
+function useDisplayQueenBeeModal() {
+    const [displayQueenBee, setDisplayQueenBee] = useState(false);
+    const ranking = useRecoilValue(rankingSelector);
+    const mostRecentRanking = useRef(ranking);
+
+    useEffect(() => {
+        if (mostRecentRanking.current !== ranking && ranking === "Queen Bee") {
+            setDisplayQueenBee(true);
+        }
+
+        mostRecentRanking.current = ranking;
+    }, [ranking]);
+
+    const hideQueenBee = () => {
+        setDisplayQueenBee(false);
+    };
+
+    return [displayQueenBee, hideQueenBee] as const;
+}
