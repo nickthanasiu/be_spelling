@@ -8,12 +8,12 @@ import getRoutes from "./routes";
 dotenv.config();
 
 // DB config
-const mongodbUsername = process.env.MONGODB_USERNAME;
-const mongodbPassword = process.env.MONGODB_PASSWORD;
+
+const { MONGODB_USERNAME, MONGODB_PASSWORD } = process.env;
 
 async function connectToDB() {
     try {
-        await mongoose.connect(`mongodb+srv://${mongodbUsername}:${mongodbPassword}@cluster0.3l6s1.mongodb.net/?retryWrites=true&w=majority`);
+        await mongoose.connect(`mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@cluster0.3l6s1.mongodb.net/?retryWrites=true&w=majority`);
 
         // tslint:disable-next-line:no-console
         console.log('Database Connected');
