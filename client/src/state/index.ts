@@ -2,9 +2,7 @@ import { addPuzzleFormAtom } from "./admin";
 import { foundWordsAtom, wordListPreviewSelector, alphabetizedWordSelector } from "./foundWords";
 import { inputAtom, inputWordSelector, inputTouchedAtom } from "./input";
 import { messageBoxAtom } from "./messageBox";
-import { 
-    allPuzzlesSelector,
-    allPuzzlesAtom,
+import {
     puzzleAtom,
     lettersSelector,
     lettersAtom,
@@ -41,8 +39,6 @@ export {
     messageBoxAtom,
 
     // Puzzle
-    allPuzzlesSelector,
-    allPuzzlesAtom,
     puzzleAtom,
     lettersSelector,
     lettersAtom,

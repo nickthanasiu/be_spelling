@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
 import styled from "styled-components";
+import usePuzzleQuery, { QueryParams } from "../hooks/usePuzzleQuery";
 import { device } from "../styles/device";
-import ApiClient from '../api/client';
-import { PuzzlesApiResponse } from "../state/puzzle";
 import LoadingAnimation from "./loading/LoadingAnimation";
 import PuzzleCard from "./PuzzleCard";
 import LoadMoreButton from "./LoadMoreButton";
@@ -70,65 +68,4 @@ const ButtonWrapper = styled.div`
     justify-content: center;
 `;
 
-
-type SortOption = "newest" | "oldest" | "hardest" | "easiest";
-
-export interface QueryParams {
-    sort?: SortOption;
-    cursor?: string;
-};
-
 export type ValueOf<T> = T[keyof T];
-
-function usePuzzleQuery(filterParams: QueryParams) {
-    const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [data, setData] = useState<PuzzlesApiResponse>();
-
-    const BASE_URL = '/puzzles';
-
-    const buildQueryString = (additionalParams?: QueryParams): string =>
-        Object
-            .entries({ ...filterParams, ...additionalParams })
-            .reduce((queryString, entry: [string, string]) => {
-                const queryParam = entry[0] + "=" + entry[1];
-                const operator = queryString === BASE_URL ? '?' : '&';
-                return queryString + operator + queryParam;
-            }, BASE_URL);
-
-    const queryString = buildQueryString(filterParams);
-
-    useEffect(() => {
-        (async () => {
-            setIsLoading(true);
-
-            try {
-                const puzzles = await ApiClient.get<PuzzlesApiResponse>(queryString);
-
-                setData(puzzles);
-                setIsLoading(false);
-            } catch (err) {
-                setIsError(true);
-                setIsLoading(false);
-            }
-        })();
-    }, [filterParams]);
-
-    const loadMore = async () => {
-
-        if (!data?.nextCursor) return;
-        
-        const nextCursor = data.nextCursor;
-        const queryString = buildQueryString({ cursor: nextCursor });
-
-        const response = await ApiClient.get<PuzzlesApiResponse>(queryString);
-
-        setData({
-            puzzles: [...data.puzzles, ...response.puzzles],
-            nextCursor: response.nextCursor
-        });
-    };
-
-
-    return { isLoading, isError, data, loadMore };
-}

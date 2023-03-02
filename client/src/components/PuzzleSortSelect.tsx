@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { QueryParams, ValueOf } from "./PuzzleGrid";
+import { ValueOf } from "./PuzzleGrid";
+import { QueryParams } from "../hooks/usePuzzleQuery";
 
 interface Props {
     updateQueryParams: (paramKey: keyof QueryParams, paramValue: ValueOf<QueryParams>) => void;

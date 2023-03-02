@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { useState } from "react";
 import PuzzleSortSelect from "./PuzzleSortSelect";
-import PuzzleGrid, { QueryParams, ValueOf } from "./PuzzleGrid";
+import PuzzleGrid, { ValueOf } from "./PuzzleGrid";
+import { QueryParams } from "../hooks/usePuzzleQuery";
 
 const PuzzleMenu = () => {
     const [filterParams, setFilterParams] = useState<QueryParams>({});

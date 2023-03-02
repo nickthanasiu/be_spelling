@@ -8,19 +8,6 @@ export interface PuzzlesApiResponse {
     nextCursor: string;
 }
 
-export const allPuzzlesSelector = selector({
-    key: 'allPuzzlesSelector',
-    get: async (): Promise<PuzzlesApiResponse> => {
-        const response: PuzzlesApiResponse = await ApiClient.get('/puzzles');
-        return response;
-    }
-})
-
-export const allPuzzlesAtom = atom({
-    key: 'allPuzzlesAtom',
-    default: allPuzzlesSelector
-})
-
 export const puzzleAtom = atom({
     key: 'puzzleAtom',
     default: {} as PuzzleState
