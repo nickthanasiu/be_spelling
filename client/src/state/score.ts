@@ -1,17 +1,17 @@
-import { atom, selector } from 'recoil';
-import { foundWordsAtom } from './foundWords';
+import { atom, selectorFamily } from 'recoil';
+import { answersById } from './foundWords';
 import { puzzleAtom } from './puzzle';
 
-export const totalScoreSelector = selector({
+export const totalScoreSelector = selectorFamily({
     key: 'totalScoreSelector',
-    get: ({ get }) => {
+    get: (puzzleId: string) => ({ get }) => {
 
-        // Score should be derived from foundWords list
+        // Score should be derived from answers
 
-        const foundWords = get(foundWordsAtom);
+        const answers = get(answersById(puzzleId));
         const { pangrams } = get(puzzleAtom);
 
-        const totalScore = deriveTotalScoreFromWordsList(foundWords, pangrams);
+        const totalScore = deriveTotalScoreFromWordsList(answers, pangrams);
   
         return totalScore;
     }
@@ -38,17 +38,16 @@ function calculateScore(wordLength: number, isPangram: boolean = false) {
     return score;
 }
 
-export function deriveTotalScoreFromWordsList(foundWords: string[], pangrams: string[]) {
+export function deriveTotalScoreFromWordsList(answers: string[], pangrams: string[]) {
 
-       const score = foundWords
-            .map((word) => {
-
-                const isPangram = pangrams.includes(word);
-                const score = calculateScore(word.length, isPangram);
-
-                return score;
-            })
-            .reduce((prev, curr) => prev + curr, 0);
+    const score = answers
+        .map((answer) => {
+            const isPangram = pangrams.includes(answer);
+            const score = calculateScore(answer.length, isPangram);
+            
+            return score;
+        })
+        .reduce((prev, curr) => prev + curr, 0);
 
         return score;
 }

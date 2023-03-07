@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
-import { PuzzlesApiResponse } from "../state/puzzle";
+import { useRecoilState } from "recoil";
+import { PuzzlesApiResponse, puzzlesAtom } from "../state/puzzle";
 import ApiClient from "../api/client";
+import { PuzzleState } from "../state";
+import { PuzzlesState } from "../state/puzzle";
 
 type SortOption = "newest" | "oldest" | "hardest" | "easiest";
 
@@ -25,6 +28,7 @@ export default function usePuzzleQuery(filterParams: QueryParams) {
                 return queryString + operator + queryParam;
             }, BASE_URL);
 
+
     useEffect(() => {
         (async () => {
             setIsLoading(true);
@@ -32,6 +36,7 @@ export default function usePuzzleQuery(filterParams: QueryParams) {
             try {
                 const queryString = buildQueryString(filterParams);
                 const puzzles = await ApiClient.get<PuzzlesApiResponse>(queryString);
+                console.log('PUZZLES data ', puzzles);
 
                 setData(puzzles);
                 setIsLoading(false);

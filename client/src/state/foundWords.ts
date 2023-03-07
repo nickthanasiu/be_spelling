@@ -1,44 +1,59 @@
-import { atom, selector } from 'recoil';
-import { puzzleAtom } from './puzzle';
-import { loadLocalStorageStateSlice } from '../utils/localStorage';
+import { atom, selector, selectorFamily } from 'recoil';
 
-
-export const foundWordsSelector = selector<string[]>({
-    key: 'foundWordsSelector',
-    get: ({ get }) => {
-
-        const { _id } = get(puzzleAtom);
-
-        const wordsFromStorage = loadLocalStorageStateSlice("words", _id) as string[]; // @TODO :: probably a better way of handling the type here
-
-        return wordsFromStorage || [];
+export interface GamesState {
+    [key: string]: {
+        answers: string[]
     }
-});
+};
 
-export const foundWordsAtom = atom({
-    key: 'foundWordsAtom',
-    default: foundWordsSelector
-});
-
-export const wordListPreviewSelector = selector({
-    key: 'wordListPreviewSelector',
-    get: ({ get }) => {
-
-        const foundWords = get(foundWordsAtom);
+export const persistedGamesSelector = selector<GamesState>({
+    key: 'persistedGamesSelector',
+    get: () => {
+        const savedGamesState = localStorage.getItem('be_spelling');
         
-        return [...foundWords].reverse();
+        if (savedGamesState) {
+            return JSON.parse(savedGamesState);
+        }
+
+        return {};
+    },
+});
+
+export const gamesAtom = atom<GamesState>({
+    key: 'gamesAtom',
+    default: persistedGamesSelector
+});
+
+
+export const answersById = selectorFamily({
+    key: 'answersById',
+    get: (puzzleId: string) => ({ get }) => {
+        const games = get(gamesAtom);
+        const answers = games[puzzleId]?.answers;
+
+        return answers || [];
+    },
+    set: (puzzleId: string) => ({ set }, newAnswer) => {
+        set(gamesAtom, (prevGamesState) => {
+            
+            const prevGame = prevGamesState[puzzleId];
+            const prevGameAnswers = prevGame?.answers || [];
+
+            const nextGamesState = {
+                ...prevGamesState,
+                [puzzleId]: {
+                    answers: [...prevGameAnswers, ...newAnswer as string[]]
+                }
+            };
+
+            // Persist games state
+            window.localStorage.setItem('be_spelling', JSON.stringify(nextGamesState));
+
+            return nextGamesState;
+        });
     }
 });
 
-export const alphabetizedWordSelector = selector({
-    key: 'alphabetizedWordSelector',
-    get: ({ get }) => {
-
-        const foundWords = get(foundWordsAtom);
-
-        return [...foundWords].sort((a, b) => a.localeCompare(b));
-    }
-});
 
 export const foundWordsListExpandedAtom = atom({
     key: 'foundWordsListExpanded',

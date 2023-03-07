@@ -1,5 +1,7 @@
+import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { foundWordsAtom, puzzleAtom, type InvalidWordMessage } from "../state";
+import { puzzleAtom, type InvalidWordMessage } from "../state";
+import { answersById } from '../state/foundWords';
 
 interface WordValidator {
     isValid: boolean;
@@ -8,7 +10,8 @@ interface WordValidator {
 }
 
 export const useWordValidator = () => {
-    const foundWords = useRecoilValue(foundWordsAtom);
+    const { id: puzzleId } = useParams();
+    const foundWords = useRecoilValue(answersById(puzzleId as string));
     const { centerLetter, pangrams, words } = useRecoilValue(puzzleAtom);
 
     const wordValidator = (word: string): WordValidator => {

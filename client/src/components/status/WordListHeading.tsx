@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
+import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
-import { wordListPreviewSelector } from '../../state';
+import { answersById } from '../../state/foundWords';
 import { device } from '../../styles/device';
 
 interface Props {
@@ -9,17 +10,34 @@ interface Props {
     setExpanded: Dispatch<SetStateAction<boolean>>
 }
 
+type SortType = "alphabetic" | "reverse";
+
+function useAnswers(sortType?: SortType) {
+    const { id } = useParams();
+    const answers = useRecoilValue(answersById(id as string));
+
+    if (sortType === 'alphabetic') {
+        return [...answers].sort((a, b) => a.localeCompare(b));
+    }
+
+    if (sortType === 'reverse') {
+        return [...answers].reverse();
+    }
+
+    return answers;
+}
+
 function WordListHeading({ expanded, setExpanded }: Props) {
     const placeholder = <li style={{ color: 'gray' }}>Your words...</li>;
-    const wordListPreview = useRecoilValue(wordListPreviewSelector);
-    const wordCount = wordListPreview.length;
-    const previewContent = !wordCount ? placeholder : wordListPreview.map((word) => <li key={word}>{word}</li>);
+    const answersPreview = useAnswers('reverse');
+    const answerCount = answersPreview.length;
+    const previewContent = !answerCount ? placeholder : answersPreview.map((word) => <li key={word}>{word}</li>);
 
     return (
         <StyledWordListHeading onClick={() => setExpanded(!expanded)}>
             <div className="wordlist-heading-container">
                 <WordCount expanded={expanded}>
-                    You have found {wordCount} word{wordCount !== 1 ? 's' : ''}
+                    You have found {answerCount} word{answerCount !== 1 ? 's' : ''}
                 </WordCount>
                 <PreviewWrapper expanded={expanded}>
                     <ul>

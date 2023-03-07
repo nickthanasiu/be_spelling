@@ -1,5 +1,4 @@
 import { atom, selector } from "recoil";
-import ApiClient from "../api/client";
 import { PuzzleState } from "./types";
 import { PuzzleResponse } from '../../../server/shared/types';
 
@@ -7,6 +6,17 @@ export interface PuzzlesApiResponse {
     puzzles: PuzzleResponse[];
     nextCursor: string;
 }
+
+export interface PuzzlesState {
+    byId: { [key: string]: PuzzleState },
+    allIds: string[]
+}
+
+export const puzzlesAtom = atom({
+    key: 'puzzlesAtom',
+    default: {} as PuzzlesState
+});
+
 
 export const puzzleAtom = atom({
     key: 'puzzleAtom',

@@ -21,16 +21,17 @@ const PuzzleCard = ({ puzzle }: Props) => {
 
     const navigate = useNavigate();
     
-    const savedPuzzle = lookupPuzzleInLocalStorage(_id);
+    //const savedPuzzle = lookupPuzzleInLocalStorage(_id);
+    const savedPuzzle = false;
 
     let userStats = null;
 
     if (savedPuzzle) {
 
-        const score = deriveTotalScoreFromWordsList(savedPuzzle.words, pangrams);
-        const ranking = deriveRankingFromScore(score, rankings);
+       // const score = deriveTotalScoreFromWordsList(savedPuzzle.words, pangrams);
+        //const ranking = deriveRankingFromScore(score, rankings);
 
-        userStats = { score, ranking };
+        //userStats = { score, ranking };
     }
 
     const wordCount = pangrams.length + words.length;
@@ -85,10 +86,10 @@ const PuzzleCard = ({ puzzle }: Props) => {
                                 Your stats:
                             </h3>
                             <div>
-                                Score: {userStats.score}
+                                Score: {/*userStats.score*/}
                             </div>
                             <div>
-                                Ranking: {userStats.ranking}
+                                Ranking: {/*userStats.ranking*/}
                             </div>
                         </div>
                     )}

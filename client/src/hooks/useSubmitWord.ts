@@ -1,4 +1,5 @@
 import { useRecoilState, useSetRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { useParams } from 'react-router-dom';
 import {
     inputAtom,
     inputWordSelector,
@@ -11,6 +12,7 @@ import {
 import { validateInput } from '../utils/validateInput';
 import { useWordValidator } from './useWordValidator';
 import useUpdateFoundWordsState from './useUpdateFoundWordsState';
+import { answersById } from '../state/foundWords';
 
 // @TODO :: Refactor
 export const useSubmitWord = () => {
@@ -29,8 +31,15 @@ export const useSubmitWord = () => {
 
     const setMessageBoxState = useSetRecoilState(messageBoxAtom);
 
-    const updateFoundWordsState = useUpdateFoundWordsState();
+    const { id } = useParams();
 
+    //const updateFoundWordsState = useUpdateFoundWordsState();
+    const setAnswers = useSetRecoilState(answersById(id as string))
+
+    const addAnswer = (newAnswer: string) => {
+        setAnswers((answers) => [...answers, newAnswer]);
+    };
+    
 
     const hideMessageBox = () => {
 
@@ -106,14 +115,15 @@ export const useSubmitWord = () => {
         }
 
         // If input is valid and word is valid, we can add the word to foundWordsList
-        updateFoundWordsState(inputWord);
+        //updateFoundWordsState(inputWord);
+        addAnswer(inputWord);
 
         // Calculate score and update prevWordScore state
         const prevWordScore = calculatePrevWordsScore(inputWord, wordValidation.isPangram);
         setPrevWordScore(prevWordScore);
 
         // Use prevWordScore to update totalScore
-        setTotalScore(totalScore + prevWordScore);
+       // setTotalScore(totalScore + prevWordScore);
 
         // Generate message
         const successMessage = getSuccessMessage(inputWord.length, wordValidation.isPangram);
@@ -122,3 +132,16 @@ export const useSubmitWord = () => {
 
     return submit;
 };
+
+function useAlternative() {
+
+    const inputWord = useRecoilValue(inputWordSelector);
+
+    const submit = () => {
+        if (!inputWord.length) return;
+
+
+    };
+
+    return submit;
+}

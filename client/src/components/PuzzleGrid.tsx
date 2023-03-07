@@ -12,6 +12,7 @@ interface Props {
 const PuzzleGrid = ({ filterParams }: Props) => {
 
     const { isLoading, isError, data, loadMore } = usePuzzleQuery(filterParams);
+    
 
     if (!data || isLoading) { // @TODO: Replace loading animation with skeleton grid: ;
         return (

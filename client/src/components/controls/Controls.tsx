@@ -3,18 +3,31 @@ import styled from 'styled-components';
 import { foundWordsListExpandedAtom } from '../../state/foundWords';
 import MessageBox from "./MessageBox";
 import HiveInput from "./HiveInput";
-import HiveContainer from "./HiveContainer";
 import HiveActions from "./HiveActions";
+import { PuzzleState } from '../../state';
+import HiveCell from './HiveCell';
 
-function Controls() {
+function Controls({ puzzle }: { puzzle: PuzzleState }) {
     const foundWordsListExpanded = useRecoilValue(foundWordsListExpandedAtom);
+    const { letters, centerLetter } = puzzle;
 
     return (
         <StyledControlsWrapper>
             <StyledControls expanded={foundWordsListExpanded}>
+
                 <MessageBox />
+
                 <HiveInput />
-                <HiveContainer />
+
+                <StyledHiveWrapper>
+                    <StyledHive>
+                        <HiveCell letter={centerLetter} isCenter />
+                        {letters.map((letter, i) => (
+                            <HiveCell key={i} letter={letter} />
+                        ))}
+                    </StyledHive>
+                </StyledHiveWrapper>
+
                 <HiveActions />
             </StyledControls> 
         </StyledControlsWrapper>
@@ -45,6 +58,21 @@ const StyledControls = styled.div<{ expanded: boolean}>`
     display: flex;
     flex-direction: column;
     align-items: center;
+`;
+
+const StyledHiveWrapper = styled.div`
+    width: 90%;
+    margin: 25px auto;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+`;
+const StyledHive = styled.div`
+    position: relative;
+    width: 100%;
+    padding-bottom: 103.92305%;
 `;
 
 export default Controls;

@@ -1,21 +1,29 @@
 import { useRecoilValue, useRecoilState } from "recoil";
-import { foundWordsAtom, puzzleAtom } from "../state";
-import usePersistPuzzleState from "./usePersistPuzzleState";
+import { puzzleAtom } from "../state";
+import { answersById, gamesAtom } from "../state/foundWords";
+
+const useUpdateFoundWordsState = (puzzleId: string) => {
+
+    //const [foundWordsList, setFoundWordsList] = useRecoilState(foundWordsAtom);
+    const [games, setGames] = useRecoilState(gamesAtom);
+    const [answers, setAnswers] = useRecoilState(answersById(puzzleId));
 
 
-const useUpdateFoundWordsState = () => {
-
-    const [foundWordsList, setFoundWordsList] = useRecoilState(foundWordsAtom);
-    const { _id: puzzleId } = useRecoilValue(puzzleAtom);
-    const persistPuzzleState = usePersistPuzzleState(puzzleId);
-
+ 
     return (wordToAdd: string) => {
 
-        const nextFoundWordsState = [...foundWordsList, wordToAdd];
+        //const nextFoundWordsState = [...foundWordsList, wordToAdd];
 
-        setFoundWordsList(nextFoundWordsState);
+        //setFoundWordsList(nextFoundWordsState);
 
-        persistPuzzleState("words", nextFoundWordsState);
+        setGames({
+            ...games,
+            [puzzleId]: {
+                answers: [...answers]
+            }
+        });
+
+        //persistPuzzleState("words", nextFoundWordsState);
     };
 };
 

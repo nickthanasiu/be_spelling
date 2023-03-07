@@ -1,23 +1,18 @@
-import { atom, selector } from "recoil";
-import { totalScoreAtom } from "./score";
+import { selectorFamily } from "recoil";
+import { totalScoreSelector } from "./score";
 import { puzzleAtom } from "./puzzle";
-import { PuzzleRankingLevel } from "../../../server/shared/types";
+import { PuzzleRanking, PuzzleRankingLevel } from "../../../server/shared/types";
 
-export const rankingSelector = selector<PuzzleRankingLevel>({
+export const rankingSelector = selectorFamily<PuzzleRankingLevel, any>({
     key: 'rankingSelector',
-    get: ({ get }) => {
-        const totalScore = get(totalScoreAtom);
+    get: (puzzleId: string) => ({ get }) => {
+        const totalScore = get(totalScoreSelector(puzzleId));
         const { rankings } = get(puzzleAtom);
 
         const ranking = deriveRankingFromScore(totalScore, rankings);
 
         return ranking;
     }
-});
-
-export const rankingAtom = atom({
-    key: 'rankingAtom',
-    default: rankingSelector
 });
 
 export function deriveRankingFromScore(score: number, rankings: any[]) {

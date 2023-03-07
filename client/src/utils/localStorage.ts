@@ -4,11 +4,10 @@ export type LocalStorageState = {
 };
 
 export type LocalStoragePuzzleState = {
-    words: string[];
-    score: number;
+    answers: string[];
 }
 
-const BE_SPELLING_LOCAL_STORAGE_KEY = process.env.NODE_ENV === 'development' ? "be_spelling__DEV" : "be_spelling";
+const BE_SPELLING_LOCAL_STORAGE_KEY = "be_spelling";
 
 
 export function loadLocalStorageStateSlice(key: keyof LocalStoragePuzzleState, puzzleId: string) {
