@@ -1,7 +1,6 @@
-import { atom, selectorFamily } from 'recoil';
-import { answersById } from './foundWords';
-import { puzzleAtom } from './puzzle';
+import { atom } from 'recoil';
 
+/*
 export const totalScoreSelector = selectorFamily({
     key: 'totalScoreSelector',
     get: (puzzleId: string) => ({ get }) => {
@@ -16,11 +15,14 @@ export const totalScoreSelector = selectorFamily({
         return totalScore;
     }
 });
+*/
 
+/*
 export const totalScoreAtom = atom({
     key: 'totalScoreAtom',
     default: totalScoreSelector
 });
+*/
 
 export const prevWordScoreAtom = atom({
     key: 'prevWordScoreAtom',

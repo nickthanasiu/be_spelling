@@ -1,34 +1,40 @@
-import { atom, selector } from "recoil";
+import { atom, selectorFamily } from "recoil";
 import { PuzzleState } from "./types";
 import { PuzzleResponse } from '../../../server/shared/types';
+import ApiClient from '../api/client';
 
 export interface PuzzlesApiResponse {
     puzzles: PuzzleResponse[];
     nextCursor: string;
 }
 
-export interface PuzzlesState {
-    byId: { [key: string]: PuzzleState },
-    allIds: string[]
-}
-
 export const puzzlesAtom = atom({
     key: 'puzzlesAtom',
-    default: {} as PuzzlesState
+    default: null
 });
 
 
-export const puzzleAtom = atom({
+export const currentPuzzleAtom = atom<PuzzleState | undefined>({
     key: 'puzzleAtom',
-    default: {} as PuzzleState
+    default: undefined
 });
+
+export const puzzleQueryById = selectorFamily({
+    key: 'currentPuzzleQuery',
+    get: (puzzleId: string) => async () => {
+        const response = await ApiClient.get<PuzzleState>(`/puzzles/${puzzleId}`);
+        return response;
+    }
+});
+
+/*
 
 export const lettersSelector = selector<string[]>({
     key: 'lettersSelector',
     get: ({ get }) => {
-        const puzzle = get(puzzleAtom);
+        const puzzle = get(currentPuzzleAtom);
 
-        return puzzle.letters;
+        return puzzle?.letters;
     }
 });
 
@@ -40,8 +46,10 @@ export const lettersAtom = atom<string[]>({
 export const centerLetterSelector = selector({
     key: 'centerLetterSelector',
     get: ({ get }) => {
-        const puzzle = get(puzzleAtom);
+        const puzzle = get(currentPuzzleAtom);
 
         return puzzle.centerLetter;
     }
 });
+
+*/

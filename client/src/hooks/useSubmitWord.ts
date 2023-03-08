@@ -5,14 +5,12 @@ import {
     inputWordSelector,
     messageBoxAtom,
     prevWordScoreAtom,
-    totalScoreAtom,
     type ErrorMessage,
     type SuccessMessage,
 } from '../state';
 import { validateInput } from '../utils/validateInput';
 import { useWordValidator } from './useWordValidator';
-import useUpdateFoundWordsState from './useUpdateFoundWordsState';
-import { answersById } from '../state/foundWords';
+import { answersById } from '../state/answers';
 
 // @TODO :: Refactor
 export const useSubmitWord = () => {
@@ -25,15 +23,12 @@ export const useSubmitWord = () => {
 
     const validateWord = useWordValidator();
 
-    const [totalScore, setTotalScore] = useRecoilState(totalScoreAtom);
-
     const setPrevWordScore = useSetRecoilState(prevWordScoreAtom);
 
     const setMessageBoxState = useSetRecoilState(messageBoxAtom);
 
     const { id } = useParams();
 
-    //const updateFoundWordsState = useUpdateFoundWordsState();
     const setAnswers = useSetRecoilState(answersById(id as string))
 
     const addAnswer = (newAnswer: string) => {

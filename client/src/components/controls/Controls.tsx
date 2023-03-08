@@ -1,19 +1,20 @@
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { foundWordsListExpandedAtom } from '../../state/foundWords';
 import MessageBox from "./MessageBox";
 import HiveInput from "./HiveInput";
 import HiveActions from "./HiveActions";
-import { PuzzleState } from '../../state';
 import HiveCell from './HiveCell';
 
-function Controls({ puzzle }: { puzzle: PuzzleState }) {
-    const foundWordsListExpanded = useRecoilValue(foundWordsListExpandedAtom);
-    const { letters, centerLetter } = puzzle;
+interface Props {
+    letters: string[];
+    centerLetter: string;
+    answersListExpanded: boolean;
+}
+
+function Controls({ letters, centerLetter, answersListExpanded }: Props) {
 
     return (
         <StyledControlsWrapper>
-            <StyledControls expanded={foundWordsListExpanded}>
+            <StyledControls expanded={answersListExpanded}>
 
                 <MessageBox />
 

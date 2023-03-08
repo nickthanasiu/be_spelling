@@ -1,31 +1,13 @@
-import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { answersById } from '../../state/foundWords';
 import { device } from '../../styles/device';
+import { useAnswers } from '../../hooks/useAnswers';
+
 
 interface Props {
     expanded: boolean;
 }
 
-type SortType = "alphabetic" | "reverse";
-
-function useAnswers(sortType?: SortType) {
-    const { id } = useParams();
-    const answers = useRecoilValue(answersById(id as string));
-
-    if (sortType === 'alphabetic') {
-        return [...answers].sort((a, b) => a.localeCompare(b));
-    }
-
-    if (sortType === 'reverse') {
-        return [...answers].reverse();
-    }
-
-    return answers;
-}
-
-function WordListDrawer({ expanded }: Props) {
+export default function WordListDrawer({ expanded }: Props) {
     const alphabetizedAnswers = useAnswers('alphabetic');
 
     return (
@@ -86,5 +68,3 @@ const List = styled.ul`
         padding-bottom: 5px;
     }
 `;
-
-export default WordListDrawer;

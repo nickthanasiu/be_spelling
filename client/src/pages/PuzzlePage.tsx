@@ -1,33 +1,21 @@
-import styled from "styled-components";
-import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import styled, { keyframes } from "styled-components";
+import { Suspense } from "react";
+import { useRecoilValue } from "recoil";
 import { useParams } from "react-router-dom";
-import { puzzleAtom, PuzzleState } from "../state";
-import ApiClient from "../api/client";
 import GameField from "../components/GameField";
 import LoadingAnimation from "../components/loading/LoadingAnimation";
 import BigHeading from "../components/BigHeading";
 import { Link } from "react-router-dom";
+import { puzzleQueryById } from "../state/puzzle";
 
-interface Props {
-    id: string;
-}
 
-const PuzzlePage = ({ id }: Props) => {
+function PuzzlePage () {
 
-    const [puzzle, setPuzzle] = useState<PuzzleState>();
+    const { id } = useParams();
     
-    useEffect(() => {
-        async function getPuzzleById() {
-            const response = await ApiClient.get<any>(`/puzzles/${id}`);
-            setPuzzle(response);
-        }
+    const currentPuzzle = useRecoilValue(puzzleQueryById(id as string));
 
-        getPuzzleById();
-    }, [id]);
-
-    
-    const formattedDate = !puzzle?.date ? '' : new Date(puzzle.date).toLocaleDateString('en-US', {
+    const formattedDate = new Date(currentPuzzle.date).toLocaleDateString('en-US', {
         month: 'long',
         day: 'numeric',
         year: 'numeric',
@@ -36,32 +24,39 @@ const PuzzlePage = ({ id }: Props) => {
 
     return (
         <StyledPuzzlePage>
+            <FadeOutFallback>
+                <LoadingAnimation color="white" />
+            </FadeOutFallback>
             <header>
                 <BigHeading>
                     <Link to="/">
                         Be Spelling
                     </Link>
                     <span className="date">
-                        {puzzle?.date && formattedDate}
+                        {formattedDate}
                     </span>
                 </BigHeading>
             </header>
-            {!puzzle ? <LoadingAnimation /> : <GameField puzzle={puzzle} />}
+
+            <GameField puzzle={currentPuzzle} />
         </StyledPuzzlePage>
     );
 };
 
-export default () => {
-    const { id } = useParams();
-
-    if (!id) return <></>;
-
-    console.log('ID ', id);
-
-    return <PuzzlePage id={id} />;
-};
+export default function PuzzlePageContainer() {
+    return (
+        <Suspense fallback={
+            <StyledPuzzlePageFallback>
+                <LoadingAnimation color="white" />
+            </StyledPuzzlePageFallback>
+        }>
+            <PuzzlePage />
+        </Suspense>
+    );
+}
 
 const StyledPuzzlePage = styled.div`
+    position: relative;
 
     header {
         padding: 24px 82px;
@@ -75,4 +70,34 @@ const StyledPuzzlePage = styled.div`
         margin-left: 16px;
     }
 
+`;
+
+const StyledPuzzlePageFallback = styled.div`
+    width: 100%;
+    height: 100vh;
+    background-color: #f7da21;
+
+    display: flex;
+`;
+
+const fadeOut = keyframes`
+    from {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+`;
+
+const FadeOutFallback = styled(StyledPuzzlePageFallback)`
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+
+    animation: ${fadeOut} 1s;
+    animation-fill-mode: forwards;
 `;

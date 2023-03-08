@@ -1,56 +1,64 @@
+import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { device } from '../styles/device';
-import Controls from './controls/Controls';
-import WordList from './status/WordList';
-import ScoreMarker from './status/ScoreMarker';
+
+// Types
 import { PuzzleState } from '../state';
-import { useRecoilValue } from 'recoil';
-import { answersById } from '../state/foundWords';
+
+// State
+import { answersById } from '../state/answers';
 import { deriveTotalScoreFromWordsList } from '../state/score';
 import { deriveRankingFromScore } from '../state/ranking';
 
+// Components
+import Controls from './controls/Controls';
+import ScoreMarker from './status/ScoreMarker';
+import WordListHeading from './status/WordListHeading';
+import WordListDrawer from './status/WordListDrawer';
+
+
 interface Props {
-    puzzle: PuzzleState
+    puzzle: PuzzleState;
 }
 
 function GameField({ puzzle }: Props) {
 
-    const { _id: puzzleId, pangrams, rankings } = puzzle;
-    console.log('PUZZLE ', puzzle);
-
+    const { _id: puzzleId, letters, centerLetter, pangrams, rankings } = puzzle;
+    
     const answers = useRecoilValue(answersById(puzzleId));
-    console.log('ANSWERS ', answers);
+    const [answersListExpanded, setAnswersListExpanded] = useState(false);
+
     const score = deriveTotalScoreFromWordsList(answers, pangrams);
     const ranking = deriveRankingFromScore(score, rankings);
 
     return (
         <StyledGameField>
-
             <Status>
-
                 <Progress>  
-
                     <Ranking>
                         {ranking}
                     </Ranking>
 
                     <ProgressBar>
-
                         <Line>
                             {[...Array(9)].map((el, i) => <Dot key={i} />)}
                         </Line>
-
                         <ScoreMarker ranking={ranking} score={score} />
-
                     </ProgressBar>
                 </Progress>
 
-                <WordList />
-
+                <WordList>
+                    <WordListHeading expanded={answersListExpanded} setExpanded={setAnswersListExpanded} />
+                    <WordListDrawer expanded={answersListExpanded} />
+                </WordList>
             </Status>
 
-            <Controls puzzle={puzzle} />
-
+            <Controls 
+                letters={letters}
+                centerLetter={centerLetter}
+                answersListExpanded={answersListExpanded}
+            />
         </StyledGameField>
     )
 }
@@ -130,4 +138,17 @@ const Dot = styled.span`
         border-radius: 0;
     }
 
+`;
+
+const WordList = styled.div`
+    border-radius: 6px;
+    border: 1px solid #dcdcdc;
+    overflow: hidden;
+    margin: 12px;
+
+    li {
+        max-width: 200px;
+        padding-right: 7px;
+        text-transform: capitalize;
+    }
 `;

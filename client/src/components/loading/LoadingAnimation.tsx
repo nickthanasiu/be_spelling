@@ -2,10 +2,11 @@ import styled, { keyframes } from 'styled-components';
 
 interface Props {
   size?: number;
+  color?: "lightgray" | "black" | "white";
 }
 
 // Copied from: https://loading.io/css/
-const LoadingAnimation = (props: Props) => {
+export default function LoadingAnimation(props: Props) {
     return (
         <StyledLoadingAnimation {...props}>
             <div></div>
@@ -15,8 +16,6 @@ const LoadingAnimation = (props: Props) => {
         </StyledLoadingAnimation>
     );
 }
-
-export default LoadingAnimation;
 
 const ellipsis1 = keyframes`
     0% {
@@ -60,7 +59,7 @@ const StyledLoadingAnimation = styled.div<Props>`
         bottom: 0;
         margin: auto;
         border-radius: 50%;
-        background: lightgray;
+        background: ${(props) => `${props.color || 'lightgray'}`};
         animation-timing-function: cubic-bezier(0, 1, 1, 0);
 
         &:nth-child(1) {

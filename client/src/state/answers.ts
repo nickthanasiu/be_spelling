@@ -53,9 +53,3 @@ export const answersById = selectorFamily({
         });
     }
 });
-
-
-export const foundWordsListExpandedAtom = atom({
-    key: 'foundWordsListExpanded',
-    default: false
-});

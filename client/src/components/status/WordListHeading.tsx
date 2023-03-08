@@ -1,47 +1,30 @@
 import { Dispatch, SetStateAction } from 'react';
-import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import styled, { css } from 'styled-components';
-import { answersById } from '../../state/foundWords';
 import { device } from '../../styles/device';
+import { useAnswers } from '../../hooks/useAnswers';
 
 interface Props {
     expanded: boolean;
     setExpanded: Dispatch<SetStateAction<boolean>>
 }
 
-type SortType = "alphabetic" | "reverse";
+export default function WordListHeading({ expanded, setExpanded }: Props) {
 
-function useAnswers(sortType?: SortType) {
-    const { id } = useParams();
-    const answers = useRecoilValue(answersById(id as string));
-
-    if (sortType === 'alphabetic') {
-        return [...answers].sort((a, b) => a.localeCompare(b));
-    }
-
-    if (sortType === 'reverse') {
-        return [...answers].reverse();
-    }
-
-    return answers;
-}
-
-function WordListHeading({ expanded, setExpanded }: Props) {
-    const placeholder = <li style={{ color: 'gray' }}>Your words...</li>;
     const answersPreview = useAnswers('reverse');
-    const answerCount = answersPreview.length;
-    const previewContent = !answerCount ? placeholder : answersPreview.map((word) => <li key={word}>{word}</li>);
+    const answersCount = answersPreview.length;
 
     return (
         <StyledWordListHeading onClick={() => setExpanded(!expanded)}>
-            <div className="wordlist-heading-container">
+            <div>
                 <WordCount expanded={expanded}>
-                    You have found {answerCount} word{answerCount !== 1 ? 's' : ''}
+                    You have found {answersCount} word{answersCount !== 1 ? 's' : ''}
                 </WordCount>
                 <PreviewWrapper expanded={expanded}>
                     <ul>
-                        {previewContent}
+                        {answersCount === 0
+                            ? <PlaceHolder>Your words...</PlaceHolder>
+                            : answersPreview.map(answer => <li key={answer}>{answer}</li>)
+                        }
                     </ul>
                 </PreviewWrapper>
                 <Toggle>
@@ -143,4 +126,6 @@ const Toggle = styled.div`
     }
 `;
 
-export default WordListHeading;
+const PlaceHolder = styled.li`
+    color: gray;
+`;

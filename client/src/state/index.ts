@@ -2,13 +2,13 @@ import { addPuzzleFormAtom } from "./admin";
 import { inputAtom, inputWordSelector, inputTouchedAtom } from "./input";
 import { messageBoxAtom } from "./messageBox";
 import {
-    puzzleAtom,
-    lettersSelector,
-    lettersAtom,
-    centerLetterSelector,
+    //puzzleAtom,
+    //lettersSelector,
+    //lettersAtom,
+    //centerLetterSelector,
 } from "./puzzle";
-import { totalScoreAtom, prevWordScoreAtom } from "./score";
-import { rankingSelector } from "./ranking";
+import { /*totalScoreAtom*/ prevWordScoreAtom } from "./score";
+import { /*rankingSelector*/ } from "./ranking";
 import {
     AddPuzzleFormState,
     LetterObj,
@@ -33,17 +33,17 @@ export {
     messageBoxAtom,
 
     // Puzzle
-    puzzleAtom,
-    lettersSelector,
-    lettersAtom,
-    centerLetterSelector,
+    //puzzleAtom,
+    //lettersSelector,
+    //lettersAtom,
+    //centerLetterSelector,
     
     // Score
-    totalScoreAtom,
+    //totalScoreAtom,
     prevWordScoreAtom,
 
     // Ranking
-    rankingSelector,
+    //rankingSelector,
 
     // Types
     type AddPuzzleFormState,
