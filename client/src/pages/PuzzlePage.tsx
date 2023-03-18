@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
+import { device } from "../styles/device";
 import { puzzleAtom, foundWordsAtom } from "../state";
 import ApiClient from "../api/client";
 import GameField from "../components/GameField";
 import LoadingAnimation from "../components/loading/LoadingAnimation";
-import BigHeading from "../components/BigHeading";
+import H1 from "../components/H1";
 import { Link } from "react-router-dom";
 
 const PuzzlePage = () => {
@@ -39,19 +41,45 @@ const PuzzlePage = () => {
 
     return (
         <div>
-            <div style={{ padding: '24px 82px', borderBottom: '1px solid #bfbfbf' }}>
-                <BigHeading>
+            <StyledHeader>
+                <H1>
                     <Link to="/">
                         Be Spelling
                     </Link>
-                    <span style={{ fontSize: '24px', fontWeight: 300, fontFamily: 'sans-serif', marginLeft: '16px' }}>
+                    <DateSpan>
                         {puzzle?.date && formattedDate}
-                    </span>
-                </BigHeading>
-            </div>
+                    </DateSpan>
+                </H1>
+            </StyledHeader>
             {!loaded ? <LoadingAnimation /> : <GameField />}
         </div>
     );
 };
 
 export default PuzzlePage;
+
+const StyledHeader = styled.header`
+    border-bottom: 1px solid #bfbfbf;
+    padding: 24px 24px;
+
+    
+    @media (min-width: ${device.desktop}) {
+        padding: 24px 82px;
+        
+    }
+`;
+
+const DateSpan = styled.span`
+    font-weight: 300;
+    font-family: sans-serif;
+
+    font-size: 24px;
+    display: block;
+    margin-left: 2px;
+
+    @media (min-width: ${device.desktop}) {
+        font-size: 28px;
+        display: inline;
+        margin-left: 16px;
+    }
+`;
