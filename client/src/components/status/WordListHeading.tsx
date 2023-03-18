@@ -26,7 +26,7 @@ function WordListHeading({ expanded, setExpanded }: Props) {
                         {previewContent}
                     </ul>
                 </PreviewWrapper>
-                <Toggle>
+                <Toggle expanded={expanded}>
                     <span className="toggle-icon"></span>
                 </Toggle>
             </div>
@@ -98,7 +98,7 @@ const PreviewWrapper = styled.div<IExpandedProps>`
     }
 `;
 
-const Toggle = styled.div`
+const Toggle = styled.div<IExpandedProps>`
     width: 45px;
     height: 45px;
     position: absolute;
@@ -107,21 +107,23 @@ const Toggle = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #242424;
-    box-shadow: 0px 0px 20px 5px #242424;
+    background-color: #fff;
+    box-shadow: 0px 0px 20px 5px #fff;
 
     @media (min-width: ${device.desktop}) {
         display: none;
     }
 
     .toggle-icon {
-        border: solid #fff;
-        border-width: 0 3px 3px 0;
+        border: solid #242424;
+        border-width: 0 2px 2px 0;
         display: inline-block;
         padding: 4px;
         margin-top: --4px;
-
-        transform: rotate(45deg);
+        
+        transition: transform .5s;
+        transform: ${({ expanded }) => 
+            expanded ? 'rotate(225deg)' : 'rotate(45deg)'};
     }
 `;
 
