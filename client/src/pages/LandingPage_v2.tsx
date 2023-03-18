@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import BigHeading from '../components/BigHeading';
+import H1 from '../components/H1';
 import PuzzleMenu from '../components/PuzzleMenu';
 
 export default function LandingPage_v2() {
     return (
         <StyledLandingPage>
             <ContentContainer>
-                <BigHeading>Be Spelling</BigHeading>
+                <H1>Be Spelling</H1>
                 <h2>
                     Archive of old
                     <a href='https://www.nytimes.com/puzzles/spelling-bee' target="_blank" rel="noopener noreferrer">
